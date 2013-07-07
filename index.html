@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Документ без названия</title>
+
+</head>
+
+
+<body>
+
+
+
+<script src="./js/ModulesInAnyEvent.js"></script>
+<script src="./js/Modules.js"></script>
+<script src="./js/mainListener.js"></script>
+
+
+<script src="./js/Core/core.js"></script>
+<script src="./js/Core/listeners.js"></script>
+
+
+<script>
+
+    Modules.mod =  createNewModule();
+    Modules.mod1 =  Modules.mod.extend({attributs : {a:30,b:40}});
+    Modules.mod2 = createCloneModule(Modules.mod1).extend({attributes : {a:40,b:50}});
+
+    Modules.mod3 =  createNewModule();
+
+    Modules.mod.addModulesToAudition( [Modules.mod,Modules.mod1]);
+
+
+    Modules.mod.addModulesToAudition( Modules.mod3);
+
+    //Modules.mod.removeModulesFomAudition([Modules.mod1, Modules.mod, Modules.mod3]);
+
+    Modules.mod1.addModulesToAudition( Modules.mod3);  //???
+    Modules.mod2.addModulesToAudition( Modules.mod3);
+    Modules.mod3.addModulesToAudition( Modules.mod3);
+
+    //Modules.mod3.removeListenerFromModules( [Modules.mod1, Modules.mod2]);
+
+</script>
+
+</body>
+</html>
