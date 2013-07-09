@@ -1,12 +1,23 @@
 var Modules = {};
 
+window.Modules = Modules;
+
 var modulesForAudition = {};
 
 function Module(){
     this.events = {};
 };
 
-function createNewModule(defaultSettings){
+Modules.extendCore = function(extend){
+
+    for (var name in extend) {
+
+        Module.prototype[name] = extend[name];
+    }
+
+};
+
+Modules.createNewModule = function(defaultSettings){
 
     function NewModule() {};
     NewModule.prototype = new Module();
@@ -533,6 +544,9 @@ Module.prototype.removeAuditionFromList = function(auditionModule){
         delete auditionList;
     }
 };
+
+
+//    Modules.extendCore  - точка расширения ядра
 
 //    Module.prototype.removeAuditionFromList()    удаляет модуль из хеша прослушиваемых модулей
 
