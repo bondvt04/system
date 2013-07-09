@@ -1,5 +1,10 @@
 var Modules = {};
-function Module(){};
+
+var modulesForAudition = {};
+
+function Module(){
+    this.events = {};
+};
 
 function createNewModule(defaultSettings){
 
@@ -11,8 +16,10 @@ function createNewModule(defaultSettings){
     }
     var newModule = new NewModule();
 
-    if(newModule.events.beforeCreate){
-        newModule.events.beforeCreate();
+    var newModuleEvents = newModule.events;
+
+    if(newModuleEvents.beforeCreate){
+        newModuleEvents.beforeCreate();
     }
 
     if(defaultSettings){
@@ -24,20 +31,22 @@ function createNewModule(defaultSettings){
     }
     newModule._listeningsModules = [];
 
-    if(newModule.events.afterCreate){
-        newModule.events.afterCreate();
+    if(newModuleEvents.afterCreate){
+        newModuleEvents.afterCreate();
     }
 
     return  newModule;
 };
 
-Module.prototype.createCloneModule = function (module){
+Module.prototype.createCloneModule = function (){
 
-    if(this.events.beforeCreate){
-        this.events.beforeCreate();
+    var events = this.events;
+
+    if(events.beforeCreate){
+        events.beforeCreate();
     }
-    if(this.events.beforeClone){
-        this.events.beforeClone();
+    if(events.beforeClone){
+        events.beforeClone();
     }
 
     function clone(o) {
@@ -48,54 +57,39 @@ Module.prototype.createCloneModule = function (module){
         var c = "function" === typeof o.pop ? [] : {};
         var p, v;
         for(p in o) {
-            if(o.hasOwnProperty(p)) {
+
                 v = o[p];
                 if(v && "object" === typeof v) {
                     c[p] = clone(v);
                 }
                 else c[p] = v;
-            }
+
         }
         return c;
     }
 
-    var newProps = clone(module);
+    var returnObj = clone(this);
+    var returnEvents = returnObj.events;
 
-    if(newProps.events.afterCreateClone){
-        newProps.events.afterCreateClone();
+    if(returnEvents.afterCreate){
+        returnEvents.afterCreate();
     }
-
-
-    function AuxiliaryObj(){};
-    AuxiliaryObj.prototype =Module.prototype;
-
-    var returnObj = new  AuxiliaryObj();
-
-    for (var prop in newProps){
-
-        returnObj[prop] =  newProps[prop];
-    }
-
-    //TODO skopirovat clushateli
-    returnObj._listeningsModules = [];
-
-    if(returnObj.events.afterCreate){
-        returnObj.events.afterCreate();
-    }
-    if(returnObj.events.afterClone){
-        returnObj.events.afterClone();
+    if(returnEvents.afterClone){
+        returnEvents.afterClone();
     }
 
     return  returnObj;
 };
 
-Module.prototype.createCloneModuleWithAuditions = function (module){
+Module.prototype.createCloneModuleWithOutAuditions = function (){
 
-    if(this.events.beforeCreate){
-        this.events.beforeCreate();
+    var events = this.events;
+
+    if(events.beforeCreate){
+        events.beforeCreate();
     }
-    if(this.events.beforeClone){
-        this.events.beforeClone();
+    if(events.beforeClone){
+        events.beforeClone();
     }
 
     function clone(o) {
@@ -117,27 +111,17 @@ Module.prototype.createCloneModuleWithAuditions = function (module){
         return c;
     }
 
-    var newProps = clone(module);
+    var returnObj = clone(this);
 
-    if(newProps.events.afterCreateClone){
-        newProps.events.afterCreateClone();
+    returnObj._listeningsModules = []
+
+    var returnEvents = returnObj.events;
+
+    if(returnEvents.afterCreate){
+        returnEvents.afterCreate();
     }
-
-    function AuxiliaryObj(){};
-    AuxiliaryObj.prototype =Module.prototype;
-
-    var returnObj = new  AuxiliaryObj();
-
-    for (var prop in newProps){
-
-            returnObj[prop] =  newProps[prop];
-    }
-
-    if(returnObj.events.afterCreate){
-        returnObj.events.afterCreate();
-    }
-    if(returnObj.events.afterClone){
-        returnObj.events.afterClone();
+    if(returnEvents.afterClone){
+        returnEvents.afterClone();
     }
 
     return  returnObj;
@@ -146,11 +130,13 @@ Module.prototype.createCloneModuleWithAuditions = function (module){
 
 Module.prototype.extend = function(newProps){
 
-    if(this.events.beforeCreate){
-        this.events.beforeCreate();
+    var events = this.events;
+
+    if(events.beforeCreate){
+        events.beforeCreate();
     }
-    if(this.events.beforeExtend){
-        this.events.beforeExtend();
+    if(events.beforeExtend){
+        events.beforeExtend();
     }
 
 
@@ -164,21 +150,23 @@ Module.prototype.extend = function(newProps){
         returnObj[prop] =  newProps[prop];
     }
 
-    if(returnObj.events.beforeClearAuditions){
-        returnObj.events.beforeClearAuditions();
+    var returnEvents = returnObj.events;
+
+    if(returnEvents.beforeClearAuditions){
+        returnEvents.beforeClearAuditions();
     }
 
     returnObj._listeningsModules = [];
 
-    if(returnObj.events.afterClearAuditions){
-        returnObj.events.afterClearAuditions();
+    if(returnEvents.afterClearAuditions){
+        returnEvents.afterClearAuditions();
     }
 
-    if(returnObj.events.afterCreate){
-        returnObj.events.afterCreate();
+    if(returnEvents.afterCreate){
+        returnEvents.afterCreate();
     }
-    if(returnObj.events.afterExtend){
-        returnObj.events.afterExtend();
+    if(returnEvents.afterExtend){
+        returnEvents.afterExtend();
     }
 
     return  returnObj;
@@ -186,11 +174,13 @@ Module.prototype.extend = function(newProps){
 
 Module.prototype.extendWithSaveAuditions = function(newProps){
 
-    if(this.events.beforeCreate){
-        this.events.beforeCreate();
+    var events = this.events;
+
+    if(events.beforeCreate){
+        events.beforeCreate();
     }
-    if(this.events.beforeExtend){
-        this.events.beforeExtend();
+    if(events.beforeExtend){
+        events.beforeExtend();
     }
 
     function AuxiliaryObj(){};
@@ -204,26 +194,33 @@ Module.prototype.extendWithSaveAuditions = function(newProps){
 
     }
 
-    if(returnObj.events.beforeCopyAuditions){
-        returnObj.events.beforeCopyAuditions();
+    var returnEvents = returnObj.events;
+
+    if(returnEvents.beforeCopyAuditions){
+        returnEvents.beforeCopyAuditions();
     }
 
     returnObj._listeningsModules = [];
 
-    for (var lengthAuditions = newProps._listeningsModules.length; lengthAuditions--;) {
+    var returnObjListeningsModules = returnObj._listeningsModules;
+    var newPropsListeningsModules =  newProps._listeningsModules;
 
-        returnObj._listeningsModules.push(newProps._listeningsModules[lengthAuditions]);
+
+    for (var lengthAuditions = newPropsListeningsModules.length; lengthAuditions--;) {
+
+        returnObjListeningsModules.push(newPropsListeningsModules[lengthAuditions]);
     }
 
-    if(returnObj.events.afterCopyAuditions){
-        returnObj.events.afterCopyAuditions();
+    if(returnEvents.afterCopyAuditions){
+        returnEvents.afterCopyAuditions();
     }
 
-    if(returnObj.events.afterCreate){
-        returnObj.events.afterCreate();
+    if(returnEvents.afterCreate){
+        returnEvents.afterCreate();
     }
-    if(returnObj.events.afterExtend){
-        returnObj.events.afterExtend();
+
+    if(returnEvents.afterExtend){
+        returnEvents.afterExtend();
     }
 
     return  returnObj;
@@ -233,11 +230,13 @@ Module.prototype.extendWithSaveAuditions = function(newProps){
 // TODO говнокод пересмотреть
 Module.prototype.extendExpanding = function(newProps){
 
-    if(this.events.beforeCreate){
-        this.events.beforeCreate();
+    var events = this.events;
+
+    if(events.beforeCreate){
+        events.beforeCreate();
     }
-    if(this.events.beforeExtend){
-        this.events.beforeExtend();
+    if(events.beforeExtend){
+        events.beforeExtend();
     }
 
     function AuxiliaryObj(){};
@@ -276,26 +275,31 @@ Module.prototype.extendExpanding = function(newProps){
         }
     }
 
-    if(returnObj.events.beforeCopyAuditions){
-        returnObj.events.beforeCopyAuditions();
+    var returnEvents = returnObj.events;
+
+    if(returnEvents.beforeCopyAuditions){
+        returnEvents.beforeCopyAuditions();
     }
 
     returnObj._listeningsModules = [];
+    var returnObjListeningsModules = returnObj._listeningsModules;
 
-    for (var lengthAuditions = newProps._listeningsModules.length; lengthAuditions--;) {
+    var  newPropsListeningsModules =  newProps._listeningsModules;
 
-        returnObj._listeningsModules.push(newProps._listeningsModules[lengthAuditions]);
+    for (var lengthAuditions = newPropsListeningsModules.length; lengthAuditions--;) {
+
+        returnObjListeningsModules.push(newPropsListeningsModules[lengthAuditions]);
     }
 
-    if(returnObj.events.afterCopyAuditions){
-        returnObj.events.afterCopyAuditions();
+    if(returnEvents.afterCopyAuditions){
+        returnEvents.afterCopyAuditions();
     }
 
-    if(returnObj.events.afterCreate){
-        returnObj.events.afterCreate();
+    if(returnEvents.afterCreate){
+        returnEvents.afterCreate();
     }
-    if(returnObj.events.afterExtend){
-        returnObj.events.afterExtend();
+    if(returnEvents.afterExtend){
+        returnEvents.afterExtend();
     }
 
     return  returnObj;
@@ -304,11 +308,13 @@ Module.prototype.extendExpanding = function(newProps){
 // TODO говнокод пересмотреть
 Module.prototype.extendExpandingAndSaveAuditions= function(newProps){
 
-    if(this.events.beforeCreate){
-        this.events.beforeCreate();
+    var events = this.events;
+
+    if(events.beforeCreate){
+        events.beforeCreate();
     }
-    if(this.events.beforeExtend){
-        this.events.beforeExtend();
+    if(events.beforeExtend){
+        events.beforeExtend();
     }
 
     function AuxiliaryObj(){};
@@ -348,26 +354,31 @@ Module.prototype.extendExpandingAndSaveAuditions= function(newProps){
         }
     }
 
-    if(returnObj.events.beforeCopyAuditions){
-        returnObj.events.beforeCopyAuditions();
+    var returnEvents = returnObj.events;
+
+    if(returnEvents.beforeCopyAuditions){
+        returnEvents.beforeCopyAuditions();
     }
 
     returnObj._listeningsModules = [];
 
+    var returnObjListeningsModules = returnObj._listeningsModules;
 
-    for (var lengthAuditions = this._listeningsModules.length; lengthAuditions--;) {
+    var thisListeningsModules = this._listeningsModules;
 
-        returnObj._listeningsModules.push(this._listeningsModules[lengthAuditions]);
+    for (var lengthAuditions = thisListeningsModules.length; lengthAuditions--;) {
+
+        returnObjListeningsModules.push(thisListeningsModules[lengthAuditions]);
     }
 
-    if(returnObj.events.afterCopyAuditions){
-        returnObj.events.afterCopyAuditions();
+    if(returnEvents.afterCopyAuditions){
+        returnEvents.afterCopyAuditions();
     }
-    if(returnObj.events.afterCreate){
-        returnObj.events.afterCreate();
+    if(returnEvents.afterCreate){
+        returnEvents.afterCreate();
     }
-    if(returnObj.events.afterExtend){
-        returnObj.events.afterExtend();
+    if(returnEvents.afterExtend){
+        returnEvents.afterExtend();
     }
 
     return  returnObj;
@@ -375,42 +386,48 @@ Module.prototype.extendExpandingAndSaveAuditions= function(newProps){
 
 Module.prototype.removeModule = function(){
 
-    if(this.events.beforeRemove){
-        this.events.beforeRemove();
+    var events = this.events;
+
+    if(events.beforeRemove){
+        events.beforeRemove();
     }
 
     for(var module in Modules){
         if(Modules[module] == this){
+
             delete Modules[module];
+            this.removeAuditionFromAllModulesListeners();
+
             return;
         }
     }
-    if(this.events.aftereRemove){
-        this.events.afterRemove();
+    if(events.aftereRemove){
+        events.afterRemove();
     }
 };
 
 Module.prototype.removeModules = function(modules){
     for(var length = modules.length; length -- ;){
 
-        if(this.events.beforeRemove){
-            this.events.beforeRemove();
+        if(events.beforeRemove){
+            events.beforeRemove();
         }
 
         delete this[modules[length]];
+        this[modules[length]].removeAuditionFromAllModulesListeners();
 
-        if(this.events.aftereRemove){
-            this.events.afterRemove();
+        if(events.aftereRemove){
+            events.afterRemove();
         }
     }
-
-
 };
 
 Module.prototype.setAllDefaultSettings = function(){
 
-    if(this.events.beforeSetDefaultSettings){
-        this.events.beforeSetDefaultSettings();
+    var events = this.events;
+
+    if(events.beforeSetDefaultSettings){
+        events.beforeSetDefaultSettings();
     }
 
     for (var name in this){
@@ -423,52 +440,105 @@ Module.prototype.setAllDefaultSettings = function(){
 
         for (var prop in this.default){
 
-            if(this.events.beforeSetOneDefaultSetting){
-                this.events.beforeSetOneDefaultSetting( this.default[prop]);
+            if(events.beforeSetOneDefaultSetting){
+                events.beforeSetOneDefaultSetting( );
             }
 
             this[prop] =  this.default[prop];
 
-            if(this.events.afterSetOneDefaultSetting){
-                this.events.afterSetOneDefaultSetting( this.default[prop]);
+            if(events.afterSetOneDefaultSetting){
+                events.afterSetOneDefaultSetting( );
             }
         }
     }
 
-    if(this.events.beforeSetDefaultSettings){
-        this.events.beforeSetDefaultSettings();
+    if(events.beforeSetDefaultSettings){
+        events.beforeSetDefaultSettings();
     }
 };
 
 Module.prototype.setDefaultSettings = function(nameSettings){
 
-    if(this.events.beforeSetDefaultSettings){
-        this.events.beforeSetDefaultSettings();
+    var events = this.events;
+    var defaultSetting;
+    var defaultProp;
+
+    if(events.beforeSetDefaultSettings){
+        events.beforeSetDefaultSettings();
     }
 
     if(this.default){
 
         for (var lengthDefaultSettings = nameSettings.length; lengthDefaultSettings--; ){
 
-            if(this.events.beforeSetOneDefaultSetting){
-                this.events.beforeSetOneDefaultSetting( this.default[prop]);
+            defaultSetting =  nameSettings[lengthDefaultSettings];
+
+            if(events.beforeSetOneDefaultSetting){
+                events.beforeSetOneDefaultSetting( );
             }
 
-            this[nameSettings[lengthDefaultSettings]] =  this.default[nameSettings[lengthDefaultSettings]];
 
-            if(this.events.afterSetOneDefaultSetting){
-                this.events.afterSetOneDefaultSetting( this.default[prop]);
+
+            this[defaultSetting] =  this.default[defaultSetting];
+
+            if(events.afterSetOneDefaultSetting){
+                events.afterSetOneDefaultSetting( );
             }
         }
     }
 
-    if(this.events.beforeSetDefaultSettings){
-        this.events.beforeSetDefaultSettings();
+    if(events.afterSetDefaultSettings){
+        events.afterSetDefaultSettings();
     }
 
 };
 
+Module.prototype.setModuleName = function(){
 
+    for (var name in Modules){
+        if (Modules[name] == this){
+
+            this._moduleName = name;
+            break;
+        }
+    }
+};
+
+Module.prototype.addAuditionToList = function(auditionModule){
+
+    var auditionList = modulesForAudition[this._moduleName];
+
+    if(!auditionList){
+
+        auditionList = [];
+    }
+
+    auditionList.push(auditionModule._moduleName);
+
+};
+
+Module.prototype.removeAuditionFromList = function(auditionModule){
+
+    var auditionList = modulesForAudition[this._moduleName];
+
+    var index =  auditionModule._moduleName  in  auditionList;
+
+    if (index != -1){
+
+        auditionList.splice(index, 1);
+    }
+
+    if(auditionList.length == 0){
+
+        delete auditionList;
+    }
+};
+
+//    Module.prototype.removeAuditionFromList()    удаляет модуль из хеша прослушиваемых модулей
+
+//   Module.prototype.addAuditionToList()   добавляет прослушиваемый модуль в хеш прослушиваемых модулей
+
+//   Module.prototype.setModuleName() назначает имя модулю
 
 //   Modules.mod =  createNewModule([{defaults}]);                        созздание нового модуля    +
 
@@ -483,9 +553,9 @@ Module.prototype.setDefaultSettings = function(nameSettings){
 //  Modules.mod1 = Module.extendExpandingAndSaveAuditions({attributes : {a:30, b:40}})с расширением одноимённых и списка слушателей
 
 
-//   Modules.mod2 = Module.createCloneModule(Modules.mod1);              создание клона модуля без сохранения списка прослушиваемых    +
+//   Modules.mod2 = Modules.mod1.createCloneModule();              создание клона модуля без сохранения списка прослушиваемых    +
 
-//   Modules.mod2 = Module.createCloneModuleWithAuditions(Modules.mod1);   создание клона с сохранением списка прослушиваемых  +
+//   Modules.mod2 = Modules.mod1.createCloneModuleWithOutAuditions();   создание клона без сохранения списка прослушиваемых  +
 
 //    Modules.mod2.removeModule();  удаление модуля   +
 
@@ -520,7 +590,7 @@ Module.prototype.setDefaultSettings = function(nameSettings){
 //  beforeSetDefaultSettings
 
 
-// TODO Сделать вызов событий this.events.name();
+
 // TODO Пересмотреть все методы -вынести повторяющийся функционал
 
 
