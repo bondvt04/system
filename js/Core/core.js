@@ -511,12 +511,12 @@ Module.prototype.setDefaultSettings = function(nameSettings){
 
 };
 
-Module.prototype.setModuleName = function(){
+function setModuleName(module){
 
     for (var name in Modules){
-        if (Modules[name] == this){
+        if (Modules[name] == module){
 
-            this._moduleName = name;
+            module._moduleName = name;
             break;
         }
     }

@@ -48,8 +48,107 @@
         }
  */
 
-Module.prototype.setAsParentFor = function (){};         // назначить родителем для      -ставить имена если нет
-Module.prototype.setAsСhildFor = function (){};          // назначить потомком для        -ставить имена если нет
+Module.prototype.setAsParentFor = function (modules){     // назначить родителем для      -ставить имена если нет
+
+    addName(this);
+    var arrayModules;
+
+    if(Object.prototype.toString.call(modules) != "[object Array]"){
+
+        arrayModules = [];
+        arrayModules.push(modules);
+    }
+    else{
+
+        arrayModules = modules;
+    }
+
+    var parentEvents = this.events;
+    var parentModuleName = this._moduleName;
+    var children =  this._familyTree.children;
+    var chaildModuleName;
+    var chaildModuleEvents;
+
+    for (var lengthArrayModules = arrayModules.length; lengthArrayModules--;){
+
+        addName(arrayModules[lengthArrayModules]);
+
+        chaildModuleName = arrayModules[lengthArrayModules]._moduleName;
+
+        if(children.indexOf(chaildModuleName) == -1 ){
+
+            chaildModuleEvents=  arrayModules[lengthArrayModules].events;
+
+            if(parentEvents.beforeSetAsParent){
+                parentEvents.beforeSetAsParent();
+            }
+
+            if(parentEvents.beforeSetСhild){
+                parentEvents.beforeSetСhild();
+            }
+            if(chaildModuleEvents.beforeSetParent){
+                chaildModuleEvents.beforeSetParent();
+            }
+
+            children.push(chaildModuleName);
+            arrayModules[lengthArrayModules]._familyTree.parent = parentModuleName;
+
+            if(parentEvents.afterSetСhild){
+                parentEvents.afterSetСhild();
+            }
+            if(chaildModuleEvents.afterSetParent){
+                chaildModuleEvents.afterSetParent();
+            }
+            if(parentEvents.afterSetAsParent){
+                parentEvents.afterSetAsParent();
+            }
+        }
+    }
+    return this;
+};
+
+
+Module.prototype.setAsСhildFor = function (module){   // назначить потомком для        -ставить имена если нет
+
+    addName(this);
+    addName(module);
+
+    var chaildEvents = this.events;
+    var chaildModuleName = this._moduleName;
+    var children =  module._familyTree.children;
+    var parentModuleName = module._moduleName;
+    var parentModuleEvents = module.events;
+
+    if(children.indexOf(chaildModuleName) == -1 ){
+
+        if(parentModuleEvents.beforeSetAsParent){
+            parentModuleEvents.beforeSetAsParent();
+        }
+
+        if(parentModuleEvents.beforeSetСhild){
+            parentModuleEvents.beforeSetСhild();
+        }
+        if(chaildEvents.beforeSetParent){
+            chaildEvents.beforeSetParent();
+        }
+
+        this._familyTree.parent = chaildModuleName;
+        children.push(chaildModuleName);
+
+        if(parentModuleEvents.afterSetСhild){
+            parentModuleEvents.afterSetСhild();
+        }
+        if(chaildEvents.afterSetParent){
+            chaildEvents.afterSetParent();
+        }
+        if(parentModuleEvents.afterSetAsParent){
+            parentModuleEvents.afterSetAsParent();
+        }
+    }
+
+    return this;
+
+};
 
 Module.prototype.getTreeСhildrenNames = function (){};     // получить дерево имён потомков
 Module.prototype.getBranchСhildrenNames = function (){};   // получить ветку имён потомков
