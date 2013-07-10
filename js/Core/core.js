@@ -6,6 +6,13 @@ var modulesForAudition = {};
 
 function Module(){
     this.events = {};
+
+    this._familyTree = {
+
+        that : this,
+        parent: null,
+        children: []
+    };
 };
 
 Modules.extendCore = function(extend){
