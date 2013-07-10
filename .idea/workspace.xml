@@ -37,7 +37,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="moduleEvents.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="moduleEvents.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Core/moduleEvents.js">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="89" selection-start="89" selection-end="89" vertical-scroll-proportion="0.0">
@@ -58,6 +58,15 @@
                 <element signature="e#6601#6742#0" expanded="false" />
                 <element signature="e#7043#7385#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="establishmentOfStructures.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/Core/establishmentOfStructures.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="33" selection-start="515" selection-end="515" vertical-scroll-proportion="0.4931973">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -97,6 +106,7 @@
         <option value="$PROJECT_DIR$/1.txt" />
         <option value="$PROJECT_DIR$/js/Core/core.js" />
         <option value="$PROJECT_DIR$/js/Core/moduleEvents.js" />
+        <option value="$PROJECT_DIR$/js/Core/establishmentOfStructures.js" />
       </list>
     </option>
   </component>
@@ -415,13 +425,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/Core/core.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/listeners.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="64" column="56" selection-start="1452" selection-end="1511" vertical-scroll-proportion="0.0">
@@ -538,6 +541,13 @@
             <element signature="e#6601#6742#0" expanded="false" />
             <element signature="e#7043#7385#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Core/establishmentOfStructures.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="33" selection-start="515" selection-end="515" vertical-scroll-proportion="0.4931973">
+          <folding />
         </state>
       </provider>
     </entry>
