@@ -567,11 +567,40 @@ Module.prototype.addAuditionToAllModulesListeners = function(){
 };
 
 
-Module.prototype.createEvent= function(event,[data]){};    // запостить событие в стек
+Module.prototype.createEvent= function(event, data, moduleNameGenerateEvent){
 
-Module.prototype.doEventForAuditionNow= function(event,[data]){};   // запустить событие для подписанных модулей
+    stackEvents.pushEvent({
+        eventType : event,
+        eventData : data ? data : null,
+        moduleName: moduleNameGenerateEvent ? moduleNameGenerateEvent : this._moduleName
+    });
 
-Module.prototype.doEvent= function(event,[data]){};   // выполнить событие для этого модуля
+    return null;
+};   // в стек событий
+
+Module.prototype.doEventForAuditionNow= function(event, data, moduleNameGenerateEvent){
+
+    modulesStudents.getModuleDevelopments({
+        eventType : event,
+        eventData : data ? data : null,
+        moduleName: moduleNameGenerateEvent ? moduleNameGenerateEvent : this._moduleName
+    });
+
+    return null;
+
+};   // запустить событие для подписанных модулей
+
+Module.prototype.doEvent= function(event,data){
+
+    if(this.events[event]){
+
+        this.events[event]({
+            eventType : event,
+            eventData : data ? data : null
+        });
+    }
+   return null;
+};   // выполнить событие для этого модуля
 
 
 //    Modules.mod2.addModulesToAudition( module | array modules);        +     // добавить модули на прослушивание

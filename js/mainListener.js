@@ -153,7 +153,9 @@ var pageModules = {
 			/** Передать на генератор событий модуля событие: "генерация события" */
 			event.eventType = 'generateEvent';
 			event.moduleName = moduleName;					
-			pageModules.ListenToTheEvent(event);
+			//pageModules.ListenToTheEvent(event);
+
+            stackEvents.pushEvent(event);
 		}
 		
         else {
@@ -165,7 +167,9 @@ var pageModules = {
 			if( event.type == 'beforeunload'){			
             	event.eventType = 'documentUnload';
             	event.moduleName = 'document';			
-            	pageModules.ListenToTheEvent(event);
+            	//pageModules.ListenToTheEvent(event);
+
+                stackEvents.pushEvent(event);
         	}
 		}
 	}	
