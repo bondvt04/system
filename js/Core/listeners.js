@@ -567,6 +567,13 @@ Module.prototype.addAuditionToAllModulesListeners = function(){
 };
 
 
+Module.prototype.createEvent= function(event,[data]){};    // запостить событие в стек
+
+Module.prototype.doEventForAuditionNow= function(event,[data]){};   // запустить событие для подписанных модулей
+
+Module.prototype.doEvent= function(event,[data]){};   // выполнить событие для этого модуля
+
+
 //    Modules.mod2.addModulesToAudition( module | array modules);        +     // добавить модули на прослушивание
 //    Modules.mod2.removeModulesFomAudition( module | array modules);   +      // удалить модули с прослушивания
 

@@ -1,52 +1,5 @@
 
-/*
-Добавить в существующий  массив/ элемент       -потомки    +
-Добавить существующий в элемент    +
 
-
-получить ветку потомков        +
-получить всех потомков         +
-получить предка               +
-
-Показать прямых потомков     +
-Показать прямого предка       +
-
-показать всех потомков на любом уровне   +
-Показать всех предков                   +
-
-Удалить из него элемент   удалить потомка  массив /элемент   +
-Удалить его из элемента   из предка удалить                  +
-Удалить всех потомков                                        +
-
-
-Является ли прямым потомком элемент       +
-Является ли прямым потомком элемента      +
-
-Является ли прямым предком элемент      +      пользовать функцуии описанные выше выше в этих
-Является ли прямым предком элемента      +
-
- Является ли потомком элемент         +
- Является ли  потомком элемента        +
-
- Является ли  предком элемент           +
- Является ли  предком элемента         +
-
- Является ли модуль братским           +
-
- пометить как страницу    снять с потомков если есть   +
- снять отметку                                         +
-
- является ли страницей                                 +
-
-      Элемент получает потомка(у потомков он помечается как родитель)
-
-
-
-        _familyTree {
-                parent -ссылка на модуль родитель
-                children [] ссылки на потомков имена чтоб не плодить ссылки
-        }
- */
 
 Module.prototype.setAsParentFor = function (modules){     // назначить родителем для      -ставить имена если нет
 
@@ -315,7 +268,7 @@ Module.prototype.getAllBrotherlyModules = function (){   // получить  б
     return returnArray;
 };
 
-Module.prototype.getAllBrotherlyModulesName = function (){ // получить  имена всех братских модулей
+Module.prototype.getAllBrotherlyModulesNames = function (){ // получить  имена всех братских модулей
 
     var moduleName = this._moduleName;
     var parent = Modules[this._familyTree.parent];
@@ -541,23 +494,18 @@ Module.prototype.isBrotherlyModule = function (module){   // является л
     return this._familyTree.parent == module._familyTree.parent;
 };
 
-
-Module.prototype.getTreeСhildren = function (){};        // получить всех потомков
-Module.prototype.getBranchСhildren = function (){};      // получить ветку потомков
-
-
 Module.prototype.setAsPage = function (){   // пометить как страницу
 
-    this.settings.isPage = true;
+    this._settings.isPage = true;
     Modules.Pages[this._moduleName] = true;
 };
 Module.prototype.unsetAsPage = function (){   // снять отметку страницы
 
-    delete this.settings.isPage;
+    delete this._settings.isPage;
     delete Modules.Pages[this._moduleName];
 };
 
 Module.prototype.isPage = function (){   // является ли страницей
 
-    return !!this.settings.isPage
+    return !!this._settings.isPage
 };

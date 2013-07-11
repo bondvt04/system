@@ -15,7 +15,17 @@ function Module(){
         children: []
     };
 
-    this.settings = {};
+    this._attributes ={
+        that : this
+    };
+
+    this._attributes.changed ={
+        that : this
+    };
+
+    this._attributes.old ={};
+
+    this._settings = {};
 }
 
 Modules.extendCore = function(extend){
