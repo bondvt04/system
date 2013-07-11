@@ -91,7 +91,8 @@ Module.prototype.setAsParentFor = function (modules){     // назначить 
             }
 
             children.push(chaildModuleName);
-            arrayModules[lengthArrayModules]._familyTree.parent = parentModuleName;
+
+            Modules[arrayModules[lengthArrayModules]]._familyTree.parent = parentModuleName;
 
             if(parentEvents.afterSetСhild){
                 parentEvents.afterSetСhild();
@@ -150,44 +151,413 @@ Module.prototype.setAsСhildFor = function (module){   // назначить п�
 
 };
 
-Module.prototype.getTreeСhildrenNames = function (){};     // получить дерево имён потомков
-Module.prototype.getBranchСhildrenNames = function (){};   // получить ветку имён потомков
+//__________________________________________________________________________________________________________________
 
-Module.prototype.getСhildrenNames = function (){};    // получить имена прямых потомков
-Module.prototype.getParentName = function (){};   // получить имя предка
+function getChildren(child){
+
+    var children = child._familyTree.children;
+    var returnObj = {};
+    var childName;
+
+    for (var lengthChildren = children.length; lengthChildren--;) {
+
+        childName = children[lengthChildren];
+        returnObj[childName] = getChildren(Modules[childName]);
+    }
+
+    return returnObj;
+}
+
+Module.prototype.getTreeСhildrenNames = function (){ // получить дерево имён потомков
+
+    var children = this._familyTree.children;
+    var returnObj = {};
+    var childName;
+
+    for (var lengthChildren = children.length; lengthChildren--;) {
+
+        childName = children[lengthChildren];
+        returnObj[childName] = getChildren(Modules[childName]);
+    }
+
+    return returnObj;
+
+    /*
+         {
+            имя 1 {
+                    имя 1{
+                    },
+
+                    имя 2 {
+                    },
+                }
+            }
+         }
+
+     */
+};
+
+Module.prototype.getBranchСhildrenNames = function (moduleName){  // получить ветку имён потомков
+
+    var children = this._familyTree.children;
+
+    if(children.indexOf(moduleName)){
+
+        return  getChildren(Modules[moduleName]);
+    }
+
+    return null;
+};
+
+Module.prototype.getСhildrenNames = function (){    // получить имена прямых потомков
+
+    var children = this._familyTree.children;
+    var returnObj = {};
+    var childName;
+
+    for (var lengthChildren = children.length; lengthChildren--;) {
+
+        childName = children[lengthChildren];
+        returnObj[childName] = childName;
+    }
+
+    return returnObj;
+};
+
+Module.prototype.getParentName = function (){   // получить имя предка
+
+    return this._familyTree.parent ?  this._familyTree.parent : null;
+
+};
+
+
+Module.prototype.getParent = function (){   // получить предка
+
+    return this._familyTree.parent ?  Modules[this._familyTree.parent] : null;
+};
+
+Module.prototype.getСhildren = function (){      // получить прямых потомков
+
+    var children = this._familyTree.children;
+    var returnObj = {};
+    var childName;
+
+    for (var lengthChildren = children.length; lengthChildren--;) {
+
+        childName = children[lengthChildren];
+        returnObj[childName] = Modules[childName];
+    }
+
+    return returnObj;
+};
+
+Module.prototype.changeСhildren = function (newChildren){    // заменить потомков на потомков
+
+    this._familyTree.children = newChildren;
+
+    return this;
+};
+
+Module.prototype.getAllParentsName = function (){  // получить имена всех предков
+
+    var parent = this._familyTree.parent;
+    var returnArray = [];
+
+    while (parent){
+
+        returnArray.push(parent);
+        parent = Modules[parent]._familyTree.parent;
+    }
+
+    return returnArray;
+};
+
+Module.prototype.getAllParents = function (){  // получить имена всех предков
+
+    var parent = this._familyTree.parent;
+    var returnArray = [];
+    var module;
+
+    while (parent){
+
+        module = Modules[parent];
+        returnArray.push( module);
+        parent = module._familyTree.parent;
+    }
+
+    return returnArray;
+};
+
+
+Module.prototype.getAllBrotherlyModules = function (){   // получить  братские модули
+
+    var moduleName = this._moduleName;
+    var parent = Modules[this._familyTree.parent];
+
+    if(parent){
+
+        var children =  this._familyTree.children;
+        var returnArray = [];
+
+        var childName;
+
+        for (var lengthChildren = children.length; lengthChildren--;) {
+
+            childName = children[lengthChildren];
+
+            if( moduleName!= childName){
+
+                returnArray.push(Modules[childName]);
+            }
+        }
+    }
+
+    return returnArray;
+};
+
+Module.prototype.getAllBrotherlyModulesName = function (){ // получить  имена всех братских модулей
+
+    var moduleName = this._moduleName;
+    var parent = Modules[this._familyTree.parent];
+
+    if(parent){
+
+        var children =  this._familyTree.children;
+        var returnArray = [];
+
+        var childName;
+
+        for (var lengthChildren = children.length; lengthChildren--;) {
+
+            childName = children[lengthChildren];
+
+            if( moduleName!= childName){
+
+                returnArray.push(childName);
+            }
+        }
+    }
+
+    return returnArray;
+};
+
+
+Module.prototype.removeParent = function (){
+
+    var parent =  this._familyTree.parent;
+    this._familyTree.parent = null;
+
+    if (parent){
+
+        var parentModule = Modules[parent];
+        var chailds = parentModule._familyTree.children;
+        var moduleName = this._moduleName;
+        var parentEvents = parentModule.events;
+        var thisEvents = this.events;
+
+
+        for (var lengthChailds = chailds.length; lengthChailds --;) {
+
+            if(moduleName == chailds[lengthChailds]){
+
+                if(parentEvents.beforeRemoveСhild){
+                    parentEvents.beforeRemoveСhild();
+                }
+
+                if(thisEvents.beforeRemoveParent){
+                    thisEvents.beforeRemoveParent();
+                }
+
+                chailds.splice(lengthChailds, 1);
+
+                if(thisEvents.afterRemoveParent){
+                    thisEvents.afterRemoveParen();
+                }
+                if(parentEvents.afterRemoveСhild){
+                    parentEvents.afterRemoveСhild();
+                }
+
+                break;
+            }
+        }
+    }
+
+    return this;
+};
+
+
+Module.prototype.removeСhild = function (modules){
+
+    var removeModuleName = modules._moduleName;
+    var chailds = this._familyTree.children;
+    var parentEvents = this.events;
+    var childEvents;
+    var arrayModules;
+
+    if(Object.prototype.toString.call(modules) != "[object Array]"){
+
+        arrayModules = [];
+        arrayModules.push(modules);
+    }
+    else{
+
+        arrayModules = modules;
+    }
+
+    for (var lengthArrayModules = arrayModules.length; lengthArrayModules--;){
+
+        childEvents = arrayModules[lengthArrayModules].events;
+        for (var lengthChailds = chailds.length; lengthChailds --;) {
+
+            if(chailds[lengthChailds] == removeModuleName){
+
+                if(parentEvents.beforeRemoveСhild){
+                    parentEvents.beforeRemoveСhild();
+                }
+                if(childEvents.beforeRemoveParent){
+                    childEvents.beforeRemoveParent();
+                }
+
+                chailds.splice(lengthChailds, 1);
+
+                Modules[arrayModules[lengthArrayModules]]._familyTree.parent = null;
+
+                if(childEvents.afterRemoveParent){
+                    childEvents.afterRemoveParen();
+                }
+                if(parentEvents.afterRemoveСhild){
+                    parentEvents.afterRemoveСhild();
+                }
+
+                break;
+            }
+        }
+    }
+
+    return this;
+
+};
+Module.prototype.removeAllСhildren = function (){
+
+    var children = this._familyTree.children;
+    var parentEvents = this.events;
+    var childEvents;
+    var childModule;
+
+    for(var lengthChailds = children.length; lengthChailds --;){
+
+        childModule = Modules[arrayModules[lengthArrayModules]];
+        childEvents = childModule.events;
+
+        if(parentEvents.beforeRemoveСhild){
+            parentEvents.beforeRemoveСhild();
+        }
+        if(childEvents.beforeRemoveParent){
+            childEvents.beforeRemoveParent();
+        }
+
+        children.splice(lengthChailds, 1);
+        childModule._familyTree.parent = null;
+
+        if(childEvents.afterRemoveParent){
+            childEvents.afterRemoveParen();
+        }
+        if(parentEvents.afterRemoveСhild){
+            parentEvents.afterRemoveСhild();
+        }
+    }
+
+    return this;
+};
+
+
+
+Module.prototype.isChild = function (module){    // является ли потомком элемента
+
+    var parent = this._familyTree.parent;
+    var nameModule = module._moduleName;
+
+    while(Modules[parent]){
+
+        if(nameModule == parent){
+
+            return true;
+        }
+
+        parent = Modules[parent]._familyTree.parent;
+    };
+
+    return false;
+};
+Module.prototype.isChildOf = function (module){   // является ли элемент потомком модуля
+
+    var parent = module._familyTree.parent;
+    var nameModule = this._moduleName;
+
+    while(Modules[parent]){
+
+        if(nameModule == parent){
+
+            return true;
+        }
+
+        parent = Modules[parent]._familyTree.parent;
+    };
+
+    return false;
+
+};
+
+Module.prototype.isDirectChild = function (module){ // является ли прямым потомком элемента
+
+    return this._familyTree.parent == module._moduleName;
+};
+Module.prototype.isDirectChildOf = function (module){  // является ли элемент прямым потомком  этого модуля
+
+    return module._familyTree.parent == this._moduleName;
+};
+
+Module.prototype.isParent = function (module){   // является ли предком элемента
+
+    return this.isChildOf(module);
+};
+
+Module.prototype.isParentOf = function (module){    // является ли элемент предком
+
+    return this.isChild(module);
+};
+
+Module.prototype.isDirectParent = function (module){    // является ли модуль прямым предком данного
+
+    return this._familyTree.parent == module._moduleName;
+};
+Module.prototype.isDirectParentOf = function (module){   // является ли элемент прямым предком
+
+    return module._familyTree.parent == this._moduleName;
+};
+
+Module.prototype.isBrotherlyModule = function (module){   // является ли братским модулем элемента
+
+    return this._familyTree.parent == module._familyTree.parent;
+};
+
 
 Module.prototype.getTreeСhildren = function (){};        // получить всех потомков
 Module.prototype.getBranchСhildren = function (){};      // получить ветку потомков
 
-Module.prototype.getParentName = function (){};       // получить предка
-Module.prototype.getСhildren = function (){};           // получить потомков
 
-Module.prototype.changeСhildren = function (){};         // заменить потомков на потомков
-Module.prototype.getAllParentsName = function (){};       // получить имена всех предков
-Module.prototype.getAllParents = function (){};       // получить  всех предков
+Module.prototype.setAsPage = function (){   // пометить как страницу
 
-Module.prototype.getAllBrotherlyModules = function (){};       // получить  братские модули
-Module.prototype.getAllBrotherlyModulesName = function (){};       // получить  имена всех братских модулей
+    this.settings.isPage = true;
+    Modules.Pages[this._moduleName] = true;
+};
+Module.prototype.unsetAsPage = function (){   // снять отметку страницы
 
-Module.prototype.removeParent = function (){};
-Module.prototype.removeСhild = function (){};
-Module.prototype.removeAllСhildren = function (){};
+    delete this.settings.isPage;
+    delete Modules.Pages[this._moduleName];
+};
 
-Module.prototype.isChild = function (){};    // является ли потомком элемента
-Module.prototype.isChildOf = function (){};  // является ли элемент потомком
+Module.prototype.isPage = function (){   // является ли страницей
 
-Module.prototype.isDirectChild = function (){};       // является ли прямым потомком элемента
-Module.prototype.isDirectChildOf = function (){};     // является ли элемент прямым потомком
-
-Module.prototype.isParent = function (){};    // является ли предком элемента
-Module.prototype.isParentOf = function (){};  // является ли элемент предком
-
-Module.prototype.isDirectParent = function (){};       // является ли прямым предком элемента
-Module.prototype.isDirectParentOf = function (){};     // является ли элемент прямым предком
-
-Module.prototype.isBrotherlyModule = function (){};       // является ли братским модулем элемента
-
-Module.prototype.setAsPage = function (){};       // пометить как страницу
-Module.prototype.unsetAsPage = function (){};       // снять отметку страницы
-
-Module.prototype.isPage = function (){};       // является ли страницей
+    return !!this.settings.isPage
+};

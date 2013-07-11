@@ -1,4 +1,5 @@
 var Modules = {};
+Modules.Pages = {};
 
 window.Modules = Modules;
 
@@ -13,7 +14,9 @@ function Module(){
         parent: null,
         children: []
     };
-};
+
+    this.settings = {};
+}
 
 Modules.extendCore = function(extend){
 
@@ -414,6 +417,8 @@ Module.prototype.removeModule = function(){
         if(Modules[module] == this){
 
             delete Modules[module];
+            delete Modules.Pages[this._moduleName];
+
             this.removeAuditionFromAllModulesListeners();
 
             return;
@@ -432,6 +437,8 @@ Module.prototype.removeModules = function(modules){
         }
 
         delete this[modules[length]];
+        delete Modules.Pages[modules[length]._moduleName];
+
         this[modules[length]].removeAuditionFromAllModulesListeners();
 
         if(events.aftereRemove){
