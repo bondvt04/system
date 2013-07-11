@@ -5,13 +5,13 @@
     <ignored path="cmsNew.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/index.html" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1373359298360" ignored="false" />
-    <file path="/core.js" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1373544753663" ignored="false" />
+    <file path="/core.js" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1373552491073" ignored="false" />
     <file path="/listeners.js" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1373550140496" ignored="false" />
     <file path="/Dummy.txt" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1373278061277" ignored="false" />
-    <file path="/moduleEvents.js" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1373458517979" ignored="false" />
+    <file path="/moduleEvents.js" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1373555035985" ignored="false" />
     <file path="/establishmentOfStructures.js" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1373543260623" ignored="false" />
-    <file path="/workWithModuleData.js" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1373548536743" ignored="false" />
-    <file path="/workWithView.js" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1373543004214" ignored="false" />
+    <file path="/workWithModuleData.js" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1373555080361" ignored="false" />
+    <file path="/workWithView.js" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1373555121754" ignored="false" />
     <file path="/a.dummy" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1373547636751" ignored="false" />
     <file path="/mainListener.js" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1373549944056" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,7 +36,7 @@
       <file leaf-file-name="core.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Core/core.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="27" selection-start="309" selection-end="316" vertical-scroll-proportion="0.0">
+            <state line="527" column="13" selection-start="11222" selection-end="11222" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -45,7 +45,34 @@
       <file leaf-file-name="moduleEvents.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Core/moduleEvents.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="105" selection-start="1104" selection-end="1104" vertical-scroll-proportion="0.0">
+            <state line="236" column="38" selection-start="4927" selection-end="4927" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workWithModuleData.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/Core/workWithModuleData.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="65" column="0" selection-start="1837" selection-end="1837" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workWithView.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/Core/workWithView.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="99" column="16" selection-start="2096" selection-end="2096" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mainListener.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/mainListener.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="171" column="45" selection-start="5855" selection-end="5855" vertical-scroll-proportion="1.3571428">
               <folding />
             </state>
           </provider>
@@ -54,57 +81,10 @@
       <file leaf-file-name="establishmentOfStructures.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Core/establishmentOfStructures.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="244" column="22" selection-start="6025" selection-end="6047" vertical-scroll-proportion="-6.12">
+            <state line="457" column="5" selection-start="11235" selection-end="11235" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="e#55#1715#0" expanded="false" />
-                <element signature="n#!!block;n#getChildren#0" expanded="false" />
-                <element signature="e#3394#3922#0" expanded="false" />
-                <element signature="e#3988#4185#0" expanded="false" />
-                <element signature="e#4235#4552#0" expanded="false" />
                 <element signature="e#4599#4699#0" expanded="false" />
-                <element signature="e#4743#4847#0" expanded="false" />
-                <element signature="e#4892#5214#0" expanded="false" />
-                <element signature="e#5273#5376#0" expanded="false" />
-                <element signature="e#5427#5671#0" expanded="false" />
-                <element signature="e#5718#6004#0" expanded="false" />
-                <element signature="e#6646#7171#0" expanded="false" />
-                <element signature="e#8343#9686#0" expanded="false" />
-                <element signature="e#9736#10550#0" expanded="false" />
-                <element signature="e#10599#10902#0" expanded="false" />
-                <element signature="e#10950#11259#0" expanded="false" />
-                <element signature="e#11312#11414#0" expanded="false" />
-                <element signature="e#11468#11584#0" expanded="false" />
-                <element signature="e#11632#11705#0" expanded="false" />
-                <element signature="e#11755#11826#0" expanded="false" />
-                <element signature="e#11880#11990#0" expanded="false" />
-                <element signature="e#12045#12147#0" expanded="false" />
-                <element signature="e#12204#12316#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="workWithModuleData.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/Core/workWithModuleData.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="131" column="30" selection-start="2924" selection-end="2924" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#83#1839#0" expanded="false" />
-                <element signature="e#1915#1957#0" expanded="false" />
-                <element signature="e#1997#2338#0" expanded="false" />
-                <element signature="e#2381#2650#0" expanded="false" />
-                <element signature="e#2694#2891#0" expanded="false" />
-                <element signature="e#2934#3200#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="workWithView.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/Core/workWithView.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="57" selection-start="48" selection-end="48" vertical-scroll-proportion="0.0">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -112,25 +92,7 @@
       <file leaf-file-name="listeners.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Core/listeners.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="595" column="35" selection-start="15450" selection-end="15450" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mainListener.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/mainListener.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="171" column="45" selection-start="5855" selection-end="5855" vertical-scroll-proportion="-100.8">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="19" selection-start="1269" selection-end="1269" vertical-scroll-proportion="0.9965035">
+            <state line="47" column="52" selection-start="1024" selection-end="1024" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -149,14 +111,14 @@
         <option value="$PROJECT_DIR$/js/Modules.js" />
         <option value="$PROJECT_DIR$/js/ModulesInAnyEvent.js" />
         <option value="$PROJECT_DIR$/1.txt" />
-        <option value="$PROJECT_DIR$/js/Core/moduleEvents.js" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/js/Core/workWithView.js" />
-        <option value="$PROJECT_DIR$/js/Core/establishmentOfStructures.js" />
-        <option value="$PROJECT_DIR$/js/Core/core.js" />
-        <option value="$PROJECT_DIR$/js/Core/workWithModuleData.js" />
         <option value="$PROJECT_DIR$/js/mainListener.js" />
+        <option value="$PROJECT_DIR$/js/Core/core.js" />
+        <option value="$PROJECT_DIR$/js/Core/establishmentOfStructures.js" />
         <option value="$PROJECT_DIR$/js/Core/listeners.js" />
+        <option value="$PROJECT_DIR$/js/Core/moduleEvents.js" />
+        <option value="$PROJECT_DIR$/js/Core/workWithModuleData.js" />
+        <option value="$PROJECT_DIR$/js/Core/workWithView.js" />
       </list>
     </option>
   </component>
@@ -471,7 +433,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -529,89 +491,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/Core/core.js">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="27" selection-start="309" selection-end="316" vertical-scroll-proportion="0.0">
+        <state line="57" column="19" selection-start="1269" selection-end="1269" vertical-scroll-proportion="-35.625">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/Core/moduleEvents.js">
+    <entry file="file://$PROJECT_DIR$/js/Core/core.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="105" selection-start="1104" selection-end="1104" vertical-scroll-proportion="0.0">
+        <state line="527" column="13" selection-start="11222" selection-end="11222" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/establishmentOfStructures.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="244" column="22" selection-start="6025" selection-end="6047" vertical-scroll-proportion="-6.12">
+        <state line="457" column="5" selection-start="11235" selection-end="11235" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#55#1715#0" expanded="false" />
-            <element signature="n#!!block;n#getChildren#0" expanded="false" />
-            <element signature="e#3394#3922#0" expanded="false" />
-            <element signature="e#3988#4185#0" expanded="false" />
-            <element signature="e#4235#4552#0" expanded="false" />
             <element signature="e#4599#4699#0" expanded="false" />
-            <element signature="e#4743#4847#0" expanded="false" />
-            <element signature="e#4892#5214#0" expanded="false" />
-            <element signature="e#5273#5376#0" expanded="false" />
-            <element signature="e#5427#5671#0" expanded="false" />
-            <element signature="e#5718#6004#0" expanded="false" />
-            <element signature="e#6646#7171#0" expanded="false" />
-            <element signature="e#8343#9686#0" expanded="false" />
-            <element signature="e#9736#10550#0" expanded="false" />
-            <element signature="e#10599#10902#0" expanded="false" />
-            <element signature="e#10950#11259#0" expanded="false" />
-            <element signature="e#11312#11414#0" expanded="false" />
-            <element signature="e#11468#11584#0" expanded="false" />
-            <element signature="e#11632#11705#0" expanded="false" />
-            <element signature="e#11755#11826#0" expanded="false" />
-            <element signature="e#11880#11990#0" expanded="false" />
-            <element signature="e#12045#12147#0" expanded="false" />
-            <element signature="e#12204#12316#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/Core/workWithModuleData.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="131" column="30" selection-start="2924" selection-end="2924" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#83#1839#0" expanded="false" />
-            <element signature="e#1915#1957#0" expanded="false" />
-            <element signature="e#1997#2338#0" expanded="false" />
-            <element signature="e#2381#2650#0" expanded="false" />
-            <element signature="e#2694#2891#0" expanded="false" />
-            <element signature="e#2934#3200#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/Core/workWithView.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="57" selection-start="48" selection-end="48" vertical-scroll-proportion="0.0">
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/listeners.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="595" column="35" selection-start="15450" selection-end="15450" vertical-scroll-proportion="0.0">
+        <state line="47" column="52" selection-start="1024" selection-end="1024" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Core/moduleEvents.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="236" column="38" selection-start="4927" selection-end="4927" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Core/workWithModuleData.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="0" selection-start="1837" selection-end="1837" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Core/workWithView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="99" column="16" selection-start="2096" selection-end="2096" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/mainListener.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="171" column="45" selection-start="5855" selection-end="5855" vertical-scroll-proportion="-100.8">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="19" selection-start="1269" selection-end="1269" vertical-scroll-proportion="0.9965035">
+        <state line="171" column="45" selection-start="5855" selection-end="5855" vertical-scroll-proportion="1.3571428">
           <folding />
         </state>
       </provider>

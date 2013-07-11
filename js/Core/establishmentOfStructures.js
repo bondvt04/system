@@ -438,7 +438,7 @@ Module.prototype.isChild = function (module){    // является ли пот
         }
 
         parent = Modules[parent]._familyTree.parent;
-    };
+    }
 
     return false;
 };
@@ -455,7 +455,7 @@ Module.prototype.isChildOf = function (module){   // является ли эл�
         }
 
         parent = Modules[parent]._familyTree.parent;
-    };
+    }
 
     return false;
 

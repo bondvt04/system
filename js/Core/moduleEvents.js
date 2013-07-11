@@ -205,6 +205,7 @@ Module.prototype.removeUserEventListenerFromElement = function(eLement, userEven
         events.afterRemoveUserEvent();
     }
 
+    return this;
 };
 
 Module.prototype.removeUserAllEventListenersFromElement = function(eLement){
@@ -236,6 +237,7 @@ Module.prototype.removeUserAllEventListenersFromElement = function(eLement){
         events.afterRemoveUserEvent();
     }
 
+    return this;
 };
 
 

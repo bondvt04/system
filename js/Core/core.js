@@ -16,16 +16,31 @@ function Module(){
     };
 
     this._attributes ={
+
         that : this
     };
 
     this._attributes.changed ={
+
         that : this
     };
 
     this._attributes.old ={};
 
     this._settings = {};
+
+    this._shablon = {
+
+        urlHTML : false,
+        urlCSS : false,
+
+        textCss : false,
+        textHTML : false,
+
+        inWork : false,
+        load : false
+
+    };
 }
 
 Modules.extendCore = function(extend){
@@ -39,7 +54,7 @@ Modules.extendCore = function(extend){
 
 Modules.createNewModule = function(defaultSettings){
 
-    function NewModule() {};
+    function NewModule() {}
     NewModule.prototype = new Module();
 
     if(defaultSettings){
@@ -144,7 +159,7 @@ Module.prototype.createCloneModuleWithOutAuditions = function (){
 
     var returnObj = clone(this);
 
-    returnObj._listeningsModules = []
+    returnObj._listeningsModules = [];
 
     var returnEvents = returnObj.events;
 
@@ -214,7 +229,7 @@ Module.prototype.extendWithSaveAuditions = function(newProps){
         events.beforeExtend();
     }
 
-    function AuxiliaryObj(){};
+    function AuxiliaryObj(){}
     AuxiliaryObj.prototype =this;
 
     var returnObj = new  AuxiliaryObj();
@@ -270,7 +285,7 @@ Module.prototype.extendExpanding = function(newProps){
         events.beforeExtend();
     }
 
-    function AuxiliaryObj(){};
+    function AuxiliaryObj(){}
     AuxiliaryObj.prototype =this;
 
     var returnObj = new  AuxiliaryObj();
@@ -348,7 +363,7 @@ Module.prototype.extendExpandingAndSaveAuditions= function(newProps){
         events.beforeExtend();
     }
 
-    function AuxiliaryObj(){};
+    function AuxiliaryObj(){}
     AuxiliaryObj.prototype =this;
 
     var returnObj = new  AuxiliaryObj();
@@ -511,8 +526,6 @@ Module.prototype.setDefaultSettings = function(nameSettings){
             if(events.beforeSetOneDefaultSetting){
                 events.beforeSetOneDefaultSetting( );
             }
-
-
 
             this[defaultSetting] =  this.default[defaultSetting];
 

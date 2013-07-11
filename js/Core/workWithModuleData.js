@@ -64,6 +64,8 @@ Module.prototype.set = function(data){
 
     }
 
+    return this;
+
 };// вызывает событие модуль изменился
 
 Module.prototype.has = function(name){

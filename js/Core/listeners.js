@@ -40,7 +40,7 @@ Module.prototype.addModulesToAudition = function(modules){
 
             for (var lenghtListenersArray = listenersArray.length; lenghtListenersArray --;) {
 
-                module =  modules[lengthModules]
+                module =  modules[lengthModules];
 
                 if( listenersArray[lenghtListenersArray] == module){
 
