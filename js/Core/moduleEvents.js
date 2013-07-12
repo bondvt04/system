@@ -3,8 +3,8 @@ Module.prototype.addEventListener = function(nameEvent, functionToEvent, eventAf
     var events = this.events;
     var newEvent =  events[nameEvent];
 
-    if(events.beforeAddModuleEvent){
-        events.beforeAddModuleEvent();
+    if(events.beforeAddEvent){
+        events.beforeAddEvent();
     }
 
     if(newEvent){
@@ -23,8 +23,8 @@ Module.prototype.addEventListener = function(nameEvent, functionToEvent, eventAf
         'that': this
     };
 
-    if(events.afterAddModuleEvent){
-        events.afterAddModuleEvent();
+    if(events.afterAddEvent){
+        events.afterAddEvent();
     }
 
     return this;
@@ -35,8 +35,8 @@ Module.prototype.removeEventListener = function(nameEvent){
     var events = this.events;
     var newEvent =  events[nameEvent];
 
-    if(events.beforeRemoveModuleEvent){
-        events.beforeRemoveModuleEvent();
+    if(events.beforeRemoveEvent){
+        events.beforeRemoveEvent();
     }
 
     if(!newEvent){
@@ -46,8 +46,8 @@ Module.prototype.removeEventListener = function(nameEvent){
 
     delete newEvent;
 
-    if(events.afterRemoveModuleEvent){
-        events.afterRemoveModuleEvent();
+    if(events.afterRemoveEvent){
+        events.afterRemoveEvent();
     }
 
     return this;
@@ -59,8 +59,9 @@ Module.prototype.changeEventListener = function(nameEvent, functionToEvent, even
     var events = this.events;
     var newEvent =  events[nameEvent];
 
-    if(events.beforeChangeModuleEvent){
-        events.beforeChangeModuleEvent();
+
+    if(events.beforeChangeEvent){
+        events.beforeChangeEvent();
     }
 
     if(!newEvent){
@@ -74,22 +75,22 @@ Module.prototype.changeEventListener = function(nameEvent, functionToEvent, even
         'that': this
     };
 
-    if(events.afterChangeModuleEvent){
-        events.afterChangeModuleEvent();
+    if(events.afterChangeEvent){
+        events.afterChangeEvent();
     }
 
     return this;
 };
 
-Module.prototype.hasEventListener = function(userEventName){
+Module.prototype.hasEventListener = function(EventName){
 
-    return  (this.events[userEventName] ? true  :false);
+    return  (this.events[EventName] ? true  :false);
 
 };
 
-Module.prototype.getEventListener = function(userEventName){
+Module.prototype.getEventListener = function(EventName){
 
-    var event = this.events[userEventName];
+    var event = this.events[EventName];
 
     if(!event){
 
@@ -97,7 +98,7 @@ Module.prototype.getEventListener = function(userEventName){
     }
 
     return {
-        'eventName' :  userEventName,
+        'eventName' :  EventName,
         'eventsAfterEvent' :  event.eventsAfterEvent,
         'functionForEvent' :  event.functionToEvent
     };
@@ -127,175 +128,9 @@ Module.prototype.getAllEventsListeners = function(){
    return returnObj;
 };
 
+Module.prototype.getAllListenersName = function(){
 
-
-Module.prototype.addUserEventListener = function(eLement, userEvent, moduleEvent){
-
-    var events = this.events;
-    var userEventsTable = events.userEventsTable;
-
-    if(events.beforeAddUserEvent){
-        events.beforeAddUserEvent();
-    }
-
-    if(!userEventsTable){
-
-        userEventsTable ={};
-        userEventsTable.that = this;
-    }
-
-    var elementOfView = userEventsTable[eLement];
-
-    if(!elementOfView){
-
-        elementOfView ={};
-        elementOfView.that = this;
-    }
-
-    var newUserEvent =  elementOfView[userEvent];
-
-    if(newUserEvent){
-        console.log("event for element'"+ eLement +"' '"+userEvent+"'  is exist");
-        return this;
-    }
-
-    newUserEvent = moduleEvent;
-
-    if(events.afterAddUserEvent){
-        events.afterAddUserEvent();
-    }
-
-    return this;
-};
-
-Module.prototype.removeUserEventListenerFromElement = function(eLement, userEvent){
-
-    var events = this.events;
-    var userEventsTable = events.userEventsTable;
-
-    if(events.beforeRemoveUserEvent){
-        events.beforeRemoveUserEvent();
-    }
-
-    if(!userEventsTable){
-
-        console.log('Module has not any users event');
-        return this;
-    }
-
-    var elementOfView = userEventsTable[eLement];
-
-    if(!elementOfView){
-
-        console.log('Module has not any events for this element');
-        return this;
-    }
-
-    var event = elementOfView[userEvent];
-
-    if(!elementOfView){
-
-        console.log('Module has not this events for this element');
-        return this;
-    }
-
-    delete event;
-
-    if(events.afterRemoveUserEvent){
-        events.afterRemoveUserEvent();
-    }
-
-    return this;
-};
-
-Module.prototype.removeUserAllEventListenersFromElement = function(eLement){
-
-    var events = this.events;
-    var userEventsTable = events.userEventsTable;
-
-    if(events.beforeRemoveUserEvent){
-        events.beforeRemoveUserEvent();
-    }
-
-    if(!userEventsTable){
-
-        console.log('Module has not any users event');
-        return this;
-    }
-
-    var elementOfView = userEventsTable[eLement];
-
-    if(!elementOfView){
-
-        console.log('Module has not any events for this element');
-        return this;
-    }
-
-    delete elementOfView;
-
-    if(events.afterRemoveUserEvent){
-        events.afterRemoveUserEvent();
-    }
-
-    return this;
-};
-
-
-Module.prototype.changeUserEventListener = function(eLement, userEvent, moduleEvent){
-
-    var events = this.events;
-    var userEventsTable = events.userEventsTable;
-
-    if(events.beforeChangeUserEvent){
-        events.beforeChangeUserEvent();
-    }
-
-    if(!(events || events.userEventsTable || events.userEventsTable[eLement] || events.userEventsTable[eLement][userEvent])){
-        console.log("event for element'"+ eLement +"'   '"+userEvent+"'  is not exist");
-        return this;
-    }
-
-    events.userEventsTable[eLement][userEvent]  = moduleEvent;
-
-    if(events.afterChangeUserEvent){
-        events.afterChangeUserEvent();
-    }
-
-    return this;
-};
-
-Module.prototype.hasUserEventForElement =function(eLement, userEvent){
-
-    return  this.events || this.events.userEventsTable || this.events.userEventsTable[eLement] || this.events.userEventsTable[eLement][userEvent ] ? true : false;
-
-};
-
-Module.prototype.getUserEventListenerForElement = function(eLement){
-
-    var elementListeners = this.events || this.events.userEventsTable || this.events.userEventsTable[eLement];
-
-    if (elementListeners){
-
-        var returnObj = {};
-
-        for (var name in elementListeners) {
-
-            if(elementListeners[name] != this){
-
-                returnObj[name] = elementListeners[name];
-            }
-        }
-
-        return  returnObj;
-    }
-    else {
-        return null;
-    }
-};
-
-Module.prototype.getAllListenersElements = function(){
-
-    var elements =  this.events.userEventsTable;
+    var elements =  this.events;
     var returnObj = {};
 
     for (var name in elements) {
@@ -309,6 +144,40 @@ Module.prototype.getAllListenersElements = function(){
     return returnObj;
 };
 
+Module.prototype.createEvent= function(event, data, moduleNameGenerateEvent){
+
+    stackEvents.pushEvent({
+        eventType : event,
+        eventData : data ? data : null,
+        moduleName: moduleNameGenerateEvent ? moduleNameGenerateEvent : this._moduleName
+    });
+
+    return this;
+};   // в стек событий
+
+Module.prototype.doEventForAuditionNow= function(event, data, moduleNameGenerateEvent){
+
+    modulesStudents.getModuleDevelopments({
+        eventType : event,
+        eventData : data ? data : null,
+        moduleName: moduleNameGenerateEvent ? moduleNameGenerateEvent : this._moduleName
+    });
+
+    return this;
+
+};   // запустить событие для подписанных модулей
+
+Module.prototype.doEvent= function(event,data){
+
+    if(this.events[event]){
+
+        this.events[event]({
+            eventType : event,
+            eventData : data ? data : null
+        });
+    }
+    return this;
+};   // выполнить событие для этого модуля
 
 
 // события -до установки слушателя события -после       beforeAddModuleEvent    afterAddModuleEvent     beforeAddUserEvent  afterAddUserEvent

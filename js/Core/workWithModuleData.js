@@ -15,7 +15,7 @@ Module.prototype.set = function(data){
 
     parentEvents && parentEvents.beforeChange && parentEvents.beforeChange();
 
-    parentEvents &&parentEvents.beforeChildChange && parentEvents.beforeChildChange();
+
 
     moduleEvents &&moduleEvents.beforeChange && moduleEvents.beforeChange();
 
@@ -48,7 +48,7 @@ Module.prototype.set = function(data){
 
     if(isChange){
 
-        parentEvents && parentEvents.afterChange && parentEvents.afterChange();
+
 
         parentEvents &&parentEvents.afterChildChange && parentEvents.afterChildChange();
 
@@ -75,7 +75,7 @@ Module.prototype.has = function(name){
 
 Module.prototype.get = function(data){
 
-    data = data || this._attributes;
+    data = {data:true} || this._attributes;
 
     var returnObj = {};
 
@@ -175,7 +175,7 @@ Module.prototype.Validate = function(data, selectors){
 
     var events = this.events;
     events.beforeValidation && events.beforeValidation(data);
-    events.beforeValidationData && events.beforeValidationData(data);
+
 
 
     var validateData = selectors  ? selectors : this._attributes;
@@ -213,7 +213,7 @@ Module.prototype.Validate = function(data, selectors){
     }
 
     events.afterValidation && events.afterValidation(data);
-    events.afterValidationData && events.afterValidationData(data);
+
 
    return  validationSuccess;
 
@@ -227,11 +227,9 @@ Module.prototype.addValidateFunction = function(name, functionToValidate){
     return this;
 };
 
+Module.prototype.removeValidateFunction = function(name){
 
+    delete this._validatoinFunctions[name];
 
-// частичная валидация .
-
-// в валидации перед валидацияей с данными, с модулем
-// успешная валидация
-// не успешная валидация
-
+    return this;
+};

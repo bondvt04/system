@@ -325,22 +325,15 @@ Module.prototype.extendExpanding = function(newProps){
 
     var returnEvents = returnObj.events;
 
-    if(returnEvents.beforeCopyAuditions){
-        returnEvents.beforeCopyAuditions();
+    if(returnEvents.beforeClearAuditions){
+        returnEvents.beforeClearAuditions();
     }
 
     returnObj._listeningsModules = [];
-    var returnObjListeningsModules = returnObj._listeningsModules;
 
-    var  newPropsListeningsModules =  newProps._listeningsModules;
 
-    for (var lengthAuditions = newPropsListeningsModules.length; lengthAuditions--;) {
-
-        returnObjListeningsModules.push(newPropsListeningsModules[lengthAuditions]);
-    }
-
-    if(returnEvents.afterCopyAuditions){
-        returnEvents.afterCopyAuditions();
+    if(returnEvents.afterClearAuditions){
+        returnEvents.afterClearAuditions();
     }
 
     if(returnEvents.afterCreate){
@@ -451,12 +444,10 @@ Module.prototype.removeModule = function(){
             return;
         }
     }
-    if(events.aftereRemove){
-        events.afterRemove();
-    }
+
 };
 
-Module.prototype.removeModules = function(modules){
+Modules.removeModules = function(modules){
     for(var length = modules.length; length -- ;){
 
         if(events.beforeRemove){
@@ -467,10 +458,6 @@ Module.prototype.removeModules = function(modules){
         delete Modules.Pages[modules[length]._moduleName];
 
         this[modules[length]].removeAuditionFromAllModulesListeners();
-
-        if(events.aftereRemove){
-            events.afterRemove();
-        }
     }
 };
 
@@ -507,6 +494,8 @@ Module.prototype.setAllDefaultSettings = function(){
     if(events.beforeSetDefaultSettings){
         events.beforeSetDefaultSettings();
     }
+
+    return this;
 };
 
 Module.prototype.setDefaultSettings = function(nameSettings){
@@ -541,6 +530,7 @@ Module.prototype.setDefaultSettings = function(nameSettings){
         events.afterSetDefaultSettings();
     }
 
+    return this;
 };
 
 function setModuleName(module){

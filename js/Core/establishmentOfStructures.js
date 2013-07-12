@@ -189,7 +189,7 @@ Module.prototype.getParent = function (){   // получить предка
     return this._familyTree.parent ?  Modules[this._familyTree.parent] : null;
 };
 
-Module.prototype.getСhildren = function (){      // получить прямых потомков
+Module.prototype.getСhildren = function (){
 
     var children = this._familyTree.children;
     var returnObj = {};
@@ -204,6 +204,7 @@ Module.prototype.getСhildren = function (){      // получить прямы
     return returnObj;
 };
 
+//TODO  доработать -удалять у них родителя и у этого генерить добавление потомка
 Module.prototype.changeСhildren = function (newChildren){    // заменить потомков на потомков
 
     this._familyTree.children = newChildren;
@@ -225,7 +226,7 @@ Module.prototype.getAllParentsName = function (){  // получить имен�
     return returnArray;
 };
 
-Module.prototype.getAllParents = function (){  // получить имена всех предков
+Module.prototype.getAllParents = function (){  // получить  всех предков
 
     var parent = this._familyTree.parent;
     var returnArray = [];
@@ -498,11 +499,16 @@ Module.prototype.setAsPage = function (){   // пометить как стра�
 
     this._settings.isPage = true;
     Modules.Pages[this._moduleName] = true;
+
+   return this;
+
 };
 Module.prototype.unsetAsPage = function (){   // снять отметку страницы
 
     delete this._settings.isPage;
     delete Modules.Pages[this._moduleName];
+
+    return this;
 };
 
 Module.prototype.isPage = function (){   // является ли страницей

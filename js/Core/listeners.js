@@ -30,9 +30,7 @@ Module.prototype.addModulesToAudition = function(modules){
         listenersArray = [];
     }
 
-    if(events.beforeAddAuditionModule){
-        events.beforeAddAuditionModule();
-    }
+
 
     if (Object.prototype.toString.call(modules) == "[object Array]"){
 
@@ -56,6 +54,10 @@ Module.prototype.addModulesToAudition = function(modules){
                 listenerIsset = false;
                 moduleEvents =  modules[lengthModules].events;
 
+                if(events.beforeAddAuditionModule){
+                    events.beforeAddAuditionModule();
+                }
+
                 if(moduleEvents.beforeAddAuditionModuleToOtherModule){
                     moduleEvents.beforeAddAuditionModuleToOtherModule();
                 }
@@ -66,6 +68,9 @@ Module.prototype.addModulesToAudition = function(modules){
 
                 if(moduleEvents.afterAddAuditionModuleToOtherModule){
                     moduleEvents.afterAddAuditionModuleToOtherModule();
+                }
+                if(events.afterAddAuditionModule){
+                    events.afterAddAuditionModule();
                 }
             }
         }
@@ -87,6 +92,10 @@ Module.prototype.addModulesToAudition = function(modules){
 
             moduleEvents = modules.events;
 
+            if(events.beforeAddAuditionModule){
+                events.beforeAddAuditionModule();
+            }
+
             if(moduleEvents.beforeAddAuditionModuleToOtherModule){
                 moduleEvents.beforeAddAuditionModuleToOtherModule();
             }
@@ -98,12 +107,13 @@ Module.prototype.addModulesToAudition = function(modules){
             if(moduleEvents.afterAddAuditionModuleToOtherModule){
                 moduleEvents.afterAddAuditionModuleToOtherModule();
             }
+            if(events.afterAddAuditionModule){
+                events.afterAddAuditionModule();
+            }
         }
     }
 
-    if(events.afterAddAuditionModule){
-        events.afterAddAuditionModule();
-    }
+
     return this;
 };
 
@@ -115,9 +125,7 @@ Module.prototype.removeModulesFomAudition = function(modules){
     var moduleEvents;
     var module;
 
-    if(events.beforeRemoveModuleFromAudition){
-        events.beforeRemoveModuleFromAudition();
-    }
+
 
     if (Object.prototype.toString.call(modules) == "[object Array]"){
         for (var lengthModules = modules.length; lengthModules --;){
@@ -131,6 +139,10 @@ Module.prototype.removeModulesFomAudition = function(modules){
                     if( listenersArray[lenghtListenersArray] == module){
 
                         moduleEvents = module.events;
+
+                        if(events.beforeRemoveModuleFromAudition){
+                            events.beforeRemoveModuleFromAudition();
+                        }
 
                         if(moduleEvents.beforeRemoveModuleFromAuditionOtherModule){
                             moduleEvents.beforeRemoveModuleFromAuditionOtherModule();
@@ -159,6 +171,10 @@ Module.prototype.removeModulesFomAudition = function(modules){
 
                     moduleEvents = modules.events;
 
+                    if(events.beforeRemoveModuleFromAudition){
+                        events.beforeRemoveModuleFromAudition();
+                    }
+
                     if(moduleEvents.beforeRemoveModuleFromAuditionOtherModule){
                         moduleEvents.beforeRemoveModuleFromAuditionOtherModule();
                     }
@@ -170,15 +186,17 @@ Module.prototype.removeModulesFomAudition = function(modules){
                     if(moduleEvents.afterRemoveModulerFomAuditionOtherModule){
                         moduleEvents.afterRemoveModuleFromAuditionOtherModule();
                     }
+
+                    if(events.afterRemoveModuleFromAudition){
+                        events.afterRemoveModuleFromAudition();
+                    }
                     break;
                 }
             }
         }
     }
 
-    if(events.afterRemoveModuleFromAudition){
-        events.afterRemoveModuleFromAudition();
-    }
+
 
     return this;
 };
@@ -187,9 +205,7 @@ Module.prototype.removeListenerFromModules = function(modules){
 
     var events = this.events;
 
-    if(events.beforeRemoveModuleFromAuditionOtherModule){
-        events.beforeRemoveModuleFromAuditionOtherModule();
-    }
+
 
     var listenersArray;
     var moduleEvents;
@@ -213,6 +229,10 @@ Module.prototype.removeListenerFromModules = function(modules){
 
                         moduleEvents = module.events;
 
+                        if(events.beforeRemoveModuleFromAuditionOtherModule){
+                            events.beforeRemoveModuleFromAuditionOtherModule();
+                        }
+
                         if(moduleEvents.beforeRemoveModuleFromAudition){
                             moduleEvents.events.beforeRemoveModuleFromAudition();
                         }
@@ -223,6 +243,9 @@ Module.prototype.removeListenerFromModules = function(modules){
 
                         if(moduleEvents.afterRemoveModuleFromAudition){
                             moduleEvents.afterRemoveModuleFromAudition();
+                        }
+                        if(events.afterRemoveModuleFromAuditionOtherModule){
+                            events.afterRemoveModuleFromAuditionOtherModule();
                         }
 
                         break;
@@ -242,6 +265,10 @@ Module.prototype.removeListenerFromModules = function(modules){
 
                     moduleEvents = modules.events;
 
+                    if(events.beforeRemoveModuleFromAuditionOtherModule){
+                        events.beforeRemoveModuleFromAuditionOtherModule();
+                    }
+
                     if(moduleEvents.beforeRemoveModuleFromAudition){
                         moduleEvents.beforeRemoveModuleFromAudition();
                     }
@@ -253,16 +280,17 @@ Module.prototype.removeListenerFromModules = function(modules){
                     if(moduleEvents.afterRemoveModuleFromAudition){
                         moduleEvents.afterRemoveModuleFromAudition();
                     }
-
+                    if(events.afterRemoveModuleFromAuditionOtherModule){
+                        events.afterRemoveModuleFromAuditionOtherModule();
+                    }
                     break;
                 }
             }
         }
     }
 
-    if(events.afterRemoveModuleFromAuditionOtherModule){
-        events.afterRemoveModuleFromAuditionOtherModule();
-    }
+
+
 
     return this;
 };
@@ -273,9 +301,7 @@ Module.prototype.addModuleToListenersOtherModule = function(modules){
 
     var events = this.events;
 
-    if(events.beforeAddModuleToAuditionOtherModules){
-        events.beforeAddModuleToAuditionOtherModules();
-    }
+
 
     var listenersArray;
     var listenerIsset = false;
@@ -308,6 +334,10 @@ Module.prototype.addModuleToListenersOtherModule = function(modules){
                     listenerIsset = false;
                     moduleEvents =  modules[lengthModules].events;
 
+                    if(events.beforeAddModuleToAuditionOtherModules){
+                        events.beforeAddModuleToAuditionOtherModules();
+                    }
+
                     if(moduleEvents.beforeAddModuleToAudition){
                         moduleEvents.beforeAddModuleToAudition();
                     }
@@ -318,6 +348,9 @@ Module.prototype.addModuleToListenersOtherModule = function(modules){
 
                     if(moduleEvents.afterAddModuleToAudition){
                         moduleEvents.afterAddModuleToAudition();
+                    }
+                    if(events.afterAddModuleToAuditionOtherModules){
+                        events.afterAddModuleToAuditionOtherModules();
                     }
                 }
             }
@@ -345,6 +378,9 @@ Module.prototype.addModuleToListenersOtherModule = function(modules){
 
                 moduleEvents =  modules.events;
 
+                if(events.beforeAddModuleToAuditionOtherModules){
+                    events.beforeAddModuleToAuditionOtherModules();
+                }
                 if(moduleEvents.beforeAddModuleToAudition){
                     moduleEvents.beforeAddModuleToAudition();
                 }
@@ -356,13 +392,15 @@ Module.prototype.addModuleToListenersOtherModule = function(modules){
                 if(moduleEvents.afterAddModuleToAudition){
                     moduleEvents.afterAddModuleToAudition();
                 }
+                if(events.afterAddModuleToAuditionOtherModules){
+                    events.afterAddModuleToAuditionOtherModules();
+                }
+
             }
         }
     }
 
-    if(events.afterAddModuleToAuditionOtherModules){
-        events.afterAddModuleToAuditionOtherModules();
-    }
+
 
     return this;
 };
@@ -371,9 +409,7 @@ Module.prototype.removeAllAuditions = function(){
 
     var events = this.events;
 
-    if(events.beforeAddModuleToAuditionOtherModules){
-        events.beforeAddModuleToAuditionOtherModules();
-    }
+
 
     var listenersArray = this._listeningsModules;
     var moduleEvents;
@@ -381,6 +417,14 @@ Module.prototype.removeAllAuditions = function(){
     for (var lenghtListenersArray = listenersArray.length; lenghtListenersArray --;) {
 
         moduleEvents =  listenersArray[lenghtListenersArray].events;
+
+        if(events.beforeAddModuleToAuditionOtherModules){
+            events.beforeAddModuleToAuditionOtherModules();
+        }
+
+        if(events.beforeAddModuleToAuditionOtherModules){
+            events.beforeAddModuleToAuditionOtherModules();
+        }
 
         if(moduleEvents.beforeRemoveModuleFromAudition){
             moduleEvents.beforeRemoveModuleFromAudition();
@@ -392,11 +436,12 @@ Module.prototype.removeAllAuditions = function(){
         if(moduleEvents.afterRemoveModuleFromAudition){
             moduleEvents.afterRemoveModuleFromAudition();
         }
+        if(events.afterRemoveModuleFomAuditionOtherModule){
+            events.afterRemoveModuleFomAuditionOtherModule();
+        }
     }
 
-    if(events.afterRemoveModuleFomAuditionOtherModule){
-        events.afterRemoveModuleFomAuditionOtherModule();
-    }
+
 
     delete modulesForAudition[this._moduleName];
 
@@ -426,6 +471,9 @@ Module.prototype.addModuleToAuditionAllModules = function(){
 
         addName(module);
 
+        if(events.beforeAddAuditionModule){
+            events.beforeAddAuditionModule();
+        }
         if(moduleEvents.beforeAddAuditionModuleToOtherModule){
             moduleEvents.beforeAddAuditionModuleToOtherModule();
         }
@@ -437,11 +485,12 @@ Module.prototype.addModuleToAuditionAllModules = function(){
         if(moduleEvents.afterAddAuditionModuleToOtherModule){
             moduleEvents.afterAddAuditionModuleToOtherModule();
         }
+        if(events.afterAddAuditionModule){
+            events.afterAddAuditionModule();
+        }
     }
 
-    if(events.afterAddAuditionModule){
-        events.afterAddAuditionModule();
-    }
+
 
     return this;
 };
@@ -452,9 +501,7 @@ Module.prototype.removeAuditionFromAllModulesListeners = function(){
 
     var events = this.events;
 
-    if(events.beforeRemoveModuleFromAuditionOtherModule){
-        events.beforeRemoveModuleFromAuditionOtherModule();
-    }
+
 
     var listenersArray;
     var moduleEvents;
@@ -476,6 +523,9 @@ Module.prototype.removeAuditionFromAllModulesListeners = function(){
 
                     moduleEvents = module.events;
 
+                    if(events.beforeRemoveModuleFromAuditionOtherModule){
+                        events.beforeRemoveModuleFromAuditionOtherModule();
+                    }
                     if(moduleEvents.beforeRemoveModuleFromAudition){
                         moduleEvents.beforeRemoveModuleFromAudition();
                     }
@@ -487,6 +537,9 @@ Module.prototype.removeAuditionFromAllModulesListeners = function(){
                     if(moduleEvents.afterRemoveModuleFromAudition){
                         moduleEvents.afterRemoveModuleFromAudition();
                     }
+                    if(events.afterRemoveModuleFromAuditionOtherModule){
+                        events.afterRemoveModuleFromAuditionOtherModule();
+                    }
 
                     break;
                 }
@@ -494,9 +547,7 @@ Module.prototype.removeAuditionFromAllModulesListeners = function(){
         }
     }
 
-    if(events.afterRemoveModuleFromAuditionOtherModule){
-        events.afterRemoveModuleFromAuditionOtherModule();
-    }
+
 
     return this;
 };
@@ -506,11 +557,6 @@ Module.prototype.addAuditionToAllModulesListeners = function(){
     addName(this);
 
     var events = this.events;
-
-
-    if(events.beforeAddModuleToAuditionOtherModules){
-        events.beforeAddModuleToAuditionOtherModules();
-    }
 
     var listenerIsset = false;
     var module;
@@ -543,6 +589,10 @@ Module.prototype.addAuditionToAllModulesListeners = function(){
                 moduleEvents =  module.events;
                 listenerIsset = false;
 
+
+                if(events.beforeAddModuleToAuditionOtherModules){
+                    events.beforeAddModuleToAuditionOtherModules();
+                }
                 if(moduleEvents.beforeAddModuleToAudition){
                     moduleEvents.beforeAddModuleToAudition();
                 }
@@ -554,53 +604,20 @@ Module.prototype.addAuditionToAllModulesListeners = function(){
                 if(moduleEvents.afterAddModuleToAudition){
                     moduleEvents.afterAddModuleToAudition();
                 }
+                if(events.afterAddModuleToAuditionOtherModules){
+                    events.afterAddModuleToAuditionOtherModules();
+                }
             }
         }
     }
 
-    if(events.afterAddModuleToAuditionOtherModules){
-        events.afterAddModuleToAuditionOtherModules();
-    }
+
 
     return this;
 
 };
 
 
-Module.prototype.createEvent= function(event, data, moduleNameGenerateEvent){
-
-    stackEvents.pushEvent({
-        eventType : event,
-        eventData : data ? data : null,
-        moduleName: moduleNameGenerateEvent ? moduleNameGenerateEvent : this._moduleName
-    });
-
-    return null;
-};   // в стек событий
-
-Module.prototype.doEventForAuditionNow= function(event, data, moduleNameGenerateEvent){
-
-    modulesStudents.getModuleDevelopments({
-        eventType : event,
-        eventData : data ? data : null,
-        moduleName: moduleNameGenerateEvent ? moduleNameGenerateEvent : this._moduleName
-    });
-
-    return null;
-
-};   // запустить событие для подписанных модулей
-
-Module.prototype.doEvent= function(event,data){
-
-    if(this.events[event]){
-
-        this.events[event]({
-            eventType : event,
-            eventData : data ? data : null
-        });
-    }
-   return null;
-};   // выполнить событие для этого модуля
 
 
 //    Modules.mod2.addModulesToAudition( module | array modules);        +     // добавить модули на прослушивание
