@@ -150,3 +150,88 @@ Module.prototype.getOldData = function(){
     return returnObj;
 
 };
+
+Module.prototype.setWithValidate = function(data){
+
+    if(this.validate(data) ){
+
+        this.set(data);
+    }
+
+    return this;
+ } ;
+
+Module.prototype.setWithValidateAndSelective= function(data, selector){
+
+    if(this.validate(data, selector) ){
+
+        this.set(data);
+    }
+    return this;
+} ;
+
+Module.prototype.Validate = function(data, selectors){
+
+
+    var events = this.events;
+    events.beforeValidation && events.beforeValidation(data);
+    events.beforeValidationData && events.beforeValidationData(data);
+
+
+    var validateData = selectors  ? selectors : this._attributes;
+    var validateFunctions = this._validatoinFunctions;
+    var validationSuccess = true;
+
+    for (var name in data){
+
+        if(validateData[name] && validateFunctions[name]){
+
+            events['beforeValidation_'+name] && events['beforeValidation_'+name]();
+
+            if(validateFunctions[name](data[name])){
+
+                events['SuссessValidation_'+name] && events['SuссessValidation_'+name]();
+
+                events['afterValidation_'+name] && events['afterValidation_'+name]();
+            }
+            else{
+
+                validationSuccess = false;
+                events['ErrorValidation_'+name] && events['ErrorValidation_'+name]();
+            }
+
+        }
+    }
+
+    if(validationSuccess) {
+
+        events.SuссessValidation && events.SuссessValidation();
+    }
+    else{
+
+        events.ErrorValidation && events.ErrorValidation();
+    }
+
+    events.afterValidation && events.afterValidation(data);
+    events.afterValidationData && events.afterValidationData(data);
+
+   return  validationSuccess;
+
+};
+
+
+Module.prototype.addValidateFunction = function(name, functionToValidate){
+
+    this._validatoinFunctions[name] = functionToValidate;
+
+    return this;
+};
+
+
+
+// частичная валидация .
+
+// в валидации перед валидацияей с данными, с модулем
+// успешная валидация
+// не успешная валидация
+

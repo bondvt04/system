@@ -27,6 +27,8 @@ function Module(){
 
     this._attributes.old ={};
 
+    this._validatoinFunctions ={};
+
     this._settings = {};
 
     this._shablon = {
