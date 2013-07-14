@@ -1,0 +1,77 @@
+var eventObj = {};
+
+
+function workWithEvent(event){
+
+    event = event || window.event;
+    if (event.type == 'mousedown' || event.type == 'touchstart' ){
+
+        var target=event.target || event.srcElement;
+
+        eventObj.realEvent = event;
+        eventObj.moduleName = target.getAttribute('data-moduleName');
+
+        var container  = target;
+
+        while (!container.hasAttribute('data-Container')){
+            container = container.parentNode;
+        }
+
+        eventObj.typeContainer = container.getAttribute('data-Container');
+        eventObj.moduleContainer = typeContainer.getAttribute('data-moduleName');
+
+        eventObj.startX = event.clientX;
+        eventObj.startY = event.clientY;
+
+        eventObj.oldMove = new Date();
+
+        eventObj.canClick = true;
+
+    }
+
+
+    if (event.type == 'mousemove' || event.type == 'touchmove' ){
+
+        eventObj.clientX = event.clientX;
+        eventObj.clientY = event.clientY;
+
+        if((Math.abs(eventObj.startX - event.clientX)> 30 ||  Math.abs(eventObj.startY - event.clientY) >30)) {
+
+            eventObj.canClick = false;
+            eventObj.target = eventObj.moduleContainer;
+
+            stackEvents.pushEvent(eventObj);      // форк сдеклать
+
+            eventObj.startX = event.clientX;
+            eventObj.startY = event.clientY;
+        }
+        else{
+
+           var time = Math.abs(30-(new Date() - eventObj.oldMove));
+
+           if(!eventObj.timer){
+
+                eventObj.timer = setTimeout( function(){
+
+                    eventObj.timer = false;
+                    eventObj.oldMove = new Date();
+                    stackEvents.pushEvent(eventObj);
+                }, time);
+           }
+        }
+    }
+
+
+    if(event.type == 'mouseup' || event.type == 'touchend'){
+
+        if((Math.abs(eventObj.startX - event.clientX) < 7 || Math.abs(eventObj.startY - event.clientY) < 7) && eventObj.canClick ) {
+
+            eventObj.typeEvent = 'click';
+            eventObj.target = target;
+
+            stackEvents.pushEvent(eventObj);
+        }
+        eventObj = {};
+    }
+
+}
