@@ -48,7 +48,10 @@ function workWithEvent(event){
         eventObj.typeEvent = 'move';
 
         if((Math.abs(eventObj.startX - event.clientX)> 30 ||  Math.abs(eventObj.startY - event.clientY) >30)) {
-
+			
+			clearTiomeout(eventObj.timer);
+			eventObj.timer = false;
+			
             eventObj.canClick = false;
             eventObj.target = eventObj.moduleContainer;
             eventObj.typeEvent = 'scroll';
@@ -81,6 +84,8 @@ function workWithEvent(event){
 
             eventObj.typeEvent = 'click';
             eventObj.target = target;
+			
+			
 
             stackEvents.pushEvent(eventObj);
         }
