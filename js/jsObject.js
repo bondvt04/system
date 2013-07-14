@@ -4,7 +4,8 @@ var eventObj = {};
 function workWithEvent(event){
 
     event = event || window.event;
-    if (event.type == 'mousedown' || event.type == 'touchstart' ){
+
+    if (event.type == 'mousedown' || event.type == 'touchstart' ){                                   // количество пальцев учитывать чтоб определять зум ротейт  . зум и ротейт на ближайшем помеченном
 
         var target=event.target || event.srcElement;
 
@@ -17,7 +18,7 @@ function workWithEvent(event){
             container = container.parentNode;
         }
 
-        eventObj.typeContainer = container.getAttribute('data-Container');
+        eventObj.typeContainer = container.getAttribute('data-Container');               // както должно учитыватся при действиях мова толи это слайд толи скрол или элемент будет сам поднимать зная свои настройки?
         eventObj.moduleContainer = typeContainer.getAttribute('data-moduleName');
 
         eventObj.startX = event.clientX;
@@ -34,13 +35,15 @@ function workWithEvent(event){
 
         eventObj.clientX = event.clientX;
         eventObj.clientY = event.clientY;
+        eventObj.typeEvent = 'move';
 
         if((Math.abs(eventObj.startX - event.clientX)> 30 ||  Math.abs(eventObj.startY - event.clientY) >30)) {
 
             eventObj.canClick = false;
             eventObj.target = eventObj.moduleContainer;
+            eventObj.typeEvent = 'scroll';
 
-            stackEvents.pushEvent(eventObj);      // форк сдеклать
+            stackEvents.pushEvent(eventObj);      // форк сдеклать      // определять какой скрол (верт/гор) его направление
 
             eventObj.startX = event.clientX;
             eventObj.startY = event.clientY;
