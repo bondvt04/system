@@ -3,9 +3,18 @@ var eventObj = {};
 
 function workWithEvent(event){
 
+	var button=false;
+		
+	if (event.which == null){
+	
+		button= (event.button < 2);
+	}
+    else{
+		button= (event.which < 2);
+	}
     event = event || window.event;
 
-    if (event.type == 'mousedown' || event.type == 'touchstart' ){                                   // количество пальцев учитывать чтоб определять зум ротейт  . зум и ротейт на ближайшем помеченном
+    if ((event.type == 'mousedown' && button) || event.type == 'touchstart' ){                                   // количество пальцев учитывать чтоб определять зум ротейт  . зум и ротейт на ближайшем помеченном
 
         var target=event.target || event.srcElement;
 
@@ -65,7 +74,7 @@ function workWithEvent(event){
     }
 
 
-    if(event.type == 'mouseup' || event.type == 'touchend'){
+    if((event.type == 'mouseup' && button)|| event.type == 'touchend'){
 
         if((Math.abs(eventObj.startX - event.clientX) < 7 || Math.abs(eventObj.startY - event.clientY) < 7) && eventObj.canClick ) {
 
