@@ -4,6 +4,7 @@ var eventObj = {};
 function workWithEvent(event){
 
 	var button=false;
+	event = event || window.event;
 		
 	if (event.which == null){
 	
@@ -12,7 +13,7 @@ function workWithEvent(event){
     else{
 		button= (event.which < 2);
 	}
-    event = event || window.event;
+    
 
     if ((event.type == 'mousedown' && button) || event.type == 'touchstart' ){                                   // количество пальцев учитывать чтоб определять зум ротейт  . зум и ротейт на ближайшем помеченном
 
