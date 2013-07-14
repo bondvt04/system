@@ -49,8 +49,10 @@ function workWithEvent(event){
 
         if((Math.abs(eventObj.startX - event.clientX)> 30 ||  Math.abs(eventObj.startY - event.clientY) >30)) {
 			
-			clearTiomeout(eventObj.timer);
-			eventObj.timer = false;
+			if(eventObj.timer){
+				clearTiomeout(eventObj.timer);
+				eventObj.timer = false;
+			}
 			
             eventObj.canClick = false;
             eventObj.target = eventObj.moduleContainer;
@@ -77,19 +79,21 @@ function workWithEvent(event){
         }
     }
 
-
-    if((event.type == 'mouseup' && button)|| event.type == 'touchend'){
+    if((event.type == 'mouseup' && button)|| event.type == 'touchend'){	
 
         if((Math.abs(eventObj.startX - event.clientX) < 7 || Math.abs(eventObj.startY - event.clientY) < 7) && eventObj.canClick ) {
+		
+			if(eventObj.timer){
+				clearTiomeout(eventObj.timer);
+				eventObj.timer = false;
+			}
 
             eventObj.typeEvent = 'click';
             eventObj.target = target;
 			
-			
-
             stackEvents.pushEvent(eventObj);
         }
+		
         eventObj = {};
     }
-
 }
