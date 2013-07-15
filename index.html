@@ -8,10 +8,14 @@
 </head>
 <body>
 
+<!--Стартовый экран показывается пока скрипты и девайс не будут готовы -->
+<div id = 'startPage'>
+    <div></div>
+</div>
 
 <div id='kontainer'></div>
 
-
+<!-- Начало скриптов какие войдут в систему -->
 
 <script src="./js/Core/core.js"></script>
 <script src="./js/Core/listeners.js"></script>
@@ -20,11 +24,33 @@
 <script src="./js/Core/workWithModuleData.js"></script>
 <script src="./js/Core/workWithView.js"></script>
 
-<script src="./js/ModulesInAnyEvent.js"></script>
-<script src="./js/Modules.js"></script>
+<!-- Конец скриптов какие войдут в ситему-->
+
+
+
+
+
+<!-- Подключение системы -->
+
 <script src="./js/mainListener.js"></script>
 
-<script src="./js/main.js"></script>   <!--В этом скрипте информация о подключаемых модулях -->
+<!--Подключить расширения прототипа -->
 
+
+<!--Список скриптов модулей. Не вижу смысла не в лезилоад ни в чём остальном, ничего практически не весят-->
+<!--Загружаются в порядке их создания, чтобы не плодить зависимости -->
+<!--Показываем изображение начальное(прелоадер) с индикатором загрузки, а по готовности девайса и скриптов скрываем их  -->
+<script src="./Modules/mod/index.js"></script>
+
+
+<!--Либо отдельный скрипт либо в систему добавить -->
+<script>
+    window.onload = function (){
+        document.addEventListener("deviceready", function(){
+            document.getElementById('startPage').style.display = 'none';
+        }, false);
+
+    }
+</script>
 </body>
 </html>
