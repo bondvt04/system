@@ -146,13 +146,13 @@ Module.prototype.getAllListenersName = function(){
 
 
 
-Module.prototype.addUserEventListener = function(eLement, userEvent, moduleEvent){
+Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent){
 
             var events = this.events;
         var userEventsTable = events.userEventsTable;
 
-            if(events.beforeAddUserEvent){
-                events.beforeAddUserEvent();
+            if(events.beforeAddViewEvent){
+                events.beforeAddViewEvent();
             }
 
             if(!userEventsTable){
@@ -178,20 +178,20 @@ Module.prototype.addUserEventListener = function(eLement, userEvent, moduleEvent
 
             newUserEvent = moduleEvent;
 
-            if(events.afterAddUserEvent){
-                events.afterAddUserEvent();
+            if(events.afterAddViewEvent){
+                events.afterAddViewEvent();
             }
 
             return this;
     };
 
-    Module.prototype.removeUserEventListenerFromElement = function(eLement, userEvent){
+    Module.prototype.removeViewEventListenerFromElement = function(eLement, userEvent){
 
             var events = this.events;
         var userEventsTable = events.userEventsTable;
 
-            if(events.beforeRemoveUserEvent){
-                events.beforeRemoveUserEvent();
+            if(events.beforeRemoveViewEvent){
+                events.beforeRemoveViewEvent();
             }
 
             if(!userEventsTable){
@@ -218,19 +218,19 @@ Module.prototype.addUserEventListener = function(eLement, userEvent, moduleEvent
 
             delete event;
 
-            if(events.afterRemoveUserEvent){
-                events.afterRemoveUserEvent();
+            if(events.afterRemoveViewEvent){
+                events.afterRemoveViewEvent();
             }
 
         };
 
-    Module.prototype.removeUserAllEventListenersFromElement = function(eLement){
+    Module.prototype.removeViewAllEventListenersFromElement = function(eLement){
 
             var events = this.events;
         var userEventsTable = events.userEventsTable;
 
-            if(events.beforeRemoveUserAllEvents){
-                events.beforeRemoveUserAllEvents);
+            if(events.beforeRemoveViewAllEvents){
+                events.beforeRemoveViewAllEvents();
             }
 
             if(!userEventsTable){
@@ -249,20 +249,20 @@ Module.prototype.addUserEventListener = function(eLement, userEvent, moduleEvent
 
             delete elementOfView;
 
-            if(events.afterRemoveUserAllEvents){
-                events.afterRemoveUserAllEvents();
+            if(events.afterRemoveViewAllEvents){
+                events.afterRemoveViewAllEvents();
             }
 
         };
 
 
-        Module.prototype.changeUserEventListener = function(eLement, userEvent, moduleEvent){
+        Module.prototype.changeViewEventListener = function(eLement, userEvent, moduleEvent){
 
             var events = this.events;
         var userEventsTable = events.userEventsTable;
 
-            if(events.beforeChangeUserEvent){
-                events.beforeChangeUserEvent();
+            if(events.beforeChangeViewEvent){
+                events.beforeChangeViewEvent();
             }
 
             if(!(events || events.userEventsTable || events.userEventsTable[eLement] || events.userEventsTable[eLement][userEvent])){
@@ -272,20 +272,20 @@ Module.prototype.addUserEventListener = function(eLement, userEvent, moduleEvent
 
             events.userEventsTable[eLement][userEvent]  = moduleEvent;
 
-            if(events.afterChangeUserEvent){
-                events.afterChangeUserEvent();
+            if(events.afterChangeViewEvent){
+                events.afterChangeViewEvent();
             }
 
             return this;
     };
 
-    Module.prototype.hasUserEventForElement =function(eLement, userEvent){
+    Module.prototype.hasViewEventForElement =function(eLement, userEvent){
 
             return  this.events || this.events.userEventsTable || this.events.userEventsTable[eLement] || this.events.userEventsTable[eLement][userEvent ] ? true : false;
 
         };
 
-    Module.prototype.getUserEventListenerForElement = function(eLement){
+    Module.prototype.getViewEventListenerForElement = function(eLement){
 
             var elementListeners = this.events || this.events.userEventsTable || this.events.userEventsTable[eLement];
 
