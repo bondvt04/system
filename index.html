@@ -22,13 +22,13 @@
 
 <script>
 
-    Modules.mod =  createNewModule();
+   // Modules.mod =  createNewModule();
     //Modules.mod.a={b:22,z:23};
 
    // Modules.mod3 =  createNewModule();
     //Modules.mod.addModulesToAudition( Modules.mod3);
 
-    Modules.mod1 =  Modules.mod.extendExpandingAndSaveAuditions({a:{a:17,m:22}})
+    //Modules.mod1 =  Modules.mod.extendExpandingAndSaveAuditions({a:{a:17,m:22}})
     //Modules.mod.addModulesToAudition( Modules.mod);
 
 
@@ -53,9 +53,9 @@
 
     // Modules.mod1.setDefaultSettings();
 
-    Modules.mod2 = Modules.mod1.createCloneModule();
+   // Modules.mod2 = Modules.mod1.createCloneModule();
 
-    Modules.mod3 = createNewModule();
+    //Modules.mod3 = createNewModule();
 
     //Modules.mod.addModulesToAudition( [Modules.mod,Modules.mod1]);
 
@@ -77,10 +77,15 @@
 
     //Modules.mod.removeAllAuditions();
 
-    Modules.mod.addAuditionToAllModulesListeners() ;
-    Modules.mod1.addAuditionToAllModulesListeners() ;
+    //Modules.mod.addAuditionToAllModulesListeners() ;
+   // Modules.mod1.addAuditionToAllModulesListeners() ;
 
-    Modules.mod1.removeAuditionFromAllModulesListeners();
+    //Modules.mod1.removeAuditionFromAllModulesListeners();
+
+
+   Modules.mod =  createNewModule().addModulesToAudition( Modules.mod).addEventListener('clickElement', function(){alert|(1)}, ['afterClick']);
+
+    // события по мумолчанию на клики
 
 </script>
 
