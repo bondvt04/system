@@ -109,7 +109,7 @@ var pageModules = {
         var viewElement = event.viewElement;
 
 
-		console.log(event.moduleName +'  '+  event.eventType )
+		console.log(event.moduleName +'  '+  event.eventType ) ;
 
 
 
@@ -118,7 +118,9 @@ var pageModules = {
            var eventModule =  pageModules.modules[module].events.userEventsTable[viewElement][eventType];
 
 			var newEvent = pageModules.modules[module].events[eventModule].functionToEvent(event);
-			if(newEvent){				
+
+
+			if(newEvent){			// нужны ли автозапуски если есть генерация событий ?
 				stackEvents.pushEvent(newEvent);
 			}
 		}
@@ -127,7 +129,7 @@ var pageModules = {
 	
 	/** Назначить слушатели событий */
 	if(document.attachEvent){
-		document.attachEvent('onclick', getEvents, false);
+		document.attachEvent('onclick', getEvents);
         //document.attachEvent('onload', getEvents ,false);
         //document.attachEvent('onunload', getEvents ,false);
 	}
@@ -217,14 +219,17 @@ function getEvents(event){
 
         var container  = target;
 
-        while (!container.hasAttribute('data-Container')){
+        while (container.hasAttribute && !container.hasAttribute('data-Container')  ){
             container = container.parentNode;
         }
 
-        eventObj.typeContainer = container.getAttribute('data-Container');               // както должно учитыватся при действиях мова толи это слайд толи скрол или элемент будет сам поднимать зная свои настройки?
-        eventObj.moduleContainer = container.getAttribute('data-moduleName');
-        eventObj.moduleContainerViewElement = container.getAttribute('data-actionElem');
 
+        if(container.getAttribute){
+            eventObj.typeContainer = container.getAttribute('data-Container');               // както должно учитыватся при действиях мова толи это слайд толи скрол или элемент будет сам поднимать зная свои настройки?
+            eventObj.moduleContainer = container.getAttribute('data-moduleName');
+            eventObj.moduleContainerViewElement = container.getAttribute('data-actionElem');
+
+        }
         eventObj.startX = event.clientX;
         eventObj.startY = event.clientY;
 
@@ -250,7 +255,7 @@ function getEvents(event){
 
             eventObj.canClick = false;
 
-            eventObj.eventTypet = 'scroll';
+            eventObj.eventType = 'scroll';
             eventObj.moduleName = eventObj.moduleContainer;
             eventObj.viewElement =  eventObj.moduleContainerViewElement;
 

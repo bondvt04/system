@@ -341,6 +341,17 @@ Module.prototype.doEvent= function(event,data){
     return this;
 };   // выполнить событие для этого модуля
 
+Module.prototype.doEventForOtherModule= function(module, event,data){
+
+    if(module.events[event]){
+
+        module.events[event]({
+            eventType : event,
+            eventData : data ? data : null
+        });
+    }
+    return this;
+};   // выполнить событие для другого модуля
 
 // события -до установки слушателя события -после       beforeAddModuleEvent    afterAddModuleEvent     beforeAddUserEvent  afterAddUserEvent
 // события -до удаления слушателя события -после     beforeRemoveModuleEvent  afterRemoveModuleEvent    beforeRemoveUserEvent    afterRemoveUserEvent
