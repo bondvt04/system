@@ -13,7 +13,7 @@ Module.prototype.setShablonUrl = function(urlHTML, urlCSS){
     return this;
 };// установка адресов шаблонов  при установке сброс загруженных
 
-Model.prototype.preRender = function(type){
+Module.prototype.preRender = function(type){
 
     this.loadShablon(this.render, type);
 
@@ -100,7 +100,7 @@ Module.prototype.loadShablon = function(callback, type){
     return null;
 }; // подгрузка если не загружен
 
-Model.prototype.Render = function(type){
+Module.prototype.Render = function(type){
 
 
     // если тип брать из родителя найти соответсвие используемым заменителям в шаблоне и данных верхнего уровня

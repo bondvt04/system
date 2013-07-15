@@ -10,7 +10,7 @@ function addName(module){
 
     if(!module._moduleName){
 
-        module.setModuleName();
+       setModuleName(module);
     }
 
 }
@@ -27,7 +27,7 @@ Module.prototype.addModulesToAudition = function(modules){
     var module;
 
     if (!listenersArray){
-        listenersArray = [];
+        listenersArray = this._listeningsModules = [];
     }
 
 

@@ -35,7 +35,8 @@ var stackEvents = {
 	* @description Передаёт на обработку методу modulesStudents.getModuleDevelopments.
 	* @description Получет первый элемент события из очереди, если он существует
  	*/
-	getEvent : function (){ 
+	getEvent : function (){
+
 		var event = stackEvents.stack.shift();
 		if(event){			
 			modulesStudents.getModuleDevelopments(event);						  
@@ -60,7 +61,7 @@ var modulesStudents = {
  	* @description Таблица слушателей событий модуля, с ключами по имени модуля
 	* @description Ссылается на внешний объект        
  	*/
-	modulesInAnyEvents : _modulesInAnyEvents, 
+	modulesInAnyEvents : modulesForAudition,
 	
 	/**
  	* @private
@@ -68,8 +69,9 @@ var modulesStudents = {
 	* @description Если есть слушатели данного модуля, предаёт каждому из слушателей объект события pageModules.ListenToTheEvent	
  	*/
 	getModuleDevelopments : function(event){  
-		var moduleName = event.moduleName;		
+		var moduleName = event.moduleName;
 		if(this.modulesInAnyEvents[moduleName]){
+
 			for(var countListModulesForEvent = this.modulesInAnyEvents[moduleName].length; countListModulesForEvent--;){
 				event.moduleName = this.modulesInAnyEvents[moduleName][countListModulesForEvent];  
 				pageModules.ListenToTheEvent(event );
@@ -93,7 +95,7 @@ var pageModules = {
  	* @description Таблица модулей с методами слушателями, свойствами и служебными методами модуля, с ключами по имени модуля
 	* @description Ссылается на внешний объект        
  	*/
-	modules : _modules,
+	modules : Modules,
 	
 	/**
  	* @private
@@ -103,11 +105,19 @@ var pageModules = {
  	*/   
 	ListenToTheEvent : function(event){
 		var eventType = event.eventType;
+        var module =  event.moduleName;
+        var viewElement = event.viewElement;
+
 
 		console.log(event.moduleName +'  '+  event.eventType )
 
-		if(pageModules.modules[event.moduleName] && pageModules.modules[event.moduleName].listeners[eventType]){
-			var newEvent = pageModules.modules[event.moduleName].listeners[eventType](event);
+
+
+		if(pageModules.modules[module] && pageModules.modules[module].events.userEventsTable[viewElement][eventType]){
+
+           var eventModule =  pageModules.modules[module].events.userEventsTable[viewElement][eventType];
+
+			var newEvent = pageModules.modules[module].events[eventModule].functionToEvent(event);
 			if(newEvent){				
 				stackEvents.pushEvent(newEvent);
 			}
@@ -122,12 +132,14 @@ var pageModules = {
         //document.attachEvent('onunload', getEvents ,false);
 	}
 	else{
-		document.addEventListener('click', getEvents ,false);
+		document.addEventListener('mousedown', getEvents ,false);
+        document.addEventListener('mouseup', getEvents ,false);
+        document.addEventListener('mousemove', getEvents ,false);
         //document.addEventListener('load', getEvents ,false);
         //document.addEventListener('unload', getEvents ,false);
 	}
 	window.onload = function(){getEvents({type : 'load'})};
-	window.onbeforeunload = function(){getEvents({type : 'beforeunload'})};;
+	window.onbeforeunload = function(){getEvents({type : 'beforeunload'})};
 	
 	/**
 	* @ inner
@@ -195,10 +207,13 @@ function getEvents(event){
 
     if ((event.type == 'mousedown' && button) || event.type == 'touchstart' ){                                   // количество пальцев учитывать чтоб определять зум ротейт  . зум и ротейт на ближайшем помеченном
 
+        // флаг для либо клик на элементе , либо на контейнер прорвалось. без него пишей не должно быть ни при муве ни при отпускании
+
         var target=event.target || event.srcElement;
 
         eventObj.realEvent = event;
         eventObj.moduleName = target.getAttribute('data-moduleName');
+        eventObj.viewElement = target.getAttribute('data-actionElem');      // может не быть их -вверх по предкам пока не обнаружатся
 
         var container  = target;
 
@@ -207,7 +222,8 @@ function getEvents(event){
         }
 
         eventObj.typeContainer = container.getAttribute('data-Container');               // както должно учитыватся при действиях мова толи это слайд толи скрол или элемент будет сам поднимать зная свои настройки?
-        eventObj.moduleContainer = typeContainer.getAttribute('data-moduleName');
+        eventObj.moduleContainer = container.getAttribute('data-moduleName');
+        eventObj.moduleContainerViewElement = container.getAttribute('data-actionElem');
 
         eventObj.startX = event.clientX;
         eventObj.startY = event.clientY;
@@ -219,24 +235,26 @@ function getEvents(event){
     }
 
 
-    if (event.type == 'mousemove' || event.type == 'touchmove' ){
+    if ((event.type == 'mousemove' || event.type == 'touchmove') && (eventObj.moduleName || eventObj.moduleContainer) ){
 
         eventObj.clientX = event.clientX;
         eventObj.clientY = event.clientY;
-        eventObj.typeEvent = 'move';
+        eventObj.eventType = 'move';
 
         if((Math.abs(eventObj.startX - event.clientX)> 30 ||  Math.abs(eventObj.startY - event.clientY) >30)) {
 
             if(eventObj.timer){
-                clearTiomeout(eventObj.timer);
+                clearTimeout(eventObj.timer);
                 eventObj.timer = false;
             }
 
             eventObj.canClick = false;
-            eventObj.target = eventObj.moduleContainer;
-            eventObj.typeEvent = 'scroll';
 
-            stackEvents.pushEvent(eventObj);      // форк сдеклать      // определять какой скрол (верт/гор) его направление
+            eventObj.eventTypet = 'scroll';
+            eventObj.moduleName = eventObj.moduleContainer;
+            eventObj.viewElement =  eventObj.moduleContainerViewElement;
+
+            pageModules.ListenToTheEvent(eventObj);      // форк сдеклать      // определять какой скрол (верт/гор) его направление
 
             eventObj.startX = event.clientX;
             eventObj.startY = event.clientY;
@@ -248,28 +266,29 @@ function getEvents(event){
             if(!eventObj.timer){
 
                 eventObj.timer = setTimeout( function(){
-
                     eventObj.timer = false;
                     eventObj.oldMove = new Date();
-                    stackEvents.pushEvent(eventObj);
+                    pageModules.ListenToTheEvent(eventObj);
                 }, time);
             }
         }
     }
 
-    if((event.type == 'mouseup' && button)|| event.type == 'touchend'){
+    if(((event.type == 'mouseup' && button)|| event.type == 'touchend') && (eventObj.moduleName || eventObj.moduleContainer)){
+
+
 
         if((Math.abs(eventObj.startX - event.clientX) < 7 || Math.abs(eventObj.startY - event.clientY) < 7) && eventObj.canClick ) {
 
             if(eventObj.timer){
-                clearTiomeout(eventObj.timer);
+                clearTimeout(eventObj.timer);
                 eventObj.timer = false;
             }
 
-            eventObj.typeEvent = 'click';
+            eventObj.eventType = 'click';
             eventObj.target = target;
 
-            stackEvents.pushEvent(eventObj);
+            pageModules.ListenToTheEvent(eventObj);
         }
 
         eventObj = {};

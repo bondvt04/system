@@ -17,7 +17,7 @@ Module.prototype.addEventListener = function(nameEvent, functionToEvent, eventAf
         events.that = this;
     }
 
-    newEvent = {
+    events[nameEvent] = {
         'functionToEvent' : functionToEvent,
         'eventsAfterEvent' : eventAfterEvent,
         'that': this
@@ -155,28 +155,24 @@ Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent
                 events.beforeAddViewEvent();
             }
 
-            if(!userEventsTable){
 
-                    userEventsTable ={};
-                userEventsTable.that = this;
-            }
 
             var elementOfView = userEventsTable[eLement];
 
             if(!elementOfView){
 
-                    elementOfView ={};
+                    elementOfView =userEventsTable[eLement] = {};
                 elementOfView.that = this;
             }
 
-            var newUserEvent =  elementOfView[userEvent];
 
-            if(newUserEvent){
+
+            if(elementOfView[userEvent]){
                 console.log("event for element'"+ eLement +"' '"+userEvent+"'  is exist");
                 return this;
             }
 
-            newUserEvent = moduleEvent;
+            elementOfView[userEvent] = moduleEvent;
 
             if(events.afterAddViewEvent){
                 events.afterAddViewEvent();

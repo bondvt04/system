@@ -8,6 +8,8 @@ var modulesForAudition = {};
 function Module(){
     this.events = {};
 
+    this.events.userEventsTable = {};
+
     this._familyTree = {
 
         that : this,
@@ -550,7 +552,7 @@ Module.prototype.addAuditionToList = function(auditionModule){
 
     if(!auditionList){
 
-        auditionList = [];
+        auditionList =  modulesForAudition[this._moduleName]=[];
     }
 
     auditionList.push(auditionModule._moduleName);

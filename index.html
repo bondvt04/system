@@ -11,14 +11,19 @@
 
 
 
-<script src="./js/ModulesInAnyEvent.js"></script>
-<script src="./js/Modules.js"></script>
-<script src="./js/mainListener.js"></script>
+
 
 
 <script src="./js/Core/core.js"></script>
 <script src="./js/Core/listeners.js"></script>
+<script src="./js/Core/establishmentOfStructures.js"></script>
+<script src="./js/Core/moduleEvents.js"></script>
+<script src="./js/Core/workWithModuleData.js"></script>
+<script src="./js/Core/workWithView.js"></script>
 
+<script src="./js/ModulesInAnyEvent.js"></script>
+<script src="./js/Modules.js"></script>
+<script src="./js/mainListener.js"></script>
 
 <script>
 
@@ -83,11 +88,16 @@
     //Modules.mod1.removeAuditionFromAllModulesListeners();
 
 
-   Modules.mod =  createNewModule().addModulesToAudition( Modules.mod).addEventListener('clickElement', function(){alert|(1)}, ['afterClick']);
+   Modules.mod =   Modules.createNewModule();
+   Modules.mod.addModulesToAudition( Modules.mod);
+   Modules.mod.addViewEventListener('testElem', 'click', 'clickElement');
+   Modules.mod.addEventListener('clickElement', function(){alert(1)}, ['afterClick']);
 
     // события по мумолчанию на клики
 
 </script>
+
+<div data-moduleName='mod' data-actionElem='testElem' data-Container='true' style="background-color:indianred "> Click</div>
 
 </body>
 </html>
