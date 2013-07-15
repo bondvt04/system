@@ -3,14 +3,13 @@
 <head>
 <meta charset="utf-8">
 <title>Документ без названия</title>
+<link rel="stylesheet" href="CSS/css.css" type="text/css" />
 
 </head>
-
-
 <body>
 
 
-
+<div id='kontainer'></div>
 
 
 
@@ -25,79 +24,7 @@
 <script src="./js/Modules.js"></script>
 <script src="./js/mainListener.js"></script>
 
-<script>
-
-   // Modules.mod =  createNewModule();
-    //Modules.mod.a={b:22,z:23};
-
-   // Modules.mod3 =  createNewModule();
-    //Modules.mod.addModulesToAudition( Modules.mod3);
-
-    //Modules.mod1 =  Modules.mod.extendExpandingAndSaveAuditions({a:{a:17,m:22}})
-    //Modules.mod.addModulesToAudition( Modules.mod);
-
-
-    //Modules.mod.setDefaultSettings(['a']);
-
-    ///Modules.mod3 =  createNewModule();
-    //Modules.mod.addModulesToAudition( Modules.mod3);
-
-    //Modules.mod1 =  Modules.mod.createCloneModuleWithAuditions(Modules.mod);
-
-   // Modules.mod.addModulesToAudition( Modules.mod1);
-    //Modules.mod.addModulesToAudition( Modules.mod1);
-
-   // Modules.mod2 = Modules.mod.extendWithSaveAuditions({attributes : {a:30, b:40}});
-
-    //Modules.mod2.a =60;
-
-   // Modules.mod2.setAllDefaultSettings();
-
-
-
-
-    // Modules.mod1.setDefaultSettings();
-
-   // Modules.mod2 = Modules.mod1.createCloneModule();
-
-    //Modules.mod3 = createNewModule();
-
-    //Modules.mod.addModulesToAudition( [Modules.mod,Modules.mod1]);
-
-
-    //Modules.mod.addModulesToAudition( Modules.mod3);
-
-    //Modules.mod.removeModulesFomAudition([Modules.mod1, Modules.mod, Modules.mod3]);
-
-    //Modules.mod1.addModulesToAudition( Modules.mod3);  //???
-    //Modules.mod2.addModulesToAudition( Modules.mod3);
-    //Modules.mod3.addModulesToAudition( Modules.mod3);
-
-
-   // Modules.mod3.addModuleToListenersOtherModule( [Modules.mod3, Modules.mod, Modules.mod2] );
-
-   // Modules.mod3.addModuleToListenersOtherModule(Modules.mod1 );
-
-   // Modules.mod3.removeListenerFromModules( Modules.mod1);
-
-    //Modules.mod.removeAllAuditions();
-
-    //Modules.mod.addAuditionToAllModulesListeners() ;
-   // Modules.mod1.addAuditionToAllModulesListeners() ;
-
-    //Modules.mod1.removeAuditionFromAllModulesListeners();
-
-
-   Modules.mod =   Modules.createNewModule();
-   Modules.mod.addModulesToAudition( Modules.mod);
-   Modules.mod.addViewEventListener('testElem', 'click', 'clickElement');
-   Modules.mod.addEventListener('clickElement', function(){alert(1)}, ['afterClick']);
-
-    // события по мумолчанию на клики
-
-</script>
-
-<div data-moduleName='mod' data-actionElem='testElem' data-Container='true' style="background-color:indianred "> Click</div>
+<script src="./js/main.js"></script>   <!--В этом скрипте информация о подключаемых модулях -->
 
 </body>
 </html>
