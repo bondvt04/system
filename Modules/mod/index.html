@@ -1,6 +1,9 @@
 function getHTML(){
  return{
-      _shablon: "<div><div>{{dataOne}}</div></div>",
-      dataOne: "<div data-moduleName='{this._moduleName}' data-actionElem='testElem' data-Container='true' > Click</div>"
+      _template: "<div><div>{{dataOne}}</div></div>"+
+                  "<div>{{dataTwo}}<div></div></div>",
+
+      dataOne: "<div data-moduleName='{$this._moduleName}' data-actionElem='testElem' data-Container='true' > {$a}</div>",
+      dataTwo: "<p data-moduleName='{$this._moduleName}' data-actionElem='testElem' data-Container='true' > {$dataTwo}</p>"
 }}
 

@@ -22,11 +22,12 @@ Module.prototype.set = function(data){
 
    brothers = this.getAllBrotherlyModules();
 
-    for(var lengthBrothers = brothers.length; lengthBrothers-- ;){
+   if( brothers){
+        for(var lengthBrothers = brothers.length; lengthBrothers-- ;){
 
-        brothers[lengthBrothers].events && brothers[lengthBrothers].events.afterChangeBrotherly && brothers[lengthBrothers].events.afterChangeBrotherly();
-    }
-
+            brothers[lengthBrothers].events && brothers[lengthBrothers].events.afterChangeBrotherly && brothers[lengthBrothers].events.afterChangeBrotherly();
+        }
+   }
     var att;
 
     for( var name in data){
@@ -57,9 +58,12 @@ Module.prototype.set = function(data){
 
         brothers = this.getAllBrotherlyModules();
 
-        for(lengthBrothers = brothers.length; lengthBrothers-- ;){
+        if(brothers){
 
-            brothers[lengthBrothers].events && brothers[lengthBrothers].events.afterChangeBrotherly && brothers[lengthBrothers].events.afterChangeBrotherly();
+            for(lengthBrothers = brothers.length; lengthBrothers-- ;){
+
+                brothers[lengthBrothers].events && brothers[lengthBrothers].events.afterChangeBrotherly && brothers[lengthBrothers].events.afterChangeBrotherly();
+            }
         }
 
     }

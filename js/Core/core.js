@@ -33,7 +33,7 @@ function Module(){
 
     this._settings = {};
 
-    this._shablon = {
+    this._template = {
 
         urlHTML : false,
         urlCSS : false,
