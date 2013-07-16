@@ -1,1 +1,6 @@
-<div data-moduleName='mod' data-actionElem='testElem' data-Container='true' > Click</div>
+function getHTML(){
+ return{
+      _shablon: "<div><div>{{dataOne}}</div></div>",
+      dataOne: "<div data-moduleName='{this._moduleName}' data-actionElem='testElem' data-Container='true' > Click</div>"
+}}
+

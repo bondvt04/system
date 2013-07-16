@@ -1,11 +1,9 @@
 
-Module.prototype.setShablonUrl = function(urlHTML, urlCSS){
+Module.prototype.setShablonUrl = function(urlHTML){
 
     this._shablon.urlHTML = urlHTML;
-    this._shablon.urlCSS = urlCSS;
 
     this._shablon.textHTML = false;
-    this._shablon.textCSS = false;
 
     this._shablon.inWork= false;
     this._shablon.load= false;
@@ -37,70 +35,32 @@ Module.prototype.loadShablon = function(callback, type){
 
     else {
 
-        var lengthShablons;
-
-        if(this._shablon.urlHTML && this._shablon.urlCSS){
-
-            lengthShablons =2;
-        }
-        else if(this._shablon.urlHTML || this._shablon.urlCSS){
-
-            lengthShablons =1;
-        }
-
         if(this._shablon.urlHTML){
-
-
 
             var elemHTML = document.createElement("script");
 
-            elemHTML.onerror = function(){ throw (shablon.urlHTML +' no shablon');};
+            elemHTML.onerror = function(){throw (shablon.urlHTML +' no shablon');};
 
             elemHTML.onload=function(){
 
-                shablon.textHTML = elemHTML.text;
-
-                lengthShablons--;
-
-                if(!lengthShablons){
+                shablon.textHTML = getHTML();
 
                     shablon.load = true;
                     callback(type);
                 }
-            };
-            elemHTML.type = 'text';
+            }
+
             elemHTML.src = this._shablon.urlHTML;
+           document.getElementsByTagName('head')[0].appendChild(elemHTML);
         }
-
-        if(this._shablon.urlCSS){
-
-            var elemCSS = document.createElement("script");
-
-            elemCSS.onerror=function(){ throw (shablon.urlCSS +' no shablon');};
-
-            elemCSS.onload=function(){
-
-                urlCss.textCSS = elemCSS.text;
-
-                lengthShablons--;
-
-                if(!lengthShablons){
-
-                    shablon.load = true;
-                    callback(type);
-                }
-            };
-            elemCSS.type = 'text';
-            elemCSS.src = shablon.urlCss;
-        }
-
-        //document.getElementsByTagName('head')[0].appendChild(elem);
-    }
 
     return null;
 }; // подгрузка если не загружен
 
-Module.prototype.Render = function(type){
+Module.prototype.render = function(type){
+
+    //тип изменять стиль -стоит свойство шаблона -функцию написать
+    // просто отрендерить вставить в родительский если есть он , иначе в контейнер ?
 
 
     // если тип брать из родителя найти соответсвие используемым заменителям в шаблоне и данных верхнего уровня
