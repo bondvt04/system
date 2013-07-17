@@ -16,6 +16,8 @@ Module.prototype.setAsParentFor = function (modules){     // назначить 
         arrayModules = modules;
     }
 
+
+
     var parentEvents = this.events;
     var parentModuleName = this._moduleName;
     var children =  this._familyTree.children;
@@ -45,7 +47,8 @@ Module.prototype.setAsParentFor = function (modules){     // назначить 
 
             children.push(chaildModuleName);
 
-            Modules[arrayModules[lengthArrayModules]]._familyTree.parent = parentModuleName;
+
+            arrayModules[lengthArrayModules]._familyTree.parent = parentModuleName;
 
             if(parentEvents.afterSetСhild){
                 parentEvents.afterSetСhild();

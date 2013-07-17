@@ -20,60 +20,83 @@ Module.prototype.setTemplateUrl = function(urlHTML, urlCSS){
     return this;
 };// установка адресов шаблонов  при установке сброс загруженных
 
-Module.prototype.preRender = function(type){
-
-    this.loadTemplate(this.render, type);
-
-};  // прелоадер , вызов лоад  , отрисовка
-
-
-
-
 
 
 Module.prototype.loadTemplate = function( type){
 
     var that = this;
+    var templatesLength = 1;
 
-    var template = this._template;
+    function loadTemplates(module){
 
-    if(template.load){
+        var template = module._template;
 
-        this.render(type);
+        if(template.load){
+            templatesLength--;
 
-        return null;
-    }
+            if(!templatesLength){
+                that.renderWithOutEventRendered(type);
+            }
 
-    else {
+            return null;
+        }
 
-        if(this._template.urlHTML){
+        else {
 
-            var elemHTML = document.createElement("script");
+            if(module._template.urlHTML){
 
-            elemHTML.onerror = function(){throw (template.urlHTML +' no shablon');};
+                var elemHTML = document.createElement("script");
 
-            elemHTML.onload=function(){
+                elemHTML.onerror = function(){throw (template.urlHTML +' no shablon');templatesLength--;};
 
-                template.textHTML = getHTML();
+                elemHTML.onload=function(){
 
-                    template.load = true;
+                    template.textHTML = getHTML();
 
-                    that.render(type);
+                        templatesLength--;
+                        template.load = true;
+
+                    if(!templatesLength){
+
+                        that.renderWithOutEventRendered(type);
+                    }
                 }
             }
 
-            elemHTML.src = this._template.urlHTML;
-           document.getElementsByTagName('head')[0].appendChild(elemHTML);
+            elemHTML.src = module._template.urlHTML;
+            document.getElementsByTagName('head')[0].appendChild(elemHTML);
         }
+    }
+
+ function getChildren(module){
+
+     var children = module._familyTree.children;
+
+     for (var lengthChildren = children.length; lengthChildren--;) {
+
+         templatesLength++;
+
+         childName = children[lengthChildren];
+         loadTemplates(Modules[childName]);
+         getChildren(Modules[childName]);
+     }
+ }
+getChildren(this);
+loadTemplates(this);
 
     return null;
 }; // подгрузка если не загружен
 
-Module.prototype.render = function(type){
+Module.prototype.render = function(){
+
+    this.loadTemplate('top');
 
 
-    // функция получает строку шаблона и объект данных делает замену и возвращает результат
-    // для элемента  массива объектов или объекта - ка5к и было раньше получить свойства заменить в шаблоне на них
+};
+
+
+
+Module.prototype.renderWithOutEventRendered= function(type){
 
     function setDataToTemplate(template, data, that){
 
@@ -83,9 +106,8 @@ Module.prototype.render = function(type){
             template = template.replace(reg, data[dataToInsert]);
         }
 
-       return (template.replace(new RegExp("{\\$this._moduleName}", "g"), that._moduleName));
+        return (template.replace(new RegExp("{\\$this._moduleName}", "g"), that._moduleName));
     }
-
 
     var template = this._template.textHTML._template;
     var attributes;
@@ -128,30 +150,57 @@ Module.prototype.render = function(type){
         }
     }
 
-    this._template.render = template;        // нужно ли хранить забивать память?
+    var childrenTemplates = template.match(/\{!child_[^}]+\}/g);
+    var nameChildrenTemplates;
+    var templateFromChild;
+    var indexChild;
 
-    if (this._familyTree.parent){            //  TODO если событие подписано .
 
-        Modules[this._familyTree.parent].events.childRendered(template);
+    if(childrenTemplates){
+        for(var lengthChildrenTemplates = childrenTemplates.length; lengthChildrenTemplates--; ){
+
+            templateFromChild = '';
+
+            nameChildrenTemplates =  childrenTemplates[lengthChildrenTemplates].replace('{!child_','').replace('}','');
+
+            indexChild = this._familyTree.children.indexOf(nameChildrenTemplates);
+
+            if(indexChild != -1){
+
+                templateFromChild = Modules[this._familyTree.children[indexChild]].renderWithOutEventRendered('noTop');
+
+                template =  template.replace(childrenTemplates[lengthChildrenTemplates], templateFromChild);
+            }
+            else{
+
+               // throw (this._moduleName + ' has not child module ' + nameChildrenTemplates +'');
+            }
+
+        }
     }
 
-    this.events.Rendered();
+    this._template.render = template;        // нужно ли хранить забивать память?
 
-    //TODO   результат рендеринга получает шаблон родитель и всавляет в точку вставки данного потомка
+    if(type == 'top'){
+        if (this.events.rendered){
 
-    //TODO  наверно нужно и имя модуля отдавать, а в род метки с этим именем чтоб понимать на что заменять , когда все замененены шаблон готов ,
+            this.events.rendered(this._template.render);    //TODO а вот его можно преопределить обработчик этого события что дальше делать
+        }
+    }
 
-    //TODO разные типы распространения событий этот и вниз изменить шаблоны, только этот , этот и вверх , все на входящие в раздел пейдж...
+    return template;
 
-    //TODO способ получения всегда из текущего -будет событе после получения данных, обработать , распределить по модулям , событийную пользовать
-
-    //TODO может даже рендер запускать с указанного  а там уже генерить события для родительских и родительский генерит события -изменись плотомок , если событие не подписано потомок не генерит ничего
-
-    //TODO модуль получает событие перегенерись , говорит потомкам перегенеритесь, потомки подписанные опускают на макс глубину подписанных своих потомков , затем потомки снизу начинают говорить родителям -мы перегенерились
-      //TODO и включают в себя данные потомков , генерят свои и так пока не дойдут до модуля какой первым сказал перегенеритесь , у него на это событие событие какоето другое запускается -например убери прелоадер, и поакажись -2 события
 };
 
+
+//TODO при измении данных запускается рендер на модуле установленном в свойстве относительно какого модуля делать полный рендер   или его можно запускать в событии после измения всех данных
 //TODO связать с потомками , хотя и из шаблона можно понимать что потомок нужен
 //TODO запросить потомка -вставить возврат т.е выйдет рекурсия и пока все потомки не отрисуются шаблон предку не уйдёт -если это запустить на предке он не отрисуется пока данные не вернутся
-
 //TODO а вот на событику можно вешать или компилить  или брать скомпилённую или остановить распространение , или пропустить отдать дальше потомкам
+//TODO   результат рендеринга получает шаблон родитель и всавляет в точку вставки данного потомка
+//TODO  наверно нужно и имя модуля отдавать, а в род метки с этим именем чтоб понимать на что заменять , когда все замененены шаблон готов ,
+//TODO разные типы распространения событий этот и вниз изменить шаблоны, только этот , этот и вверх , все на входящие в раздел пейдж...
+//TODO способ получения всегда из текущего -будет событе после получения данных, обработать , распределить по модулям , событийную пользовать
+//TODO может даже рендер запускать с указанного  а там уже генерить события для родительских и родительский генерит события -изменись плотомок , если событие не подписано потомок не генерит ничего
+//TODO модуль получает событие перегенерись , говорит потомкам перегенеритесь, потомки подписанные опускают на макс глубину подписанных своих потомков , затем потомки снизу начинают говорить родителям -мы перегенерились
+//TODO и включают в себя данные потомков , генерят свои и так пока не дойдут до модуля какой первым сказал перегенеритесь , у него на это событие событие какоето другое запускается -например убери прелоадер, и поакажись -2 события

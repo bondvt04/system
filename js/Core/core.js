@@ -6,9 +6,20 @@ window.Modules = Modules;
 var modulesForAudition = {};
 
 function Module(){
-    this.events = {};
+    this.events = {
+        rendered : function(){
 
-    this.events.userEventsTable = {};
+             if(this.that.container){
+                 //console.log(this.that._template.render)
+
+                 document.getElementById(this.that.container).innerHTML = this.that._template.render;
+             }
+        }
+    };
+
+    this.events.userEventsTable = {};      //
+
+    this.container = false; // ид контейнера
 
     this._familyTree = {
 
@@ -31,7 +42,12 @@ function Module(){
 
     this._validatoinFunctions ={};
 
-    this._settings = {};
+    this._settings = {
+
+        rendering : 'renderingAll'     // свойство отвечающее за рендер данного модуля
+    };                                 // nonRendering - не рендерить ни его ни детей
+                                       // thisRendering - не рендерить только его -данные детей взять из ранее рендеённых если они есть
+                                        // getSaave - отдать ранее сохранённое , если оно есть
 
     this._template = {
 
@@ -448,6 +464,8 @@ Module.prototype.removeModule = function(){
     }
 
 };
+
+//TODO должен быть метод удалить модуль и его потомков
 
 Modules.removeModules = function(modules){
     for(var length = modules.length; length -- ;){

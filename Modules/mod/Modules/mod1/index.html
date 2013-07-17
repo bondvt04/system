@@ -1,0 +1,8 @@
+function getHTML(){
+return{
+    _template: "<span><span>{{dataOne}}</span></span>"+
+        "<span>{{dataTwo}}<span></span></span>",
+
+    dataOne: "<span   data-moduleName='{$this._moduleName}' data-actionElem='testElem' data-Container='true' > {$a}</span>",
+    dataTwo: "<b data-moduleName='{$this._moduleName}' data-actionElem='testElem' data-Container='true' > {$dataTwo}</b>"
+}}

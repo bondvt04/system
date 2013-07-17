@@ -1,3 +1,8 @@
 div{
     border: 1px solid red;
+
+}
+
+#startPage{
+    display: none;
 }

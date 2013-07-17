@@ -104,6 +104,7 @@ var pageModules = {
 	* @description Если обработчик генерирует событие оно помещается в очередь событий:	stackEvents.pushEvent(newEvent)
  	*/   
 	ListenToTheEvent : function(event){
+
 		var eventType = event.eventType;
         var module =  event.moduleName;
         var viewElement = event.viewElement;
@@ -195,6 +196,7 @@ var pageModules = {
 var eventObj = {};
 
 function getEvents(event){
+
     var button=false;
     event = event || window.event;
 
@@ -215,6 +217,8 @@ function getEvents(event){
 
         eventObj.realEvent = event;
         eventObj.moduleName = target.getAttribute('data-moduleName');
+        //alert(target.getAttribute('data-modulename'))
+
         eventObj.viewElement = target.getAttribute('data-actionElem');      // может не быть их -вверх по предкам пока не обнаружатся
 
         var container  = target;
@@ -279,6 +283,7 @@ function getEvents(event){
         }
     }
 
+    //alert(eventObj.moduleName)
     if(((event.type == 'mouseup' && button)|| event.type == 'touchend') && (eventObj.moduleName || eventObj.moduleContainer)){
 
 
