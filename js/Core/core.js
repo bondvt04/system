@@ -14,6 +14,10 @@ function Module(){
 
                  document.getElementById(this.that.container).innerHTML = this.that._template.render;
              }
+        },
+        beforeInsertToTemplate : function (data, context){
+
+           return data;
         }
     };
 

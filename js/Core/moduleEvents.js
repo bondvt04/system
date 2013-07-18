@@ -8,7 +8,7 @@ Module.prototype.addEventListener = function(nameEvent, functionToEvent, eventAf
     }
 
     if(newEvent){
-        console.log("event '"+ nameEvent +"'  is exist");
+        tr("event '"+ nameEvent +"'  is exist");
         return this;
     }
 
@@ -40,7 +40,7 @@ Module.prototype.removeEventListener = function(nameEvent){
     }
 
     if(!newEvent){
-        console.log("event '"+ nameEvent +"'  is not exist");
+        throw("event '"+ nameEvent +"'  is not exist");
         return this;
     }
 
@@ -59,13 +59,14 @@ Module.prototype.changeEventListener = function(nameEvent, functionToEvent, even
     var events = this.events;
     var newEvent =  events[nameEvent];
 
-
     if(events.beforeChangeEvent){
         events.beforeChangeEvent();
     }
 
     if(!newEvent){
-        console.log("event '"+ nameEvent +"'  is not exist");
+
+        throw("event '"+ nameEvent +"'  is not exist");
+
         return this;
     }
 
@@ -155,8 +156,6 @@ Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent
                 events.beforeAddViewEvent();
             }
 
-
-
             var elementOfView = userEventsTable[eLement];
 
             if(!elementOfView){
@@ -165,10 +164,8 @@ Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent
                 elementOfView.that = this;
             }
 
-
-
             if(elementOfView[userEvent]){
-                console.log("event for element'"+ eLement +"' '"+userEvent+"'  is exist");
+                throw("event for element'"+ eLement +"' '"+userEvent+"'  is exist");
                 return this;
             }
 
@@ -192,7 +189,7 @@ Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent
 
             if(!userEventsTable){
 
-                    console.log('Module has not any users event');
+                throw('Module has not any users event');
                 return this;
             }
 
@@ -200,7 +197,7 @@ Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent
 
             if(!elementOfView){
 
-                    console.log('Module has not any events for this element');
+                throw('Module has not any events for this element');
                 return this;
             }
 
@@ -208,7 +205,7 @@ Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent
 
             if(!elementOfView){
 
-                    console.log('Module has not this events for this element');
+                throw('Module has not this events for this element');
                 return this;
             }
 
@@ -222,86 +219,89 @@ Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent
 
     Module.prototype.removeViewAllEventListenersFromElement = function(eLement){
 
-            var events = this.events;
+        var events = this.events;
         var userEventsTable = events.userEventsTable;
 
-            if(events.beforeRemoveViewAllEvents){
-                events.beforeRemoveViewAllEvents();
-            }
+        if(events.beforeRemoveViewAllEvents){
+            events.beforeRemoveViewAllEvents();
+        }
 
-            if(!userEventsTable){
+        if(!userEventsTable){
 
-                    console.log('Module has not any users event');
-                return this;
-            }
+            throw('Module has not any users event');
+            return this;
+        }
 
-            var elementOfView = userEventsTable[eLement];
+        var elementOfView = userEventsTable[eLement];
 
-            if(!elementOfView){
+        if(!elementOfView){
 
-                    console.log('Module has not any events for this element');
-                return this;
-            }
+            throw('Module has not any events for this element');
+            return this;
+        }
 
-            delete elementOfView;
+        delete elementOfView;
 
-            if(events.afterRemoveViewAllEvents){
-                events.afterRemoveViewAllEvents();
-            }
+        if(events.afterRemoveViewAllEvents){
+            events.afterRemoveViewAllEvents();
+        }
 
-        };
+    };
 
 
-        Module.prototype.changeViewEventListener = function(eLement, userEvent, moduleEvent){
+    Module.prototype.changeViewEventListener = function(eLement, userEvent, moduleEvent){
 
-            var events = this.events;
+        var events = this.events;
         var userEventsTable = events.userEventsTable;
 
-            if(events.beforeChangeViewEvent){
-                events.beforeChangeViewEvent();
-            }
+        if(events.beforeChangeViewEvent){
+            events.beforeChangeViewEvent();
+        }
 
-            if(!(events || events.userEventsTable || events.userEventsTable[eLement] || events.userEventsTable[eLement][userEvent])){
-                console.log("event for element'"+ eLement +"'   '"+userEvent+"'  is not exist");
-                return this;
-            }
+        if(!(events || events.userEventsTable || events.userEventsTable[eLement] || events.userEventsTable[eLement][userEvent])){
 
-            events.userEventsTable[eLement][userEvent]  = moduleEvent;
-
-            if(events.afterChangeViewEvent){
-                events.afterChangeViewEvent();
-            }
+            throw("event for element'"+ eLement +"'   '"+userEvent+"'  is not exist");
 
             return this;
+        }
+
+        events.userEventsTable[eLement][userEvent]  = moduleEvent;
+
+        if(events.afterChangeViewEvent){
+            events.afterChangeViewEvent();
+        }
+
+        return this;
     };
 
     Module.prototype.hasViewEventForElement =function(eLement, userEvent){
 
-            return  this.events || this.events.userEventsTable || this.events.userEventsTable[eLement] || this.events.userEventsTable[eLement][userEvent ] ? true : false;
+        return  this.events || this.events.userEventsTable || this.events.userEventsTable[eLement] || this.events.userEventsTable[eLement][userEvent ] ? true : false;
 
-        };
+    };
 
     Module.prototype.getViewEventListenerForElement = function(eLement){
 
-            var elementListeners = this.events || this.events.userEventsTable || this.events.userEventsTable[eLement];
+        var elementListeners = this.events || this.events.userEventsTable || this.events.userEventsTable[eLement];
 
-            if (elementListeners){
+        if (elementListeners){
 
-                    var returnObj = {};
+            var returnObj = {};
 
-                    for (var name in elementListeners) {
+            for (var name in elementListeners) {
 
-                            if(elementListeners[name] != this){
+                if(elementListeners[name] != this){
 
-                                    returnObj[name] = elementListeners[name];
-                            }
-                    }
-
-                    return  returnObj;
+                    returnObj[name] = elementListeners[name];
+                }
             }
-        else {
-                return null;
-            }
+
+            return  returnObj;
+        }
+        else{
+
+            return null;
+        }
     };
 
 

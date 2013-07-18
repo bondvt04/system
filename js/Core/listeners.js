@@ -16,7 +16,7 @@ function addName(module){
 }
 
 
-Module.prototype.addModulesToAudition = function(modules){
+Module.prototype.addModulesToAudition = function(){
 
     addName(this);
 
@@ -26,71 +26,32 @@ Module.prototype.addModulesToAudition = function(modules){
     var listenerIsset = false;
     var module;
 
+    var modules = arguments;
+
+
     if (!listenersArray){
         listenersArray = this._listeningsModules = [];
     }
 
+    for (var lengthModules = modules.length; lengthModules --;){
 
-
-    if (Object.prototype.toString.call(modules) == "[object Array]"){
-
-        for (var lengthModules = modules.length; lengthModules --;){
-
-            for (var lenghtListenersArray = listenersArray.length; lenghtListenersArray --;) {
-
-                module =  modules[lengthModules];
-
-                if( listenersArray[lenghtListenersArray] == module){
-
-                    addName(module);
-
-                    listenerIsset = true;
-                    break;
-                }
-            }
-
-            if(!listenerIsset){
-
-                listenerIsset = false;
-                moduleEvents =  modules[lengthModules].events;
-
-                if(events.beforeAddAuditionModule){
-                    events.beforeAddAuditionModule();
-                }
-
-                if(moduleEvents.beforeAddAuditionModuleToOtherModule){
-                    moduleEvents.beforeAddAuditionModuleToOtherModule();
-                }
-
-                listenersArray.push(module);
-
-                this.addAuditionToList(module);
-
-                if(moduleEvents.afterAddAuditionModuleToOtherModule){
-                    moduleEvents.afterAddAuditionModuleToOtherModule();
-                }
-                if(events.afterAddAuditionModule){
-                    events.afterAddAuditionModule();
-                }
-            }
-        }
-    }
-    else{
+        module =  modules[lengthModules];
+        addName(module);
 
         for (var lenghtListenersArray = listenersArray.length; lenghtListenersArray --;) {
 
-            if( listenersArray[lenghtListenersArray] == modules){
+            if( listenersArray[lenghtListenersArray] == module){
 
-                addName(modules);
-
-                listenerIsset = true;
-                break;
+                    listenerIsset = true;
+                    break;
             }
         }
 
+
         if(!listenerIsset){
 
-            moduleEvents = modules.events;
+            listenerIsset = false;
+            moduleEvents =  modules[lengthModules].events;
 
             if(events.beforeAddAuditionModule){
                 events.beforeAddAuditionModule();
@@ -100,9 +61,9 @@ Module.prototype.addModulesToAudition = function(modules){
                 moduleEvents.beforeAddAuditionModuleToOtherModule();
             }
 
-            listenersArray.push(modules);
+            listenersArray.push(module);
 
-            this.addAuditionToList(modules);
+            this.addAuditionToList(module);
 
             if(moduleEvents.afterAddAuditionModuleToOtherModule){
                 moduleEvents.afterAddAuditionModuleToOtherModule();
@@ -113,11 +74,10 @@ Module.prototype.addModulesToAudition = function(modules){
         }
     }
 
-
     return this;
 };
 
-Module.prototype.removeModulesFomAudition = function(modules){
+Module.prototype.removeModulesFomAudition = function(){
 
     var events = this.events;
     var listenersArray = this._listeningsModules;
@@ -125,51 +85,19 @@ Module.prototype.removeModulesFomAudition = function(modules){
     var moduleEvents;
     var module;
 
+    var modules = arguments;
 
+    for (var lengthModules = modules.length; lengthModules --;){
 
-    if (Object.prototype.toString.call(modules) == "[object Array]"){
-        for (var lengthModules = modules.length; lengthModules --;){
-
-            module =  modules[lengthModules];
-
-            if (listenersArray){
-
-                for (var lenghtListenersArray = listenersArray.length; lenghtListenersArray --;) {
-
-                    if( listenersArray[lenghtListenersArray] == module){
-
-                        moduleEvents = module.events;
-
-                        if(events.beforeRemoveModuleFromAudition){
-                            events.beforeRemoveModuleFromAudition();
-                        }
-
-                        if(moduleEvents.beforeRemoveModuleFromAuditionOtherModule){
-                            moduleEvents.beforeRemoveModuleFromAuditionOtherModule();
-                        }
-
-                        this.removeAuditionFromList(module);
-
-                        listenersArray.splice(lenghtListenersArray, 1);
-
-                        if(moduleEvents.afterRemoveModuleFromAuditionOtherModule){
-                            moduleEvents.afterRemoveModuleFromAuditionOtherModule();
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    else{
+        module =  modules[lengthModules];
 
         if (listenersArray){
 
             for (var lenghtListenersArray = listenersArray.length; lenghtListenersArray --;) {
 
-                if( listenersArray[lenghtListenersArray] == modules){
+                if( listenersArray[lenghtListenersArray] == module){
 
-                    moduleEvents = modules.events;
+                    moduleEvents = module.events;
 
                     if(events.beforeRemoveModuleFromAudition){
                         events.beforeRemoveModuleFromAudition();
@@ -179,83 +107,38 @@ Module.prototype.removeModulesFomAudition = function(modules){
                         moduleEvents.beforeRemoveModuleFromAuditionOtherModule();
                     }
 
-                    this.removeAuditionFromList(modules);
+                    this.removeAuditionFromList(module);
 
                     listenersArray.splice(lenghtListenersArray, 1);
 
-                    if(moduleEvents.afterRemoveModulerFomAuditionOtherModule){
+                    if(moduleEvents.afterRemoveModuleFromAuditionOtherModule){
                         moduleEvents.afterRemoveModuleFromAuditionOtherModule();
                     }
 
-                    if(events.afterRemoveModuleFromAudition){
-                        events.afterRemoveModuleFromAudition();
-                    }
                     break;
                 }
             }
         }
     }
 
-
-
     return this;
 };
 
-Module.prototype.removeListenerFromModules = function(modules){
+Module.prototype.removeListenerFromModules = function(){
 
     var events = this.events;
-
-
 
     var listenersArray;
     var moduleEvents;
     var module;
 
+    var modules = arguments;
 
-    if (Object.prototype.toString.call(modules) == "[object Array]"){
+    for (var lengthModules = modules.length; lengthModules --;){
 
-        for (var lengthModules = modules.length; lengthModules --;){
+        module =  modules[lengthModules];
 
-            module =  modules[lengthModules];
-
-            listenersArray = module._listeningsModules;
-
-            if (listenersArray){
-
-                for (var lenghtListenersArray = listenersArray.length; lenghtListenersArray --;) {
-
-
-                    if( listenersArray[lenghtListenersArray] == this){
-
-                        moduleEvents = module.events;
-
-                        if(events.beforeRemoveModuleFromAuditionOtherModule){
-                            events.beforeRemoveModuleFromAuditionOtherModule();
-                        }
-
-                        if(moduleEvents.beforeRemoveModuleFromAudition){
-                            moduleEvents.events.beforeRemoveModuleFromAudition();
-                        }
-
-                        module.removeAuditionFromList(this);
-
-                        listenersArray.splice(lenghtListenersArray, 1);
-
-                        if(moduleEvents.afterRemoveModuleFromAudition){
-                            moduleEvents.afterRemoveModuleFromAudition();
-                        }
-                        if(events.afterRemoveModuleFromAuditionOtherModule){
-                            events.afterRemoveModuleFromAuditionOtherModule();
-                        }
-
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    else{
-        listenersArray = modules._listeningsModules;
+        listenersArray = module._listeningsModules;
 
         if (listenersArray){
 
@@ -263,17 +146,17 @@ Module.prototype.removeListenerFromModules = function(modules){
 
                 if( listenersArray[lenghtListenersArray] == this){
 
-                    moduleEvents = modules.events;
+                    moduleEvents = module.events;
 
                     if(events.beforeRemoveModuleFromAuditionOtherModule){
                         events.beforeRemoveModuleFromAuditionOtherModule();
                     }
 
                     if(moduleEvents.beforeRemoveModuleFromAudition){
-                        moduleEvents.beforeRemoveModuleFromAudition();
+                        moduleEvents.events.beforeRemoveModuleFromAudition();
                     }
 
-                    modules.removeAuditionFromList(this);
+                    module.removeAuditionFromList(this);
 
                     listenersArray.splice(lenghtListenersArray, 1);
 
@@ -283,81 +166,32 @@ Module.prototype.removeListenerFromModules = function(modules){
                     if(events.afterRemoveModuleFromAuditionOtherModule){
                         events.afterRemoveModuleFromAuditionOtherModule();
                     }
+
                     break;
                 }
             }
         }
     }
 
-
-
-
     return this;
 };
 
-Module.prototype.addModuleToListenersOtherModule = function(modules){
+Module.prototype.addModuleToListenersOtherModule = function(){
 
     addName(this);
 
     var events = this.events;
-
-
 
     var listenersArray;
     var listenerIsset = false;
     var moduleEvents;
     var listenersModule;
 
-    if (Object.prototype.toString.call(modules) == "[object Array]"){
+    var modules = arguments;
 
-        for (var lengthModules = modules.length; lengthModules --;){
+    for (var lengthModules = modules.length; lengthModules --;){
 
-            listenersArray = modules[lengthModules]._listeningsModules;
-
-            if (listenersArray){
-
-                for (var lenghtListenersArray = listenersArray.length; lenghtListenersArray --;) {
-
-                    listenersModule = listenersArray[lenghtListenersArray];
-
-                    addName(listenersModule);
-
-                    if( listenersModule == this){
-
-                        listenerIsset = true;
-                        break;
-                    }
-                }
-
-                if(!listenerIsset){
-
-                    listenerIsset = false;
-                    moduleEvents =  modules[lengthModules].events;
-
-                    if(events.beforeAddModuleToAuditionOtherModules){
-                        events.beforeAddModuleToAuditionOtherModules();
-                    }
-
-                    if(moduleEvents.beforeAddModuleToAudition){
-                        moduleEvents.beforeAddModuleToAudition();
-                    }
-
-                    listenersArray.push(this);
-
-                    listenersModule.addAuditionToList(this);
-
-                    if(moduleEvents.afterAddModuleToAudition){
-                        moduleEvents.afterAddModuleToAudition();
-                    }
-                    if(events.afterAddModuleToAuditionOtherModules){
-                        events.afterAddModuleToAuditionOtherModules();
-                    }
-                }
-            }
-        }
-    }
-    else{
-        listenersArray = modules._listeningsModules;
+        listenersArray = modules[lengthModules]._listeningsModules;
 
         if (listenersArray){
 
@@ -376,11 +210,13 @@ Module.prototype.addModuleToListenersOtherModule = function(modules){
 
             if(!listenerIsset){
 
-                moduleEvents =  modules.events;
+                listenerIsset = false;
+                moduleEvents =  modules[lengthModules].events;
 
                 if(events.beforeAddModuleToAuditionOtherModules){
                     events.beforeAddModuleToAuditionOtherModules();
                 }
+
                 if(moduleEvents.beforeAddModuleToAudition){
                     moduleEvents.beforeAddModuleToAudition();
                 }
@@ -395,12 +231,9 @@ Module.prototype.addModuleToListenersOtherModule = function(modules){
                 if(events.afterAddModuleToAuditionOtherModules){
                     events.afterAddModuleToAuditionOtherModules();
                 }
-
             }
         }
     }
-
-
 
     return this;
 };
@@ -408,8 +241,6 @@ Module.prototype.addModuleToListenersOtherModule = function(modules){
 Module.prototype.removeAllAuditions = function(){
 
     var events = this.events;
-
-
 
     var listenersArray = this._listeningsModules;
     var moduleEvents;
@@ -440,8 +271,6 @@ Module.prototype.removeAllAuditions = function(){
             events.afterRemoveModuleFomAuditionOtherModule();
         }
     }
-
-
 
     delete modulesForAudition[this._moduleName];
 
@@ -490,8 +319,6 @@ Module.prototype.addModuleToAuditionAllModules = function(){
         }
     }
 
-
-
     return this;
 };
 
@@ -500,8 +327,6 @@ Module.prototype.removeAuditionFromAllModulesListeners = function(){
     addName(this);
 
     var events = this.events;
-
-
 
     var listenersArray;
     var moduleEvents;
@@ -546,8 +371,6 @@ Module.prototype.removeAuditionFromAllModulesListeners = function(){
             }
         }
     }
-
-
 
     return this;
 };
@@ -611,46 +434,6 @@ Module.prototype.addAuditionToAllModulesListeners = function(){
         }
     }
 
-
-
     return this;
 
 };
-
-
-
-
-//    Modules.mod2.addModulesToAudition( module | array modules);        +     // добавить модули на прослушивание
-//    Modules.mod2.removeModulesFomAudition( module | array modules);   +      // удалить модули с прослушивания
-
-//    Modules.mod2.addModuleToListenersOtherModule( module | array modules);   +    // добавить модуль на прослушивание модулям
-//    Modules.mod2.removeListenerFromModules( module | array modules);         +   //   удалить модуль из прослушивания модулями
-
-//    Modules.mod2.removeAllAuditions();+   // удалить все слушатели модулей из модуля
-
-//    Modules.mod2.addModuleToAuditionAllModules();             // прослушивать все модули      +
-//    Modules.mod2.addAuditionToAllModulesListeners();     // добавить прослушивание модуля во все модули  +
-//    Modules.mod2.removeAuditionFromAllModulesListeners();     // удалить прослушивание из всех модулей +
-
-
-//     beforeAddAuditionModules
-//         beforeAddAuditionModuleToOtherModule
-//         afterAddAuditionModuleToOtherModule
-//     afterAddAuditionModules
-
-//   beforeRemoveModulesFomAudition
-//         beforeRemoveModuleFomAuditionOtherModule      -удаление модуля из других -внутренние становятся внешними
-//         afterRemoveModuleFomAuditionOtherModule
-//   afterRemoveModulesFomAudition
-
-//     beforeAddModuleToAuditionOtherModules
-//        beforeAddModulesToAudition
-//        afterAddModulesToAudition
-//     afterAddModuleFomAuditionOtherModule
-
-
-// ������� ������� �������� ������� 
-// ������� ������� ������������ �������
-// ������� ������� ������� ���������
-// ������� ������� ������� ������� 
-

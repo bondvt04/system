@@ -68,21 +68,22 @@ Module.prototype.loadTemplate = function( type){
         }
     }
 
- function getChildren(module){
+    function getChildren(module){
 
-     var children = module._familyTree.children;
+        var children = module._familyTree.children;
 
-     for (var lengthChildren = children.length; lengthChildren--;) {
+        for (var lengthChildren = children.length; lengthChildren--;) {
 
-         templatesLength++;
+            templatesLength++;
 
-         childName = children[lengthChildren];
-         loadTemplates(Modules[childName]);
-         getChildren(Modules[childName]);
-     }
- }
-getChildren(this);
-loadTemplates(this);
+            childName = children[lengthChildren];
+            loadTemplates(Modules[childName]);
+            getChildren(Modules[childName]);
+        }
+    }
+
+    getChildren(this);
+    loadTemplates(this);
 
     return null;
 }; // подгрузка если не загружен
@@ -90,11 +91,7 @@ loadTemplates(this);
 Module.prototype.render = function(){
 
     this.loadTemplate('top');
-
-
 };
-
-
 
 Module.prototype.renderWithOutEventRendered= function(type){
 
@@ -117,6 +114,7 @@ Module.prototype.renderWithOutEventRendered= function(type){
         var childTemplates = template.match(/\{\{[^}]+\}\}/g);
         var nameChildTemplates;
         var templateLine;
+        var dataToInsert;
 
         for(var lengthchildTemplates = childTemplates.length; lengthchildTemplates--; ){
 
@@ -129,19 +127,41 @@ Module.prototype.renderWithOutEventRendered= function(type){
 
                     for( var num = 0, dataLength = attributes.length; num < dataLength; num++){
 
-                        templateLine =  templateLine + setDataToTemplate( this._template.textHTML[nameChildTemplates], attributes[num], this);
+                        dataToInsert = attributes[num];
+
+                        if(this.events.beforeInsertToTemplate){
+
+                            dataToInsert = this.events.beforeInsertToTemplate(dataToInsert, this);
+                        }
+
+                        templateLine =  templateLine + setDataToTemplate( this._template.textHTML[nameChildTemplates], dataToInsert, this);
                     }
                 }
                 else{
 
                     if(Object.prototype.toString.call(attributes) === "[object Object]"){
 
-                        templateLine =  templateLine + setDataToTemplate( this._template.textHTML[nameChildTemplates], attributes, this);
+                        dataToInsert = attributes;
+
+                        if(this.events.beforeInsertToTemplate){
+
+                            dataToInsert = this.events.beforeInsertToTemplate(dataToInsert, this);
+                        }
+
+                        templateLine =  templateLine + setDataToTemplate( this._template.textHTML[nameChildTemplates], dataToInsert, this);
                     }
                     else{
 
                         var reg = new RegExp("{\\$"+nameChildTemplates+"}", "g");
-                        templateLine =  this._template.textHTML[nameChildTemplates].replace(reg ,attributes).replace('{$this._moduleName}', this._moduleName);
+
+                        dataToInsert = attributes;
+
+                        if(this.events.beforeInsertToTemplate){
+
+                            dataToInsert = this.events.beforeInsertToTemplate(dataToInsert, this);
+                        }
+
+                        templateLine =  this._template.textHTML[nameChildTemplates].replace(reg ,dataToInsert).replace('{$this._moduleName}', this._moduleName);
                     }
                 }
             }
@@ -173,7 +193,7 @@ Module.prototype.renderWithOutEventRendered= function(type){
             }
             else{
 
-               // throw (this._moduleName + ' has not child module ' + nameChildrenTemplates +'');
+               throw (this._moduleName + ' has not child module ' + nameChildrenTemplates +'');
             }
 
         }

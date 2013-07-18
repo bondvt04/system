@@ -28,47 +28,46 @@ Module.prototype.set = function(data){
             brothers[lengthBrothers].events && brothers[lengthBrothers].events.afterChangeBrotherly && brothers[lengthBrothers].events.afterChangeBrotherly();
         }
    }
-    var att;
 
-    for( var name in data){
+   var att;
 
-        if(data.hasOwnProperty(name)){
+   for( var name in data){
 
-            att =  data[name];
+       if(data.hasOwnProperty(name)){
 
-            if(moduleAttributes[name] != att){
+           att =  data[name];
 
-                moduleAttributes.changed[name] = att;
-                moduleAttributes.old[name] = att;
-                isChange = true;
-            }
+           if(moduleAttributes[name] != att){
 
-            moduleAttributes[name] = att;
-        }
-    }
+               moduleAttributes.changed[name] = att;
+               moduleAttributes.old[name] = att;
+               isChange = true;
+           }
 
-    if(isChange){
+           moduleAttributes[name] = att;
+       }
+   }
+
+   if(isChange){
+
+       parentEvents &&parentEvents.afterChildChange && parentEvents.afterChildChange();
+
+       moduleEvents &&moduleEvents.afterChange && moduleEvents.afterChange();
 
 
+       brothers = this.getAllBrotherlyModules();
 
-        parentEvents &&parentEvents.afterChildChange && parentEvents.afterChildChange();
+       if(brothers){
 
-        moduleEvents &&moduleEvents.afterChange && moduleEvents.afterChange();
+           for(lengthBrothers = brothers.length; lengthBrothers-- ;){
 
+               brothers[lengthBrothers].events && brothers[lengthBrothers].events.afterChangeBrotherly && brothers[lengthBrothers].events.afterChangeBrotherly();
+           }
+       }
 
-        brothers = this.getAllBrotherlyModules();
+   }
 
-        if(brothers){
-
-            for(lengthBrothers = brothers.length; lengthBrothers-- ;){
-
-                brothers[lengthBrothers].events && brothers[lengthBrothers].events.afterChangeBrotherly && brothers[lengthBrothers].events.afterChangeBrotherly();
-            }
-        }
-
-    }
-
-    return this;
+   return this;
 
 };// вызывает событие модуль изменился
 

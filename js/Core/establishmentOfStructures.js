@@ -1,22 +1,10 @@
 
 
 
-Module.prototype.setAsParentFor = function (modules){     // назначить родителем для      -ставить имена если нет
+Module.prototype.setAsParentFor = function (){     // назначить родителем для      -ставить имена если нет
 
     addName(this);
-    var arrayModules;
-
-    if(Object.prototype.toString.call(modules) != "[object Array]"){
-
-        arrayModules = [];
-        arrayModules.push(modules);
-    }
-    else{
-
-        arrayModules = modules;
-    }
-
-
+    var arrayModules = arguments;
 
     var parentEvents = this.events;
     var parentModuleName = this._moduleName;
@@ -349,17 +337,7 @@ Module.prototype.removeСhild = function (modules){
     var chailds = this._familyTree.children;
     var parentEvents = this.events;
     var childEvents;
-    var arrayModules;
-
-    if(Object.prototype.toString.call(modules) != "[object Array]"){
-
-        arrayModules = [];
-        arrayModules.push(modules);
-    }
-    else{
-
-        arrayModules = modules;
-    }
+    var arrayModules = arguments;
 
     for (var lengthArrayModules = arrayModules.length; lengthArrayModules--;){
 
