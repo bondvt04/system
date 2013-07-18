@@ -6,3 +6,4 @@ Modules.mod1.setTemplateUrl('./Modules/mod/Modules/mod1/index.html');
 Modules.mod1.set({dataOne: [{a:30},{a:40}]});
 Modules.mod1.set({dataTwo: 'startChild'});
 
+//Modules.mod1.setRenderAttribute('nonRendering');

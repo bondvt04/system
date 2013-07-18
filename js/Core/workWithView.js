@@ -10,10 +10,11 @@ Module.prototype.setTemplateUrl = function(urlHTML, urlCSS){
 
     if(urlCSS){
 
-        var css=document.createElement("link");
+        var css = document.createElement("link");
         css.setAttribute("rel", "stylesheet");
         css.setAttribute("type", "text/css");
         css.setAttribute("href", urlCSS);
+
         document.getElementsByTagName('head')[0].appendChild(css);
     }
 
@@ -22,7 +23,7 @@ Module.prototype.setTemplateUrl = function(urlHTML, urlCSS){
 
 
 
-Module.prototype.loadTemplate = function( type){
+Module.prototype.loadTemplate = function(type){
 
     var that = this;
     var templatesLength = 1;
@@ -109,7 +110,18 @@ Module.prototype.renderWithOutEventRendered= function(type){
     var template = this._template.textHTML._template;
     var attributes;
 
-    if(template){
+    if ( this._settings.rendering == 'nonRendering'){
+
+        return '';
+    }
+
+    if ( this._settings.rendering == 'getSave' && this._template.render){
+
+        return this._template.render;
+    }
+
+
+    if(template && (this._settings.rendering == 'renderingAll' || this._settings.rendering == 'thisRendering')){
 
         var childTemplates = template.match(/\{\{[^}]+\}\}/g);
         var nameChildTemplates;
@@ -170,13 +182,14 @@ Module.prototype.renderWithOutEventRendered= function(type){
         }
     }
 
+
     var childrenTemplates = template.match(/\{!child_[^}]+\}/g);
     var nameChildrenTemplates;
     var templateFromChild;
     var indexChild;
 
+    if(childrenTemplates && this._settings.rendering != 'thisRendering'){
 
-    if(childrenTemplates){
         for(var lengthChildrenTemplates = childrenTemplates.length; lengthChildrenTemplates--; ){
 
             templateFromChild = '';
@@ -212,6 +225,33 @@ Module.prototype.renderWithOutEventRendered= function(type){
 
 };
 
+
+Module.prototype.setContainer = function(id){
+
+    this.container = id;
+
+    return this;
+};
+
+Module.prototype.removeContainer = function(id){
+
+    delete this.container;
+
+    return this;
+};
+
+Module.prototype.setRenderAttribute = function(attr){
+
+    if (attr =='renderingAll' || attr =='nonRendering' || attr =='thisRendering' || attr =='getSave' ) {
+
+        this._settings.rendering = attr;
+    }
+    else {
+        throw('unknow type render attribute ');
+    }
+
+    return this;
+};
 
 //TODO при измении данных запускается рендер на модуле установленном в свойстве относительно какого модуля делать полный рендер   или его можно запускать в событии после измения всех данных
 //TODO связать с потомками , хотя и из шаблона можно понимать что потомок нужен
