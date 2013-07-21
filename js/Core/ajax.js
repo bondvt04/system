@@ -74,12 +74,11 @@ Module.prototype.getServerResponse = function(){
 
                         clearTimeout(timer);
 
-                        if(that.beforeSendAjaxRequest){
+                        response = that.afterSendAjaxRequest(response);
 
-                            response = that.beforeSendAjaxRequest(response);
+                        if(response){
+                            that.getResponse(response);
                         }
-
-                        that.getResponse(response);
 
                         return;
                     }
@@ -171,6 +170,15 @@ Module.prototype.beforeSendAjaxRequest = function(data){
     return JSON.stringify(data);
 };
 
+Module.prototype.afterSendAjaxRequest = function(data){
+
+    return data;
+};
+
+
+//TODO  вынести функции обработки ответа в отдельные функции чтоб при гете можно было ссылаться
+//TODO  События запрос отравился, запрос пришел -чтоб не загаживать обработчики ответа прелоадерами   усановкой их и снятием
+//TODO один запрос одновременно
 /**
  * @land Ajax
  * @description Методы для работы с Ajax
