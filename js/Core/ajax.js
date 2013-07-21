@@ -10,151 +10,212 @@
 
 Module.prototype.getServerResponse = function(){
 
-    var ajaxData = this.getAjaxData;
+    if(!Modules.flagResponse){
 
-    if(this.beforeSendAjaxRequest){
+        var ajaxData = this.getAjaxData;
 
-        ajaxData.dataToSend =  this.beforeSendAjaxRequest(this._attributes);
-    }
+        if(this.beforeSendAjaxRequest){
 
-
-    var moduleName = this._moduleName;
-    //var that = this;
-    // счётчик здесь и таймер
-
-    var count = 0;
-    var timer;
+            ajaxData.dataToSend =  this.beforeSendAjaxRequest(this._attributes);
+        }
 
 
+        var moduleName = this._moduleName;
+        //var that = this;
+        // счётчик здесь и таймер
 
-    function sendAjax(that){
+        var count = 0;
+        var timer;
+
+        Modules.flagResponse = true;
+        this.isGetRequest = false;
 
 
 
-        function setAjaxRequestObject(){
+        function sendAjax(that){
 
-            var req;
 
-            if (window.XMLHttpRequest){
 
-                req = new XMLHttpRequest();
-            }
-            else{
+            function setAjaxRequestObject(){
 
-                if (window.ActiveXObject){
-                    try{
-                        req = new ActiveXObject('Msxml2.XMLHTTP');
-                    }
-                    catch (e){
+                var req;
+
+                if (window.XMLHttpRequest){
+
+                    req = new XMLHttpRequest();
+                }
+                else{
+
+                    if (window.ActiveXObject){
                         try{
-                            req = new ActiveXObject('Microsoft.XMLHTTP');
+                            req = new ActiveXObject('Msxml2.XMLHTTP');
                         }
                         catch (e){
+                            try{
+                                req = new ActiveXObject('Microsoft.XMLHTTP');
+                            }
+                            catch (e){
 
-                            return null;
+                                return null;
+                            }
                         }
                     }
                 }
+
+                return  req;
             }
 
-            return  req;
+            function setOnReadyState(){
+
+                var response;
+
+                if (requestObject.readyState == 4  &&  requestObject.status == 200)  {
+
+                    if(that.afterGetAjaxResponse){
+                        that.afterGetAjaxResponse();
+                    }
+
+                    response = requestObject.responseText;
+
+                    clearTimeout(timer);
+                    that.isGetRequest = true;
+
+                    Modules.flagResponse = false;
+
+                    if(Modules.ajaxRequests.length){
+
+                        (Modules[Modules.ajaxRequests.turn.shift()]).getServerResponse();
+                    }
+
+                    response = that.afterGetNoErrorResponse(response);
+
+                    if(response){
+                        that.getResponse(response);
+                    }
+
+                    return null;
+                }
+
+                if (requestObject.readyState == 4  &&  (requestObject.status > 400 && requestObject.status < 500))  {
+
+                    if(that.afterGetAjaxResponse){
+                        that.afterGetAjaxResponse();
+                    }
+
+                    response = requestObject.responseText;
+
+                    clearTimeout(timer);
+                    that.isGetRequest = true;
+
+                    Modules.flagResponse = false;
+
+                    if(Modules.ajaxRequests.length){
+
+                        (Modules[Modules.ajaxRequests.turn.shift()]).getServerResponse();
+                    }
+
+                    if(that.getError400){
+
+                        setTimeout(function(){that.getError400(response)},0);
+                    }
+
+                    return null;
+                }
+
+                if (requestObject.readyState == 4  &&  requestObject.status > 500 )  {
+
+                    if(that.afterGetAjaxResponse){
+                        that.afterGetAjaxResponse();
+                    }
+
+                    response = requestObject.responseText;
+
+                    clearTimeout(timer);
+                    that.isGetRequest = true;
+
+                    Modules.flagResponse = false;
+
+                    if(Modules.ajaxRequests.length){
+
+                        (Modules[Modules.ajaxRequests.turn.shift()]).getServerResponse();
+                    }
+
+                    if(that.getError500){
+
+                        setTimeout(function(){that.getError400(response)},0);
+                    }
+
+                    return null;
+                }
+            }
+
+            var requestObj = setAjaxRequestObject();
+
+            if(requestObj){
+
+                if(ajaxData.requestType == 'POST'){
+
+                    requestObject.onreadystatechange = setOnReadyState;
+
+                    requestObject.open("POST", ajaxData.url, true);
+                    requestObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded","Cache-Control: no-store, no-cache, must-revalidate");
+                    requestObject.send('data=' + ajaxData.dataToSend);
+
+                    if(that.afterSendAjax){
+                        that.afterSendAjax();
+                    }
+
+                }
+
+
+
+                if(ajaxData.requestType == 'GET'){
+
+                    requestObject.open("GET", ajaxData.url +'?data=' + ajaxData.dataToSend , true);
+                    requestObject.onreadystatechange = setOnReadyState;
+                    requestObject.send(null);
+
+                    if(that.afterSendAjax){
+                        that.afterSendAjax();
+                    }
+                }
+
+            }
+
+            Modules.flagResponse = true;
+            isGetRequest = false;
+
+
+            timer = setTimeout( function(){
+                if(!that.isGetRequest  &&  count < 5){
+                    Modules.flagResponse = false;   //??
+                    requestObject.abort();
+                    that.count++;
+                    that.sendAjax(event);
+
+                }
+                else{
+                    requestObject.abort();
+                    count = 0;
+                    Modules.flagResponse = false;
+                    that.overNumberAttemptsAjaxRequest();
+
+                    if(Modules.ajaxRequests.length){
+                        (Modules[Modules.ajaxRequests.turn.shift()]).getServerResponse();
+                    }
+
+
+                }
+            },10000);
         }
 
-        function setOnReadyState(){
-
-            var response;
-
-            if (requestObject.readyState == 4  &&  requestObject.status == 200)  {
-
-                if(that.afterGetAjaxResponse){
-                    that.afterGetAjaxResponse();
-                }
-
-                response = requestObject.responseText;
-
-                clearTimeout(timer);
-
-                response = that.afterGetNoErrorResponse(response);
-
-                if(response){
-                    that.getResponse(response);
-                }
-
-                return null;
-            }
-
-            if (requestObject.readyState == 4  &&  (requestObject.status > 400 && requestObject.status < 500))  {
-
-                if(that.afterGetAjaxResponse){
-                    that.afterGetAjaxResponse();
-                }
-
-                response = requestObject.responseText;
-
-                clearTimeout(timer);
-
-                if(that.getError400){
-
-                    setTimeout(function(){that.getError400(response)},0);
-                }
-
-                return null;
-            }
-
-            if (requestObject.readyState == 4  &&  requestObject.status > 500 )  {
-
-                if(that.afterGetAjaxResponse){
-                    that.afterGetAjaxResponse();
-                }
-
-                response = requestObject.responseText;
-
-                clearTimeout(timer);
-
-                if(that.getError500){
-
-                    setTimeout(function(){that.getError400(response)},0);
-                }
-
-                return null;
-            }
-        }
-
-        var requestObj = setAjaxRequestObject();
-
-        if(requestObj){
-
-            if(ajaxData.requestType == 'POST'){
-
-                requestObject.onreadystatechange = setOnReadyState;
-
-                requestObject.open("POST", ajaxData.url, true);
-                requestObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded","Cache-Control: no-store, no-cache, must-revalidate");
-                requestObject.send('data=' + ajaxData.dataToSend);
-
-                if(that.afterSendAjax){
-                    that.afterSendAjax();
-                }
-
-            }
-
-
-
-            if(ajaxData.requestType == 'GET'){
-
-                requestObject.open("GET", ajaxData.url +'?data=' + ajaxData.dataToSend , true);
-                requestObject.onreadystatechange = setOnReadyState;
-                requestObject.send(null);
-
-                if(that.afterSendAjax){
-                    that.afterSendAjax();
-                }
-            }
-
-        }
+        sendAjax(this);
     }
+    else{
 
-    sendAjax(this);
+        Modules.ajaxRequests.push(this._moduleName);
+
+    }
 
 };
 
@@ -165,6 +226,11 @@ Module.prototype.afterSendAjax = function(){
 
 Module.prototype.afterGetAjaxRequest = function(){
     // Допустим удалить прелоадер чтоб не засерать другие события и разнести их по разгным узлам
+};
+
+Module.prototype.overNumberAttemptsAjaxRequest = function(data){
+
+     // закончилось количество попыток , ответ в означенное время ни разу не вернулся
 };
 
 Module.prototype.getError500 = function(data){

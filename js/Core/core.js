@@ -1,5 +1,7 @@
 var Modules = {};
 Modules.Pages = {};
+Modules.flagResponse = false;  // флаг запроса аякс
+Modules.ajaxRequests = [];    // очередь аякс запросов . становяться в очередь если выполняется запрос в это время
 
 window.Modules = Modules;
 
