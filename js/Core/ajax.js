@@ -193,7 +193,10 @@ Module.prototype.getServerResponse = function(){
 
                 if(ajaxData.requestType == 'GET'){
 
-                    requestObject.open("GET", ajaxData.url +'?data=' + ajaxData.dataToSend , true);
+                    //requestObject.open("GET", ajaxData.url +'?data=' + ajaxData.dataToSend , true);
+
+                    requestObject.open("GET", ajaxData.url, true);
+
                     requestObject.onreadystatechange = setOnReadyState;
                     requestObject.send(null);
 
@@ -307,6 +310,9 @@ Module.prototype.afterGetNoErrorResponse = function(data){
 //TODO  События запрос отравился, запрос пришел -чтоб не загаживать обработчики ответа прелоадерами   усановкой их и снятием
 //TODO один запрос одновременно
 
+//TODO  метод должен быть чтобы прееопределять данные при запросах , возможно только гет. Т.е должен быть просто адрес -а сервер уже отдаёт данные , нипкаких параметров в гет запросе быть не должно
+//TODO  т.е клик по ссылке действие переход , замена адреса в модуле в разделе данные аякс , посыл запроса
+//TODO  показать соотв шаблон если он другой, записать в него  данные показать
 
 //______________________________________________________________________________________________________________________________________________
 /**
