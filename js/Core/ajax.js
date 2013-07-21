@@ -5,6 +5,8 @@
 
 
 //TODO Если планируется не более одного запроса одновременно -должен быть флаг на уровне свойства объекта Modules
+//TODO  таймеры количество попыток
+
 
 Module.prototype.getServerResponse = function(){
 
@@ -58,58 +60,80 @@ Module.prototype.getServerResponse = function(){
             return  req;
         }
 
+        function setOnReadyState(){
+
+            var response;
+
+            if (requestObject.readyState == 4  &&  requestObject.status == 200)  {
+
+                if(that.afterGetAjaxResponse){
+                    that.afterGetAjaxResponse();
+                }
+
+                response = requestObject.responseText;
+
+                clearTimeout(timer);
+
+                response = that.afterGetNoErrorResponse(response);
+
+                if(response){
+                    that.getResponse(response);
+                }
+
+                return null;
+            }
+
+            if (requestObject.readyState == 4  &&  (requestObject.status > 400 && requestObject.status < 500))  {
+
+                if(that.afterGetAjaxResponse){
+                    that.afterGetAjaxResponse();
+                }
+
+                response = requestObject.responseText;
+
+                clearTimeout(timer);
+
+                if(that.getError400){
+
+                    setTimeout(function(){that.getError400(response)},0);
+                }
+
+                return null;
+            }
+
+            if (requestObject.readyState == 4  &&  requestObject.status > 500 )  {
+
+                if(that.afterGetAjaxResponse){
+                    that.afterGetAjaxResponse();
+                }
+
+                response = requestObject.responseText;
+
+                clearTimeout(timer);
+
+                if(that.getError500){
+
+                    setTimeout(function(){that.getError400(response)},0);
+                }
+
+                return null;
+            }
+        }
+
         var requestObj = setAjaxRequestObject();
 
         if(requestObj){
 
             if(ajaxData.requestType == 'POST'){
 
+                requestObject.onreadystatechange = setOnReadyState;
 
+                requestObject.open("POST", ajaxData.url, true);
+                requestObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded","Cache-Control: no-store, no-cache, must-revalidate");
+                requestObject.send('data=' + ajaxData.dataToSend);
 
-                requestObject.onreadystatechange = function() {
-
-                    if (requestObject.readyState == 4  &&  requestObject.status == 200)  {
-
-                        var response = requestObject.responseText;
-
-                        clearTimeout(timer);
-
-                        response = that.afterSendAjaxRequest(response);
-
-                        if(response){
-                            that.getResponse(response);
-                        }
-
-                        return;
-                    }
-
-                    if (requestObject.readyState == 4  &&  (requestObject.status > 400 && requestObject.status < 500))  {
-
-                        var response = requestObject.responseText;
-
-                        clearTimeout(timer);
-
-                        if(that.getError400){
-
-                            setTimeout(function(){that.getError400(response)},0);
-                        }
-
-                        return;
-                    }
-
-                    if (requestObject.readyState == 4  &&  requestObject.status > 500 )  {
-
-                        var response = requestObject.responseText;
-
-                        clearTimeout(timer);
-
-                        if(that.getError500){
-
-                            setTimeout(function(){that.getError400(response)},0);
-                        }
-
-                        return;
-                    }
+                if(that.afterSendAjax){
+                    that.afterSendAjax();
                 }
 
             }
@@ -118,6 +142,13 @@ Module.prototype.getServerResponse = function(){
 
             if(ajaxData.requestType == 'GET'){
 
+                requestObject.open("GET", ajaxData.url +'?data=' + ajaxData.dataToSend , true);
+                requestObject.onreadystatechange = setOnReadyState;
+                requestObject.send(null);
+
+                if(that.afterSendAjax){
+                    that.afterSendAjax();
+                }
             }
 
         }
@@ -127,6 +158,14 @@ Module.prototype.getServerResponse = function(){
 
 };
 
+
+Module.prototype.afterSendAjax = function(){
+    // Допустим показать прелоадер чтоб не засерать другие события и разнести их по разгным узлам
+};
+
+Module.prototype.afterGetAjaxRequest = function(){
+    // Допустим удалить прелоадер чтоб не засерать другие события и разнести их по разгным узлам
+};
 
 Module.prototype.getError500 = function(data){
 
@@ -170,7 +209,7 @@ Module.prototype.beforeSendAjaxRequest = function(data){
     return JSON.stringify(data);
 };
 
-Module.prototype.afterSendAjaxRequest = function(data){
+Module.prototype.afterGetNoErrorResponse = function(data){
 
     return data;
 };

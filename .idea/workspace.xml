@@ -4,7 +4,7 @@
     <list default="true" id="985a3249-3244-4350-86b9-537bd7ef44d4" name="Default" comment="" />
     <ignored path="cmsNew.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/ajax.js" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1374407500783" ignored="false" />
+    <file path="/ajax.js" changelist="985a3249-3244-4350-86b9-537bd7ef44d4" time="1374411574015" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +72,7 @@
       <file leaf-file-name="ajax.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/Core/ajax.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="180" column="31" selection-start="4065" selection-end="4065" vertical-scroll-proportion="0.6717892">
+            <state line="56" column="71" selection-start="1366" selection-end="1366" vertical-scroll-proportion="-0.5225027">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -602,7 +602,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/ajax.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="180" column="31" selection-start="4065" selection-end="4065" vertical-scroll-proportion="0.6717892">
+        <state line="56" column="71" selection-start="1366" selection-end="1366" vertical-scroll-proportion="-0.5225027">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
