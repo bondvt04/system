@@ -1,11 +1,15 @@
 var Modules = {};
 Modules.Pages = {};
-Modules.flagResponse = false;  // флаг запроса аякс
-Modules.ajaxRequests = [];    // очередь аякс запросов . становяться в очередь если выполняется запрос в это время
+
 
 window.Modules = Modules;
 
 var modulesForAudition = {};
+
+
+var flagResponse = false;  // TODO флаг запроса аякс
+var ajaxRequests = [];    // TODO очередь аякс запросов . становяться в очередь если выполняется запрос в это время
+
 
 function Module(){
     this.events = {

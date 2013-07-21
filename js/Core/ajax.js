@@ -8,11 +8,30 @@
 //TODO  таймеры количество попыток
 //TODO  заголовки по умолчанию если не переустанавливаются в объекте настройки
 
+
+
+Module.prototype.setAjaxOptons = function(options){
+
+    if(Object.prototype.toString.call(options) == "[object Object]"){
+
+        this.AjaxData = options;
+    }
+    else{
+
+        throw('Error in ajax options') ;
+    }
+};
+
+Module.prototype.getAjaxOptons = function(){
+
+   return this.AjaxData;
+};
+
 Module.prototype.getServerResponse = function(){
 
-    if(!Modules.flagResponse){
+    if(!flagResponse){
 
-        var ajaxData = this.getAjaxData;
+        var ajaxData = this.AjaxData;
 
         if(this.beforeSendAjaxRequest){
 
@@ -27,7 +46,7 @@ Module.prototype.getServerResponse = function(){
         var count = 0;
         var timer;
 
-        Modules.flagResponse = true;
+        flagResponse = true;
         this.isGetRequest = false;
 
 
@@ -80,11 +99,11 @@ Module.prototype.getServerResponse = function(){
                     clearTimeout(timer);
                     that.isGetRequest = true;
 
-                    Modules.flagResponse = false;
+                    flagResponse = false;
 
-                    if(Modules.ajaxRequests.length){
+                    if(ajaxRequests.length){
 
-                        (Modules[Modules.ajaxRequests.turn.shift()]).getServerResponse();
+                        (Modules[ajaxRequests.turn.shift()]).getServerResponse();
                     }
 
                     response = that.afterGetNoErrorResponse(response);
@@ -107,11 +126,11 @@ Module.prototype.getServerResponse = function(){
                     clearTimeout(timer);
                     that.isGetRequest = true;
 
-                    Modules.flagResponse = false;
+                    flagResponse = false;
 
-                    if(Modules.ajaxRequests.length){
+                    if(ajaxRequests.length){
 
-                        (Modules[Modules.ajaxRequests.turn.shift()]).getServerResponse();
+                        (Modules[ajaxRequests.turn.shift()]).getServerResponse();
                     }
 
                     if(that.getError400){
@@ -133,11 +152,11 @@ Module.prototype.getServerResponse = function(){
                     clearTimeout(timer);
                     that.isGetRequest = true;
 
-                    Modules.flagResponse = false;
+                    flagResponse = false;
 
-                    if(Modules.ajaxRequests.length){
+                    if(ajaxRequests.length){
 
-                        (Modules[Modules.ajaxRequests.turn.shift()]).getServerResponse();
+                        (Modules[ajaxRequests.turn.shift()]).getServerResponse();
                     }
 
                     if(that.getError500){
@@ -158,6 +177,9 @@ Module.prototype.getServerResponse = function(){
                     requestObject.onreadystatechange = setOnReadyState;
 
                     requestObject.open("POST", ajaxData.url, true);
+
+                    //requestObject.setRequestHeader(that.AjaxData.Headers || "Content-Type", "application/x-www-form-urlencoded","Cache-Control: no-store, no-cache, must-revalidate");      //TODO подумать как обыграть
+
                     requestObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded","Cache-Control: no-store, no-cache, must-revalidate");
                     requestObject.send('data=' + ajaxData.dataToSend);
 
@@ -182,13 +204,13 @@ Module.prototype.getServerResponse = function(){
 
             }
 
-            Modules.flagResponse = true;
+            flagResponse = true;
             isGetRequest = false;
 
 
             timer = setTimeout( function(){
                 if(!that.isGetRequest  &&  count < 5){
-                    Modules.flagResponse = false;   //??
+                    flagResponse = false;   //??
                     requestObject.abort();
                     that.count++;
                     that.sendAjax(event);
@@ -197,11 +219,11 @@ Module.prototype.getServerResponse = function(){
                 else{
                     requestObject.abort();
                     count = 0;
-                    Modules.flagResponse = false;
+                    flagResponse = false;
                     that.overNumberAttemptsAjaxRequest();
 
-                    if(Modules.ajaxRequests.length){
-                        (Modules[Modules.ajaxRequests.turn.shift()]).getServerResponse();
+                    if(ajaxRequests.length){
+                        (Modules[ajaxRequests.turn.shift()]).getServerResponse();
                     }
 
 
@@ -213,7 +235,7 @@ Module.prototype.getServerResponse = function(){
     }
     else{
 
-        Modules.ajaxRequests.push(this._moduleName);
+        ajaxRequests.push(this._moduleName);
 
     }
 
@@ -284,6 +306,9 @@ Module.prototype.afterGetNoErrorResponse = function(data){
 //TODO  вынести функции обработки ответа в отдельные функции чтоб при гете можно было ссылаться
 //TODO  События запрос отравился, запрос пришел -чтоб не загаживать обработчики ответа прелоадерами   усановкой их и снятием
 //TODO один запрос одновременно
+
+
+//______________________________________________________________________________________________________________________________________________
 /**
  * @land Ajax
  * @description Методы для работы с Ajax
