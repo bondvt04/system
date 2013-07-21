@@ -60,19 +60,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="core.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="core.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/Core/core.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="50" selection-start="1337" selection-end="1344" vertical-scroll-proportion="0.0">
+            <state line="662" column="62" selection-start="15444" selection-end="15444" vertical-scroll-proportion="0.8320527">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ajax.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ajax.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Core/ajax.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="78" selection-start="429" selection-end="429" vertical-scroll-proportion="0.1492865">
+            <state line="18" column="219" selection-start="639" selection-end="639" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -104,8 +104,8 @@
         <option value="$PROJECT_DIR$/Modules/mod/Modules/mod1/index.js" />
         <option value="$PROJECT_DIR$/Modules/mod/index.js" />
         <option value="$PROJECT_DIR$/js/Core/workWithView.js" />
-        <option value="$PROJECT_DIR$/js/Core/core.js" />
         <option value="$PROJECT_DIR$/js/Core/ajax.js" />
+        <option value="$PROJECT_DIR$/js/Core/core.js" />
       </list>
     </option>
   </component>
@@ -593,19 +593,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/Core/core.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="50" selection-start="1337" selection-end="1344" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/ajax.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="78" selection-start="429" selection-end="429" vertical-scroll-proportion="0.1492865">
+        <state line="18" column="219" selection-start="639" selection-end="639" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Core/core.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="662" column="62" selection-start="15444" selection-end="15444" vertical-scroll-proportion="0.8320527">
+          <folding />
         </state>
       </provider>
     </entry>

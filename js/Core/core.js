@@ -27,19 +27,19 @@ function Module(){
 
     this._familyTree = {
 
-        that : this,
+
         parent: null,
         children: []
     };
 
     this._attributes ={
 
-        that : this
+
     };
 
     this._attributes.changed ={
 
-        that : this
+
     };
 
     this._attributes.old ={};
@@ -660,7 +660,7 @@ Module.prototype.removeAuditionFromList = function(auditionModule){
 
 // TODO Пересмотреть все методы -вынести повторяющийся функционал
 
-
+// TODO  ввести ссылку на модуль в свойства модуля that = this
 
 
 
