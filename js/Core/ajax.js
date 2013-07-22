@@ -3,9 +3,11 @@
 // до отравки аякс   - автоматом
 // после получения аякс - автоматом сетит если не переназначен  в модуль отравитель
 
-
+//+
 //TODO Если планируется не более одного запроса одновременно -должен быть флаг на уровне свойства объекта Modules
 //TODO  таймеры количество попыток
+
+
 //TODO  заголовки по умолчанию если не переустанавливаются в объекте настройки
 
 
@@ -102,7 +104,7 @@ Module.prototype.getServerResponse = function(event){
                 if (requestObject.readyState == 4  &&  requestObject.status == 200)  {
 
                     if(that.afterGetAjaxResponse){
-                        that.afterGetAjaxResponse();
+                        that.afterGetAjaxResponse(requestObject);
                     }
 
                     response = requestObject.responseText;
@@ -139,7 +141,7 @@ Module.prototype.getServerResponse = function(event){
                 if (requestObject.readyState == 4  &&  (requestObject.status > 400 && requestObject.status < 500))  {
 
                     if(that.afterGetAjaxResponse){
-                        that.afterGetAjaxResponse();
+                        that.afterGetAjaxResponse(requestObject);
                     }
 
                     response = requestObject.responseText;
@@ -175,7 +177,7 @@ Module.prototype.getServerResponse = function(event){
                 if (requestObject.readyState == 4  &&  requestObject.status > 500 )  {
 
                     if(that.afterGetAjaxResponse){
-                        that.afterGetAjaxResponse();
+                        that.afterGetAjaxResponse(requestObject);
                     }
 
                     response = requestObject.responseText;
@@ -222,7 +224,7 @@ Module.prototype.getServerResponse = function(event){
                     //requestObject.setRequestHeader(that.AjaxData.Headers || "Content-Type", "application/x-www-form-urlencoded","Cache-Control: no-store, no-cache, must-revalidate");      //TODO подумать как обыграть
 
                     requestObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded","Cache-Control: no-store, no-cache, must-revalidate");
-                    requestObject.send('data=' + ajaxData.dataToSend);
+                    requestObject.send('sendData=' + ajaxData.dataToSend);
 
                     if(that.afterSendAjax){
                         that.afterSendAjax();
@@ -234,9 +236,7 @@ Module.prototype.getServerResponse = function(event){
 
                 if(ajaxData.requestType == 'GET'){
 
-                    //requestObject.open("GET", ajaxData.url +'?data=' + ajaxData.dataToSend , true);
-
-                    requestObject.open("GET", ajaxData.url, true);
+                    requestObject.open("GET", ajaxData.url+ ajaxData.dataToSend, true);
 
                     requestObject.onreadystatechange = setOnReadyState;
                     requestObject.send(null);
@@ -314,7 +314,7 @@ Module.prototype.afterSendAjax = function(){
     // Допустим показать прелоадер чтоб не засерать другие события и разнести их по разгным узлам
 };
 
-Module.prototype.afterGetAjaxRequest = function(){
+Module.prototype.afterGetAjaxRequest = function(requestObject){
     // Допустим удалить прелоадер чтоб не засерать другие события и разнести их по разгным узлам
 };
 
@@ -323,7 +323,7 @@ Module.prototype.overNumberAttemptsAjaxRequest = function(data){
      // закончилось количество попыток , ответ в означенное время ни разу не вернулся
 };
 
-Module.prototype.getError500 = function(data){
+Module.prototype.getError500 = function(requestObject){
 
     /* if(аякс свойство не превысило попыток или окрасить , вывести чегото){
 
@@ -332,7 +332,7 @@ Module.prototype.getError500 = function(data){
     // this.getServerResponse();
 };
 
-Module.prototype.getError400 = function(data){
+Module.prototype.getError400 = function(requestObject){
 
    /* if(аякс свойство не превысило попыток или окрасить , вывести чегото){
 
@@ -342,32 +342,21 @@ Module.prototype.getError400 = function(data){
 };
 
 
-Module.prototype.getResponse = function(data){
+Module.prototype.getResponse = function(requestObject){
 
-    this.set(data);
+    this.set(requestObject);
 };
 
-Module.prototype.getAjaxData = function(){
 
-    return this.ajaxAttributes;
-
-};
-
-Module.prototype.setAjaxData = function(data){
-
-    this.ajaxAttributes = data;
-
-    return this;
-};
 
 Module.prototype.beforeSendAjaxRequest = function(data){
 
     return JSON.stringify(data);
 };
 
-Module.prototype.afterGetNoErrorResponse = function(data){
+Module.prototype.afterGetNoErrorResponse = function(requestObject){
 
-    return data;
+    return requestObject;
 };
 
 //+
@@ -388,5 +377,9 @@ Module.prototype.afterGetNoErrorResponse = function(data){
 //+
 //TODO  и их результат используетмся кк адрес , данные запроса и т.д по умолчанию они возвращают атрибуты и аякс настройки , но могут возвращать любые данные какие будут использоваться как атрибуты запроса, либо данные . 2 метода
 //TODO один возвращает атрибуты запроса какие будут использоваться, не переопределяя обозначенные в методе(или преопределяя), второй возвращает отправ. данныые возвращает -по умолчанию атрибуты модуля
+
+
+//ЗАГОЛОВКИ
+// параметры для гет  +
 
 //______________________________________________________________________________________________________________________________________________
