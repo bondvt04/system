@@ -27,7 +27,7 @@ Module.prototype.getAjaxOptons = function(){
    return this.AjaxData;
 };
 
-Module.prototype.getServerResponse = function(){
+Module.prototype.getServerResponse = function(event){
 
     if(!flagResponse){
 
@@ -36,8 +36,19 @@ Module.prototype.getServerResponse = function(){
         if(this.beforeSendAjaxRequest){
 
             ajaxData.dataToSend =  this.beforeSendAjaxRequest(this._attributes);
+
+            if(this.changeSendAjaxRequest){
+
+                ajaxData.dataToSend =  this.changeSendAjaxRequest(ajaxData.dataToSend);
+            }
         }
 
+        if(event){
+             if(event.dataForEvent){
+
+                 ajaxData =  event.dataForEvent;
+             }
+        }
 
         var moduleName = this._moduleName;
         //var that = this;
@@ -112,7 +123,17 @@ Module.prototype.getServerResponse = function(){
                         that.getResponse(response);
                     }
 
-                    return null;
+                    if(that.events.getServerResponse && that.events.getServerResponse.eventAfterEvent){
+
+                        stackEvents.pushEvent({
+                            eventType : this.events.getServerResponse.eventAfterEvent,
+                            moduleName : that._moduleName
+                        });
+                    }
+                    else{
+
+                        return null;
+                    }
                 }
 
                 if (requestObject.readyState == 4  &&  (requestObject.status > 400 && requestObject.status < 500))  {
@@ -138,7 +159,17 @@ Module.prototype.getServerResponse = function(){
                         setTimeout(function(){that.getError400(response)},0);
                     }
 
-                    return null;
+                    if(that.events.getError400 && that.events.getError400.eventAfterEvent){
+
+                        stackEvents.pushEvent({
+                            eventType : this.events.getError400.eventAfterEvent,
+                            moduleName : that._moduleName
+                        });
+                    }
+                    else{
+
+                        return null;
+                    }
                 }
 
                 if (requestObject.readyState == 4  &&  requestObject.status > 500 )  {
@@ -164,7 +195,17 @@ Module.prototype.getServerResponse = function(){
                         setTimeout(function(){that.getError400(response)},0);
                     }
 
-                    return null;
+                    if(that.events.getError500 && that.events.getError500.eventAfterEvent){
+
+                        stackEvents.pushEvent({
+                            eventType : this.events.getError500.eventAfterEvent,
+                            moduleName : that._moduleName
+                        });
+                    }
+                    else{
+
+                        return null;
+                    }
                 }
             }
 
@@ -235,6 +276,25 @@ Module.prototype.getServerResponse = function(){
         }
 
         sendAjax(this);
+
+        if(event){
+
+            if(this.events[event.eventType].eventAfterEvent){
+
+
+                return {
+                    eventType : this.events[event.eventType].eventAfterEvent,
+                    moduleName : moduleName
+                }
+
+            }
+            else{
+                return null;
+            }
+
+            //TODO вернуть след событие если есть или null
+        }
+
     }
     else{
 
@@ -244,6 +304,11 @@ Module.prototype.getServerResponse = function(){
 
 };
 
+
+Module.prototype.changeSendAjaxRequest = function(ajaxData){
+    // Изменние параметров аякс запроса
+    return  ajaxData;
+};
 
 Module.prototype.afterSendAjax = function(){
     // Допустим показать прелоадер чтоб не засерать другие события и разнести их по разгным узлам
@@ -305,241 +370,23 @@ Module.prototype.afterGetNoErrorResponse = function(data){
     return data;
 };
 
-
+//+
 //TODO  вынести функции обработки ответа в отдельные функции чтоб при гете можно было ссылаться
 //TODO  События запрос отравился, запрос пришел -чтоб не загаживать обработчики ответа прелоадерами   усановкой их и снятием
 //TODO один запрос одновременно
 
+
+//+
 //TODO  метод должен быть чтобы прееопределять данные при запросах , возможно только гет. Т.е должен быть просто адрес -а сервер уже отдаёт данные , нипкаких параметров в гет запросе быть не должно
 //TODO  т.е клик по ссылке действие переход , замена адреса в модуле в разделе данные аякс , посыл запроса
 //TODO  показать соотв шаблон если он другой, записать в него  данные показать
 
+
+//+
 //TODO  Данные перед запросами организуются , выбираются , могут получатьсяи из объекта event  так и атрибутов либо другой информации. в методах "пред отравкой " и т.д вызываются методы по переорганизации данных
+
+//+
 //TODO  и их результат используетмся кк адрес , данные запроса и т.д по умолчанию они возвращают атрибуты и аякс настройки , но могут возвращать любые данные какие будут использоваться как атрибуты запроса, либо данные . 2 метода
 //TODO один возвращает атрибуты запроса какие будут использоваться, не переопределяя обозначенные в методе(или преопределяя), второй возвращает отправ. данныые возвращает -по умолчанию атрибуты модуля
 
 //______________________________________________________________________________________________________________________________________________
-/**
- * @land Ajax
- * @description Методы для работы с Ajax
- */
-borrowedMethods.Ajax = {
-
-    /**
-     * @land sendAjax
-     * @param {Object} event Объект события
-     * @description Отправляет Аякс запрос по укаазанному в модуле адресу и указанным способом
-     * @description Если на момент действия есть активный запрос, ставит запрос вочередь
-     * @description Генерирует событие получение Аякс ответа, если в очереди есть запросы отправляет первый из очереди
-     * @description В случае ошибки отправляет запрос повторно, пока не исчерпается количество попыток для данного запроса
-     * @return {Object} Возвращает в объекте собранную информацию событие "информация полученна с сервера ", какое пердаётся с полученной информацией на все подписанные модули
-     */
-    sendAjax : function(event){
-        event = borrowedMethods.cloneEventObject(event);
-        /** Если есть активный запрос поставить запрос с в очередь */
-        if(borrowedMethods.Ajax.flagResponse){
-            borrowedMethods.Ajax.putInTurn(event);
-            return null;
-        }
-
-        var requestObject = borrowedMethods.Ajax.setAjaxRequestObject();
-        /** Если XHR объект создан и количество попыток не превысило допустимое */
-        if(requestObject){
-            /** Если  количество попыток не превысило допустимое */
-            if(borrowedMethods.Ajax.count<=5) {
-                var dataRequest = JSON.stringify(event.information);
-                var request = 'data=' + dataRequest;
-                that = borrowedMethods.Ajax;
-
-                if(event.typeRequest == 'POST'){
-                    requestObject.onreadystatechange = function() {
-                        if (requestObject.readyState == 4  &&  requestObject.status == 200)  {
-                            event.answerCondition = 'takeAjaxRequest';
-                            that.isGetRequest = true;
-                            clearTimeout(borrowedMethods.Ajax.timeout_id);
-                            that.count = 0;
-                            that.flagResponse = false;
-                            if(that.turn.length){
-                                that.takeFromTurn();
-                            }
-                            that.processingResponseFunction(requestObject.responseText, event);
-                            return;
-                        }
-
-                        if (requestObject.readyState == 4  &&  (requestObject.status > 400 && requestObject.status < 500))  {
-                            event.answerCondition = 'noPagetError';
-                            that.isGetRequest = true;
-                            clearTimeout(borrowedMethods.Ajax.timeout_id);
-                            that.count = 0;
-                            that.flagResponse = false;
-                            if(that.turn.length){
-                                that.takeFromTurn();
-                            }
-                            that.processingResponseFunction(requestObject.responseText, event);
-                            return;
-                        }
-
-                        if (requestObject.readyState == 4  &&  requestObject.status > 500 )  {
-                            event.answerCondition = 'AjaxServerError';
-                            that.isGetRequest = true;
-                            clearTimeout(borrowedMethods.Ajax.timeout_id);
-                            that.count = 0;
-                            that.flagResponse = false;
-                            if(that.turn.length){
-                                that.takeFromTurn();
-                            }
-                            that.processingResponseFunction(requestObject.responseText, event);
-                            return;
-                        }
-
-
-                    };
-
-                    requestObject.open("POST", event.nameServerScript, true);
-                    requestObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded","Cache-Control: no-store, no-cache, must-revalidate");
-                    requestObject.send(request);
-
-                    borrowedMethods.Ajax.flagResponse = true;
-                    borrowedMethods.Ajax.isGetRequest = false;
-
-
-                    borrowedMethods.Ajax.timeout_id = setTimeout( function(){
-                        if(!that.isGetRequest  &&  that.count < 5){
-                            that.flagResponse = false;
-                            requestObject.abort();
-                            that.count++;
-                            that.sendAjax(event);
-
-                        }
-                        else{
-                            requestObject.abort();
-                            that.count = 0;
-                            that.flagResponse = false;
-                            event.answerCondition = 'exceededSendAjax';
-                            that.processingResponseFunction("", event);
-                            that.takeFromTurn();
-
-                        }
-                    },10000);
-                }
-
-                if(event.typeRequest == 'GET'){
-
-                }
-            }
-
-            /**
-             * Сбросить счётчик запросов
-             * Сбросить флаг запросов
-             * Сгенерировать событие ошибки
-             * Отправить след. запрос из очереди если он существует
-             */
-            else{
-                borrowedMethods.Ajax.count = 0;
-                borrowedMethods.Ajax.flagResponse = true;
-                borrowedMethods.Ajax.takeFromTurn();
-                event.answerCondition = 'serverErrorAjax';
-                that.processingResponseFunction("", event);
-            }
-        }
-        else{
-            /**
-             * Сбросить счётчик запросов
-             * Сбросить флаг запросов
-             * Сгенерировать событие ошибки cоздания  XHR объекта
-             */
-            borrowedMethods.Ajax.count = 0;
-            borrowedMethods.Ajax.flagResponse = true;
-            event.answerCondition = 'errorCreateXHRObject';
-            that.processingResponseFunction("", event);
-        }
-    },
-
-    /**
-     * @property turn
-     * @description очередь
-     */
-    turn:[],
-
-    /**
-     * @property isGetRequest
-     * @description указатель получения ответа
-     */
-    isGetRequest : false,
-
-    /**
-     * @property count
-     * @description Счётчик неудачных попыток запроса
-     */
-    count:0,
-
-    /**
-     * @property flagResponse
-     * @description Флаг состояния запроса
-     */
-    flagResponse:false,
-
-    /**
-     * @land putInTurn
-     * @param {Object} event Объект события
-     * @description Поставить Аякс запрос в очередь
-     */
-    putInTurn :function(event){
-        /** Если массива очередь не существует созать его */
-        if(!this.turn) this.turn = [];
-        this.turn.push(event);
-    },
-
-    /**
-     * @land takeFromTurn
-     * @description Отправить первый запрос из очереди
-     */
-    takeFromTurn : function(){
-        /** Если в очереди есть запросы отправить первый из них */
-        if(this.turn ){
-            var ajaxEvent = this.turn.shift();
-            if(ajaxEvent){
-                this.sendAjax(ajaxEvent);
-            }
-        }
-    },
-
-    /**
-     * @land setAjaxRequestObject
-     * @description  Создать XHR объект
-     * @return {Object} Возвращает XHR объект , либо null в случае неудачи
-     */
-    setAjaxRequestObject : function(){
-        var req;
-        if (window.XMLHttpRequest) req = new XMLHttpRequest();
-        else{
-            if (window.ActiveXObject){
-                try{
-                    req = new ActiveXObject('Msxml2.XMLHTTP');
-                }
-                catch (e){
-                    try{
-                        req = new ActiveXObject('Microsoft.XMLHTTP');
-                    }
-                    catch (e){
-
-                        return null;
-                    }
-                }
-            }
-        }
-
-        return  req;
-    },
-
-    /**
-     * @land processingResponseFunction
-     * @description  Обрабатывает Аякс ответ, Передаёт ответ всем модулям слушающим события модуля какому пришел ответ
-     */
-    processingResponseFunction : function(response, event){
-        event.eventType = 'getDataFromServer';
-        event.information = response;
-        modulesStudents.getModuleDevelopments(event);
-
-    }
-};
