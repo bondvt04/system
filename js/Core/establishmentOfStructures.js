@@ -10,7 +10,7 @@ Module.prototype.setAsParentFor = function (){     // назначить род�
     var parentModuleName = this._moduleName;
     var children =  this._familyTree.children;
     var chaildModuleName;
-    var chaildModuleEvents;
+    var chaildModule;
 
     for (var lengthArrayModules = arrayModules.length; lengthArrayModules--;){
 
@@ -20,33 +20,32 @@ Module.prototype.setAsParentFor = function (){     // назначить род�
 
         if(children.indexOf(chaildModuleName) == -1 ){
 
-            chaildModuleEvents=  arrayModules[lengthArrayModules].events;
+            chaildModule=  arrayModules[lengthArrayModules];
 
-            if(parentEvents.beforeSetAsParent){
-                parentEvents.beforeSetAsParent();
-            }
 
-            if(parentEvents.beforeSetСhild){
-                parentEvents.beforeSetСhild();
-            }
-            if(chaildModuleEvents.beforeSetParent){
-                chaildModuleEvents.beforeSetParent();
-            }
+            this.doEvent('beforeSetAsParent');
+            this.doEventAfterStandartEvent('beforeSetAsParent');
+
+            this.doEvent('beforeSetСhild');
+            this.doEventAfterStandartEvent('beforeSetСhild');
+
+            chaildModule.doEvent('beforeSetParent');
+            chaildModule.doEventAfterStandartEvent('beforeSetParent');
 
             children.push(chaildModuleName);
 
 
             arrayModules[lengthArrayModules]._familyTree.parent = parentModuleName;
 
-            if(parentEvents.afterSetСhild){
-                parentEvents.afterSetСhild();
-            }
-            if(chaildModuleEvents.afterSetParent){
-                chaildModuleEvents.afterSetParent();
-            }
-            if(parentEvents.afterSetAsParent){
-                parentEvents.afterSetAsParent();
-            }
+            this.doEvent('afterSetСhild');
+            this.doEventAfterStandartEvent('afterSetСhild');
+
+            chaildModule.doEvent('afterSetParent');
+            chaildModule.doEventAfterStandartEvent('afterSetParent');
+
+            this.doEvent('afterSetAsParent');
+            this.doEventAfterStandartEvent('afterSetAsParent');
+
         }
     }
     return this;
@@ -66,29 +65,26 @@ Module.prototype.setAsСhildFor = function (module){   // назначить п�
 
     if(children.indexOf(chaildModuleName) == -1 ){
 
-        if(parentModuleEvents.beforeSetAsParent){
-            parentModuleEvents.beforeSetAsParent();
-        }
+        module.doEvent('beforeSetAsParent');
+        module.doEventAfterStandartEvent('beforeSetAsParent');
 
-        if(parentModuleEvents.beforeSetСhild){
-            parentModuleEvents.beforeSetСhild();
-        }
-        if(chaildEvents.beforeSetParent){
-            chaildEvents.beforeSetParent();
-        }
+        module.doEvent('beforeSetСhild');
+        module.doEventAfterStandartEvent('beforeSetСhild');
+
+        this.doEvent('beforeSetParent');
+        this.doEventAfterStandartEvent('beforeSetParent');
 
         this._familyTree.parent = chaildModuleName;
         children.push(chaildModuleName);
 
-        if(parentModuleEvents.afterSetСhild){
-            parentModuleEvents.afterSetСhild();
-        }
-        if(chaildEvents.afterSetParent){
-            chaildEvents.afterSetParent();
-        }
-        if(parentModuleEvents.afterSetAsParent){
-            parentModuleEvents.afterSetAsParent();
-        }
+        this.doEvent('afterSetСhild');
+        this.doEventAfterStandartEvent('afterSetСhild');
+
+        this.doEvent('afterSetParent');
+        this.doEventAfterStandartEvent('afterSetParent');
+
+        module.doEvent('afterSetAsParent');
+        module.doEventAfterStandartEvent('afterSetAsParent');
     }
 
     return this;
@@ -305,22 +301,19 @@ Module.prototype.removeParent = function (){
 
             if(moduleName == chailds[lengthChailds]){
 
-                if(parentEvents.beforeRemoveСhild){
-                    parentEvents.beforeRemoveСhild();
-                }
+                parentModule.doEvent('beforeRemoveСhild');
+                parentModule.doEventAfterStandartEvent('beforeRemoveСhild');
 
-                if(thisEvents.beforeRemoveParent){
-                    thisEvents.beforeRemoveParent();
-                }
+                this.doEvent('beforeRemoveParent');
+                this.doEventAfterStandartEvent('beforeRemoveParent');
 
                 chailds.splice(lengthChailds, 1);
 
-                if(thisEvents.afterRemoveParent){
-                    thisEvents.afterRemoveParen();
-                }
-                if(parentEvents.afterRemoveСhild){
-                    parentEvents.afterRemoveСhild();
-                }
+                this.doEvent('afterRemoveParent');
+                this.doEventAfterStandartEvent('afterRemoveParent');
+
+                parentModule.doEvent('afterRemoveСhild');
+                parentModule.doEventAfterStandartEvent('afterRemoveСhild');
 
                 break;
             }
@@ -336,33 +329,31 @@ Module.prototype.removeСhild = function (modules){
     var removeModuleName = modules._moduleName;
     var chailds = this._familyTree.children;
     var parentEvents = this.events;
-    var childEvents;
+    var child;
     var arrayModules = arguments;
 
     for (var lengthArrayModules = arrayModules.length; lengthArrayModules--;){
 
-        childEvents = arrayModules[lengthArrayModules].events;
+        child = arrayModules[lengthArrayModules];
         for (var lengthChailds = chailds.length; lengthChailds --;) {
 
             if(chailds[lengthChailds] == removeModuleName){
 
-                if(parentEvents.beforeRemoveСhild){
-                    parentEvents.beforeRemoveСhild();
-                }
-                if(childEvents.beforeRemoveParent){
-                    childEvents.beforeRemoveParent();
-                }
+                this.doEvent('beforeRemoveСhild');
+                this.doEventAfterStandartEvent('beforeRemoveСhild');
+
+                child.doEvent('beforeRemoveParent');
+                child.doEventAfterStandartEvent('beforeRemoveParent');
 
                 chailds.splice(lengthChailds, 1);
 
                 Modules[arrayModules[lengthArrayModules]]._familyTree.parent = null;
 
-                if(childEvents.afterRemoveParent){
-                    childEvents.afterRemoveParen();
-                }
-                if(parentEvents.afterRemoveСhild){
-                    parentEvents.afterRemoveСhild();
-                }
+                child.doEvent('afterRemoveParent');
+                child.doEventAfterStandartEvent('afterRemoveParent');
+
+                this.doEvent('afterRemoveСhild');
+                this.doEventAfterStandartEvent('afterRemoveСhild');
 
                 break;
             }
@@ -376,30 +367,28 @@ Module.prototype.removeAllСhildren = function (){
 
     var children = this._familyTree.children;
     var parentEvents = this.events;
-    var childEvents;
+    var child;
     var childModule;
 
     for(var lengthChailds = children.length; lengthChailds --;){
 
         childModule = Modules[arrayModules[lengthArrayModules]];
-        childEvents = childModule.events;
+        child = childModule;
 
-        if(parentEvents.beforeRemoveСhild){
-            parentEvents.beforeRemoveСhild();
-        }
-        if(childEvents.beforeRemoveParent){
-            childEvents.beforeRemoveParent();
-        }
+        this.doEvent('beforeRemoveСhild');
+        this.doEventAfterStandartEvent('beforeRemoveСhild');
+
+        child.doEvent('beforeRemoveParent');
+        child.doEventAfterStandartEvent('beforeRemoveParent');
 
         children.splice(lengthChailds, 1);
         childModule._familyTree.parent = null;
 
-        if(childEvents.afterRemoveParent){
-            childEvents.afterRemoveParen();
-        }
-        if(parentEvents.afterRemoveСhild){
-            parentEvents.afterRemoveСhild();
-        }
+        child.doEvent('afterRemoveParent');
+        child.doEventAfterStandartEvent('afterRemoveParent');
+
+        this.doEvent('afterRemoveСhild');
+        this.doEventAfterStandartEvent('afterRemoveСhild');
     }
 
     return this;
