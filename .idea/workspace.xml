@@ -23,10 +23,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="listeners.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/js/Core/listeners.js">
+      <file leaf-file-name="moduleEvents.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/Core/moduleEvents.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="354" column="60" selection-start="9839" selection-end="9839" vertical-scroll-proportion="0.9319728" vertical-offset="4473" max-vertical-offset="6255">
+            <state line="258" column="8" selection-start="6367" selection-end="6367" vertical-scroll-proportion="-1.2278912" vertical-offset="4953" max-vertical-offset="5835">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workWithModuleData.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/Core/workWithModuleData.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="63" column="15" selection-start="1553" selection-end="1553" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3660">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workWithView.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/Core/workWithView.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="191" column="0" selection-start="5474" selection-end="5474" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4065">
               <folding />
             </state>
           </provider>
@@ -53,11 +71,11 @@
         <option value="$PROJECT_DIR$/Modules/mod/index.js" />
         <option value="$PROJECT_DIR$/js/Core/workWithView.js" />
         <option value="$PROJECT_DIR$/js/mainListener.js" />
-        <option value="$PROJECT_DIR$/js/Core/moduleEvents.js" />
         <option value="$PROJECT_DIR$/js/Core/core.js" />
         <option value="$PROJECT_DIR$/js/Core/ajax.js" />
         <option value="$PROJECT_DIR$/js/Core/establishmentOfStructures.js" />
         <option value="$PROJECT_DIR$/js/Core/listeners.js" />
+        <option value="$PROJECT_DIR$/js/Core/moduleEvents.js" />
       </list>
     </option>
   </component>
@@ -471,21 +489,9 @@
         <state line="43" column="40" selection-start="1190" selection-end="1190" vertical-scroll-proportion="0.63502824" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/Core/workWithModuleData.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="15" selection-start="1553" selection-end="1553" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Modules/mod/Modules/mod1/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="0" selection-start="472" selection-end="472" vertical-scroll-proportion="0.15306123" vertical-offset="0" max-vertical-offset="882">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/Core/workWithView.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="191" column="0" selection-start="5474" selection-end="5474" vertical-scroll-proportion="0.28798187" vertical-offset="2611" max-vertical-offset="4065">
           <folding />
         </state>
       </provider>
@@ -530,13 +536,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/Core/moduleEvents.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="352" column="57" selection-start="8254" selection-end="8254" vertical-scroll-proportion="0.0" vertical-offset="4863" max-vertical-offset="6060">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/ajax.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="298" column="0" selection-start="7903" selection-end="7903" vertical-scroll-proportion="0.0" vertical-offset="4271" max-vertical-offset="5445">
@@ -574,7 +573,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/listeners.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="354" column="60" selection-start="9839" selection-end="9839" vertical-scroll-proportion="0.9319728" vertical-offset="4473" max-vertical-offset="6255">
+        <state line="339" column="68" selection-start="9366" selection-end="9501" vertical-scroll-proportion="0.67687076" vertical-offset="4473" max-vertical-offset="6255">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Core/workWithModuleData.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="15" selection-start="1553" selection-end="1553" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3660">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Core/workWithView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="191" column="0" selection-start="5474" selection-end="5474" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4065">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Core/moduleEvents.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="258" column="8" selection-start="6367" selection-end="6367" vertical-scroll-proportion="-1.2278912" vertical-offset="4953" max-vertical-offset="5835">
           <folding />
         </state>
       </provider>

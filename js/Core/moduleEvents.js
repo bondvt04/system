@@ -3,10 +3,8 @@ Module.prototype.addEventListener = function(nameEvent, functionToEvent, eventAf
     var events = this.events;
     var newEvent =  events[nameEvent];
 
-    if(events.beforeAddEvent){
-        events.beforeAddEvent();
-    }
-
+    this.doEvent('beforeAddEvent');
+    this.doEventAfterStandartEvent('beforeAddEvent');
 
     if(!events.that){
 
@@ -28,9 +26,8 @@ Module.prototype.addEventListener = function(nameEvent, functionToEvent, eventAf
         };
     }
 
-    if(events.afterAddEvent){
-        events.afterAddEvent();
-    }
+    this.doEvent('afterAddEvent');
+    this.doEventAfterStandartEvent('afterAddEvent');
 
     return this;
 };
@@ -40,9 +37,8 @@ Module.prototype.removeEventListener = function(nameEvent){
     var events = this.events;
     var newEvent =  events[nameEvent];
 
-    if(events.beforeRemoveEvent){
-        events.beforeRemoveEvent();
-    }
+    this.doEvent('beforeRemoveEvent');
+    this.doEventAfterStandartEvent('beforeRemoveEvent');
 
     if(!newEvent){
         throw("event '"+ nameEvent +"'  is not exist");
@@ -51,9 +47,8 @@ Module.prototype.removeEventListener = function(nameEvent){
 
     delete newEvent;
 
-    if(events.afterRemoveEvent){
-        events.afterRemoveEvent();
-    }
+    this.doEvent('afterRemoveEvent');
+    this.doEventAfterStandartEvent('afterRemoveEvent');
 
     return this;
 
@@ -64,9 +59,8 @@ Module.prototype.changeEventListener = function(nameEvent, functionToEvent, even
     var events = this.events;
     var newEvent =  events[nameEvent];
 
-    if(events.beforeChangeEvent){
-        events.beforeChangeEvent();
-    }
+    this.doEvent('beforeChangeEvent');
+    this.doEventAfterStandartEvent('beforeChangeEvent');
 
     if(!newEvent){
 
@@ -79,9 +73,8 @@ Module.prototype.changeEventListener = function(nameEvent, functionToEvent, even
     functionToEvent && (newEvent.functionToEvent = functionToEvent);
     newEvent.that = this;
 
-    if(events.afterChangeEvent){
-        events.afterChangeEvent();
-    }
+    this.doEvent('afterChangeEvent');
+    this.doEventAfterStandartEvent('afterChangeEvent');
 
     return this;
 };
@@ -152,12 +145,11 @@ Module.prototype.getAllListenersName = function(){
 
 Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent){
 
-            var events = this.events;
+        var events = this.events;
         var userEventsTable = events.userEventsTable;
 
-            if(events.beforeAddViewEvent){
-                events.beforeAddViewEvent();
-            }
+            this.doEvent('beforeAddViewEvent');
+            this.doEventAfterStandartEvent('beforeAddViewEvent');
 
             var elementOfView = userEventsTable[eLement];
 
@@ -174,21 +166,19 @@ Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent
 
             elementOfView[userEvent] = moduleEvent;
 
-            if(events.afterAddViewEvent){
-                events.afterAddViewEvent();
-            }
+            this.doEvent('afterAddViewEvent');
+            this.doEventAfterStandartEvent('afterAddViewEvent');
 
             return this;
     };
 
     Module.prototype.removeViewEventListenerFromElement = function(eLement, userEvent){
 
-            var events = this.events;
+        var events = this.events;
         var userEventsTable = events.userEventsTable;
 
-            if(events.beforeRemoveViewEvent){
-                events.beforeRemoveViewEvent();
-            }
+        this.doEvent('beforeRemoveViewEvent');
+        this.doEventAfterStandartEvent('beforeRemoveViewEvent');
 
             if(!userEventsTable){
 
@@ -214,9 +204,8 @@ Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent
 
             delete event;
 
-            if(events.afterRemoveViewEvent){
-                events.afterRemoveViewEvent();
-            }
+        this.doEvent('afterRemoveViewEvent');
+        this.doEventAfterStandartEvent('afterRemoveViewEvent');
 
         };
 
@@ -225,9 +214,8 @@ Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent
         var events = this.events;
         var userEventsTable = events.userEventsTable;
 
-        if(events.beforeRemoveViewAllEvents){
-            events.beforeRemoveViewAllEvents();
-        }
+        this.doEvent('beforeRemoveViewAllEvents');
+        this.doEventAfterStandartEvent('beforeRemoveViewAllEvents');
 
         if(!userEventsTable){
 
@@ -245,9 +233,8 @@ Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent
 
         delete elementOfView;
 
-        if(events.afterRemoveViewAllEvents){
-            events.afterRemoveViewAllEvents();
-        }
+        this.doEvent('afterRemoveViewAllEvents');
+        this.doEventAfterStandartEvent('afterRemoveViewAllEvents');
 
     };
 
@@ -257,9 +244,8 @@ Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent
         var events = this.events;
         var userEventsTable = events.userEventsTable;
 
-        if(events.beforeChangeViewEvent){
-            events.beforeChangeViewEvent();
-        }
+        this.doEvent('beforeChangeViewEvent');
+        this.doEventAfterStandartEvent('beforeChangeViewEvent');
 
         if(!(events || events.userEventsTable || events.userEventsTable[eLement] || events.userEventsTable[eLement][userEvent])){
 
@@ -270,9 +256,8 @@ Module.prototype.addViewEventListener = function(eLement, userEvent, moduleEvent
 
         events.userEventsTable[eLement][userEvent]  = moduleEvent;
 
-        if(events.afterChangeViewEvent){
-            events.afterChangeViewEvent();
-        }
+        this.doEvent('afterChangeViewEvent');
+        this.doEventAfterStandartEvent('afterChangeViewEvent');
 
         return this;
     };
