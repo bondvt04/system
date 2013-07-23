@@ -109,9 +109,7 @@ Module.prototype.getServerResponse = function(event){
 
                 if (requestObject.readyState == 4  &&  requestObject.status == 200)  {
 
-                    if(that.afterGetAjaxResponse){
-                        that.afterGetAjaxResponse(requestObject);
-                    }
+                    that.doEvent('afterGetAjaxResponse');
 
                     response = requestObject.responseText;
 
@@ -131,7 +129,7 @@ Module.prototype.getServerResponse = function(event){
                         that.getResponse(response);
                     }
 
-                    that.doEventAfterStandartEvent('getServerResponse');
+                    that.doEventAfterStandartEvent('getResponse');
 
 
                 }
@@ -208,10 +206,7 @@ Module.prototype.getServerResponse = function(event){
                     requestObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded","Cache-Control: no-store, no-cache, must-revalidate");
                     requestObject.send('sendData=' + ajaxData.dataToSend);
 
-                    if(that.afterSendAjax){
-                        that.afterSendAjax();
-                    }
-
+                    that.doEvent('afterSendAjax');
                     that.doEventAfterStandartEvent('afterSendAjax');
 
                 }
@@ -225,10 +220,7 @@ Module.prototype.getServerResponse = function(event){
                     requestObject.onreadystatechange = setOnReadyState;
                     requestObject.send(null);
 
-                    if(that.afterSendAjax){
-                        that.afterSendAjax();
-                    }
-
+                    that.doEvent('afterSendAjax');
                     that.doEventAfterStandartEvent('afterSendAjax');
                 }
 

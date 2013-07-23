@@ -23,36 +23,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="core.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/js/Core/core.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="519" column="4" selection-start="12284" selection-end="12284" vertical-scroll-proportion="0.32681242" vertical-offset="7501" max-vertical-offset="10155">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ajax.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ajax.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/Core/ajax.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="133" column="38" selection-start="3290" selection-end="3342" vertical-scroll-proportion="0.0" vertical-offset="1395" max-vertical-offset="5310">
+            <state line="298" column="0" selection-start="7903" selection-end="7903" vertical-scroll-proportion="0.17721519" vertical-offset="4271" max-vertical-offset="5445">
               <folding>
-                <element signature="e#7734#7799#0" expanded="false" />
-                <element signature="e#7845#7946#0" expanded="false" />
-                <element signature="e#8011#8111#0" expanded="false" />
-                <element signature="e#8177#8267#0" expanded="false" />
-                <element signature="e#8511#8634#0" expanded="false" />
-                <element signature="e#8785#8822#0" expanded="false" />
+                <element signature="e#8481#8514#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="moduleEvents.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/Core/moduleEvents.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="352" column="57" selection-start="8254" selection-end="8254" vertical-scroll-proportion="0.0" vertical-offset="4863" max-vertical-offset="6060">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -79,10 +56,10 @@
         <option value="$PROJECT_DIR$/Modules/mod/Modules/mod1/index.js" />
         <option value="$PROJECT_DIR$/Modules/mod/index.js" />
         <option value="$PROJECT_DIR$/js/Core/workWithView.js" />
-        <option value="$PROJECT_DIR$/js/Core/ajax.js" />
         <option value="$PROJECT_DIR$/js/mainListener.js" />
         <option value="$PROJECT_DIR$/js/Core/moduleEvents.js" />
         <option value="$PROJECT_DIR$/js/Core/core.js" />
+        <option value="$PROJECT_DIR$/js/Core/ajax.js" />
       </list>
     </option>
   </component>
@@ -567,20 +544,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/Core/ajax.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="133" column="38" selection-start="3290" selection-end="3342" vertical-scroll-proportion="0.0" vertical-offset="1395" max-vertical-offset="5310">
-          <folding>
-            <element signature="e#7734#7799#0" expanded="false" />
-            <element signature="e#7845#7946#0" expanded="false" />
-            <element signature="e#8011#8111#0" expanded="false" />
-            <element signature="e#8177#8267#0" expanded="false" />
-            <element signature="e#8511#8634#0" expanded="false" />
-            <element signature="e#8785#8822#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/moduleEvents.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="352" column="57" selection-start="8254" selection-end="8254" vertical-scroll-proportion="0.0" vertical-offset="4863" max-vertical-offset="6060">
@@ -590,8 +553,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/core.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="519" column="4" selection-start="12284" selection-end="12284" vertical-scroll-proportion="0.32681242" vertical-offset="7501" max-vertical-offset="10155">
+        <state line="521" column="40" selection-start="12289" selection-end="12392" vertical-scroll-proportion="0.36133486" vertical-offset="7501" max-vertical-offset="10155">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Core/ajax.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="298" column="0" selection-start="7903" selection-end="7903" vertical-scroll-proportion="0.17721519" vertical-offset="4271" max-vertical-offset="5445">
+          <folding>
+            <element signature="e#8481#8514#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
