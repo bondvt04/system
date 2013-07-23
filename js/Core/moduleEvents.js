@@ -356,6 +356,19 @@ Module.prototype.doEventForOtherModule= function(module, event,data){
     return this;
 };   // выполнить событие для другого модуля
 
+
+Module.prototype.doEventAfterStandartEvent = function(that, event){
+
+    if(that.events[event] && that.events[event].eventAfterEvent){
+
+        stackEvents.pushEvent({
+            eventType : this.events[event].eventAfterEvent,
+            moduleName : that._moduleName
+        });
+    }
+
+}; // выполнить событие подвязаное после этого события
+
 // события -до установки слушателя события -после       beforeAddModuleEvent    afterAddModuleEvent     beforeAddUserEvent  afterAddUserEvent
 // события -до удаления слушателя события -после     beforeRemoveModuleEvent  afterRemoveModuleEvent    beforeRemoveUserEvent    afterRemoveUserEvent
 // события -до изменения слушателя события -после   beforeChangeModuleEvent   afterChangeModuleEvent   beforeChangeUserEvent   afterChangeUserEvent
