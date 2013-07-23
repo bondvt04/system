@@ -146,6 +146,8 @@ Module.prototype.renderWithOutEventRendered= function(type){
                             dataToInsert = this.events.beforeInsertToTemplate(dataToInsert, this);
                         }
 
+                        this.doEventAfterStandartEvent('beforeInsertToTemplate');
+
                         templateLine =  templateLine + setDataToTemplate( this._template.textHTML[nameChildTemplates], dataToInsert, this);
                     }
                 }
@@ -160,6 +162,8 @@ Module.prototype.renderWithOutEventRendered= function(type){
                             dataToInsert = this.events.beforeInsertToTemplate(dataToInsert, this);
                         }
 
+                        this.doEventAfterStandartEvent('beforeInsertToTemplate');
+
                         templateLine =  templateLine + setDataToTemplate( this._template.textHTML[nameChildTemplates], dataToInsert, this);
                     }
                     else{
@@ -172,6 +176,8 @@ Module.prototype.renderWithOutEventRendered= function(type){
 
                             dataToInsert = this.events.beforeInsertToTemplate(dataToInsert, this);
                         }
+
+                        this.doEventAfterStandartEvent('beforeInsertToTemplate');
 
                         templateLine =  this._template.textHTML[nameChildTemplates].replace(reg ,dataToInsert).replace('{$this._moduleName}', this._moduleName);
                     }
@@ -219,6 +225,8 @@ Module.prototype.renderWithOutEventRendered= function(type){
 
             this.events.rendered(this._template.render);    //TODO а вот его можно преопределить обработчик этого события что дальше делать
         }
+
+        this.doEventAfterStandartEvent('rendered');
     }
 
     return template;
@@ -252,6 +260,9 @@ Module.prototype.setRenderAttribute = function(attr){
 
     return this;
 };
+
+
+//TODO Наверное событе ошибки загрузки шаблона ещё добавить
 
 //TODO при измении данных запускается рендер на модуле установленном в свойстве относительно какого модуля делать полный рендер   или его можно запускать в событии после измения всех данных
 //TODO связать с потомками , хотя и из шаблона можно понимать что потомок нужен

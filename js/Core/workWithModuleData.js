@@ -27,7 +27,6 @@ Module.prototype.set = function(data){
    if( brothers){
         for(var lengthBrothers = brothers.length; lengthBrothers-- ;){
 
-
             brothers[lengthBrothers].doEvent('beforeChangeBrotherly');
             brothers[lengthBrothers].doEventAfterStandartEvent('beforeChangeBrotherly');
         }
