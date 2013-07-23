@@ -132,7 +132,7 @@ var pageModules = {
 				stackEvents.pushEvent(newEvent);
 			}
 		}
-	},
+	}
 
 
 };
