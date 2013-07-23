@@ -357,13 +357,13 @@ Module.prototype.doEventForOtherModule= function(module, event,data){
 };   // выполнить событие для другого модуля
 
 
-Module.prototype.doEventAfterStandartEvent = function(that, event){
+Module.prototype.doEventAfterStandartEvent = function(event){
 
-    if(that.events[event] && that.events[event].eventAfterEvent){
+    if(this.events[event] && this.events[event].eventAfterEvent){
 
         stackEvents.pushEvent({
             eventType : this.events[event].eventAfterEvent,
-            moduleName : that._moduleName
+            moduleName : this._moduleName
         });
     }
 

@@ -39,11 +39,17 @@ Module.prototype.getServerResponse = function(event){
 
             ajaxData.dataToSend =  this.beforeSendAjaxRequest(this._attributes);
 
+            that.doEventAfterStandartEvent('beforeSendAjaxRequest');
+
             if(this.changeSendAjaxRequest){
 
                 ajaxData.dataToSend =  this.changeSendAjaxRequest(ajaxData.dataToSend);
+
+                that.doEventAfterStandartEvent('changeSendAjaxRequest');
             }
         }
+
+
 
         if(event){
              if(event.dataForEvent){
@@ -125,17 +131,9 @@ Module.prototype.getServerResponse = function(event){
                         that.getResponse(response);
                     }
 
-                    if(that.events.getServerResponse && that.events.getServerResponse.eventAfterEvent){
+                    that.doEventAfterStandartEvent('getServerResponse');
 
-                        stackEvents.pushEvent({
-                            eventType : this.events.getServerResponse.eventAfterEvent,
-                            moduleName : that._moduleName
-                        });
-                    }
-                    else{
 
-                        return null;
-                    }
                 }
 
                 if (requestObject.readyState == 4  &&  (requestObject.status > 400 && requestObject.status < 500))  {
@@ -161,17 +159,9 @@ Module.prototype.getServerResponse = function(event){
                         setTimeout(function(){that.getError400(response)},0);
                     }
 
-                    if(that.events.getError400 && that.events.getError400.eventAfterEvent){
+                    that.doEventAfterStandartEvent('getError400');
 
-                        stackEvents.pushEvent({
-                            eventType : this.events.getError400.eventAfterEvent,
-                            moduleName : that._moduleName
-                        });
-                    }
-                    else{
 
-                        return null;
-                    }
                 }
 
                 if (requestObject.readyState == 4  &&  requestObject.status > 500 )  {
@@ -197,17 +187,9 @@ Module.prototype.getServerResponse = function(event){
                         setTimeout(function(){that.getError400(response)},0);
                     }
 
-                    if(that.events.getError500 && that.events.getError500.eventAfterEvent){
+                    that.doEventAfterStandartEvent('getError500');
 
-                        stackEvents.pushEvent({
-                            eventType : this.events.getError500.eventAfterEvent,
-                            moduleName : that._moduleName
-                        });
-                    }
-                    else{
 
-                        return null;
-                    }
                 }
             }
 
@@ -230,6 +212,8 @@ Module.prototype.getServerResponse = function(event){
                         that.afterSendAjax();
                     }
 
+                    that.doEventAfterStandartEvent('afterSendAjax');
+
                 }
 
 
@@ -244,6 +228,8 @@ Module.prototype.getServerResponse = function(event){
                     if(that.afterSendAjax){
                         that.afterSendAjax();
                     }
+
+                    that.doEventAfterStandartEvent('afterSendAjax');
                 }
 
             }
