@@ -21,7 +21,7 @@ Module.prototype.addEventListener = function(nameEvent, functionToEvent, eventAf
         newEvent.that = this;
     }
     else{
-        newEvent = {
+        events[nameEvent] = {
             'functionToEvent' : functionToEvent,
             'eventsAfterEvent' : eventAfterEvent,
             'that': this

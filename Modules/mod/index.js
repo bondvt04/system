@@ -7,7 +7,7 @@ Modules.mod.set({dataOne: [{a:10},{a:20}]});
 Modules.mod.set({dataTwo: 'start'});
 Modules.mod.setContainer('kontainer');
 
-Modules.mod.setRenderAttribute('thisRendering');
+//Modules.mod.setRenderAttribute('thisRendering');
 
 Modules.mod.setAsParentFor(Modules.mod1);
 

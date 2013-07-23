@@ -118,8 +118,7 @@ var pageModules = {
 
            var eventModule =  pageModules.modules[module].events.userEventsTable[viewElement][eventType];
 
-			var newEvent = pageModules.modules[module].events[eventModule].functionToEvent(event);
-
+           var newEvent = pageModules.modules[module].events[eventModule].functionToEvent(event);
 
 			if(newEvent){			// нужны ли автозапуски если есть генерация событий ?
 				stackEvents.pushEvent(newEvent);
