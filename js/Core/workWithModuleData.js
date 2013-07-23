@@ -4,7 +4,7 @@ Module.prototype.set = function(data){
 
     var moduleEvents = this.events;
 
-    var parentEvents = this._familyTree.parent && this._familyTree.parent.events;
+    var parent = this._familyTree.parent;
 
     this._attributes.changed = {};
     this._attributes.changed.that = this;
@@ -13,11 +13,13 @@ Module.prototype.set = function(data){
     var brothers;
     var moduleAttributes =  this._attributes;
 
-    parentEvents && parentEvents.beforeChange && parentEvents.beforeChange();
+    if(parent){
+        parent.doEvent('beforeChildChange');
+        parent.doEventAfterStandartEvent('beforeChildChange');
+    }
 
-
-
-    moduleEvents &&moduleEvents.beforeChange && moduleEvents.beforeChange();
+    this.doEvent('beforeChange');
+    this.doEventAfterStandartEvent('beforeChange');
 
 
    brothers = this.getAllBrotherlyModules();
@@ -25,7 +27,9 @@ Module.prototype.set = function(data){
    if( brothers){
         for(var lengthBrothers = brothers.length; lengthBrothers-- ;){
 
-            brothers[lengthBrothers].events && brothers[lengthBrothers].events.afterChangeBrotherly && brothers[lengthBrothers].events.afterChangeBrotherly();
+
+            brothers[lengthBrothers].doEvent('beforeChangeBrotherly');
+            brothers[lengthBrothers].doEventAfterStandartEvent('beforeChangeBrotherly');
         }
    }
 
@@ -50,10 +54,13 @@ Module.prototype.set = function(data){
 
    if(isChange){
 
-       parentEvents &&parentEvents.afterChildChange && parentEvents.afterChildChange();
+       if(parent){
+           parent.doEvent('afterChildChange');
+           parent.doEventAfterStandartEvent('afterChildChange');
+       }
 
-       moduleEvents &&moduleEvents.afterChange && moduleEvents.afterChange();
-
+       this.doEvent('afterChange');
+       this.doEventAfterStandartEvent('afterChange');
 
        brothers = this.getAllBrotherlyModules();
 
@@ -61,7 +68,8 @@ Module.prototype.set = function(data){
 
            for(lengthBrothers = brothers.length; lengthBrothers-- ;){
 
-               brothers[lengthBrothers].events && brothers[lengthBrothers].events.afterChangeBrotherly && brothers[lengthBrothers].events.afterChangeBrotherly();
+               brothers[lengthBrothers].doEvent('afterChangeBrotherly');
+               brothers[lengthBrothers].doEventAfterStandartEvent('afterChangeBrotherly');
            }
        }
 
@@ -177,8 +185,9 @@ Module.prototype.Validate = function(data, selectors){
 
 
     var events = this.events;
-    events.beforeValidation && events.beforeValidation(data);
 
+    this.doEvent('beforeValidation');
+    this.doEventAfterStandartEvent('beforeValidation');
 
 
     var validateData = selectors  ? selectors : this._attributes;
@@ -189,18 +198,23 @@ Module.prototype.Validate = function(data, selectors){
 
         if(validateData[name] && validateFunctions[name]){
 
-            events['beforeValidation_'+name] && events['beforeValidation_'+name]();
+            this.doEvent('beforeValidation_'+name);
+            this.doEventAfterStandartEvent('beforeValidation_'+name);
 
             if(validateFunctions[name](data[name])){
 
-                events['SuссessValidation_'+name] && events['SuссessValidation_'+name]();
+                this.doEvent('SuссessValidation_'+name);
+                this.doEventAfterStandartEvent('SuссessValidation_'+name);
 
-                events['afterValidation_'+name] && events['afterValidation_'+name]();
+                this.doEvent('afterValidation_'+name);
+                this.doEventAfterStandartEvent('afterValidation_'+name);
             }
             else{
 
                 validationSuccess = false;
-                events['ErrorValidation_'+name] && events['ErrorValidation_'+name]();
+
+                this.doEvent('ErrorValidation_'+name);
+                this.doEventAfterStandartEvent('ErrorValidation_'+name);
             }
 
         }
@@ -208,14 +222,17 @@ Module.prototype.Validate = function(data, selectors){
 
     if(validationSuccess) {
 
-        events.SuссessValidation && events.SuссessValidation();
+        this.doEvent('SuсessValidation');
+        this.doEventAfterStandartEvent('SuссessValidation');
     }
     else{
 
-        events.ErrorValidation && events.ErrorValidation();
+        this.doEvent('ErrorValidation');
+        this.doEventAfterStandartEvent('ErrorValidation');
     }
 
-    events.afterValidation && events.afterValidation(data);
+    this.doEvent('afterValidation');
+    this.doEventAfterStandartEvent('afterValidation');
 
 
    return  validationSuccess;
