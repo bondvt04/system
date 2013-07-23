@@ -7,21 +7,26 @@ Module.prototype.addEventListener = function(nameEvent, functionToEvent, eventAf
         events.beforeAddEvent();
     }
 
-    if(newEvent){
-        tr("event '"+ nameEvent +"'  is exist");
-        return this;
-    }
 
     if(!events.that){
 
         events.that = this;
     }
 
-    events[nameEvent] = {
-        'functionToEvent' : functionToEvent,
-        'eventsAfterEvent' : eventAfterEvent,
-        'that': this
-    };
+
+    if(newEvent){
+
+        eventsAfterEvent && (newEvent.eventsAfterEvent = eventsAfterEvent);
+        functionToEvent && (newEvent.functionToEvent = functionToEvent);
+        newEvent.that = this;
+    }
+    else{
+        newEvent = {
+            'functionToEvent' : functionToEvent,
+            'eventsAfterEvent' : eventAfterEvent,
+            'that': this
+        };
+    }
 
     if(events.afterAddEvent){
         events.afterAddEvent();
@@ -70,11 +75,9 @@ Module.prototype.changeEventListener = function(nameEvent, functionToEvent, even
         return this;
     }
 
-    newEvent = {
-        'functionToEvent' : functionToEvent,
-        'eventAfterEvent' : eventAfterEvent,
-        'that': this
-    };
+    eventsAfterEvent && (newEvent.eventsAfterEvent = eventsAfterEvent);
+    functionToEvent && (newEvent.functionToEvent = functionToEvent);
+    newEvent.that = this;
 
     if(events.afterChangeEvent){
         events.afterChangeEvent();
