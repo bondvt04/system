@@ -22,7 +22,7 @@ Module.prototype.addModulesToAudition = function(){
 
     var events = this.events;
     var listenersArray = this._listeningsModules;
-    var moduleEvents;
+    var _module;
     var listenerIsset = false;
     var module;
 
@@ -51,26 +51,23 @@ Module.prototype.addModulesToAudition = function(){
         if(!listenerIsset){
 
             listenerIsset = false;
-            moduleEvents =  modules[lengthModules].events;
+            _module =  modules[lengthModules];
 
-            if(events.beforeAddAuditionModule){
-                events.beforeAddAuditionModule();
-            }
+            this.doEvent('beforeAddAuditionModule');
+            this.doEventAfterStandartEvent('beforeAddAuditionModule');
 
-            if(moduleEvents.beforeAddAuditionModuleToOtherModule){
-                moduleEvents.beforeAddAuditionModuleToOtherModule();
-            }
+            _module.doEvent('beforeAddAuditionModuleToOtherModule');
+            _module.doEventAfterStandartEvent('beforeAddAuditionModuleToOtherModule');
 
             listenersArray.push(module);
 
             this.addAuditionToList(module);
 
-            if(moduleEvents.afterAddAuditionModuleToOtherModule){
-                moduleEvents.afterAddAuditionModuleToOtherModule();
-            }
-            if(events.afterAddAuditionModule){
-                events.afterAddAuditionModule();
-            }
+            _module.doEvent('afterAddAuditionModuleToOtherModule');
+            _module.doEventAfterStandartEvent('afterAddAuditionModuleToOtherModule');
+
+            this.doEvent('afterAddAuditionModule');
+            this.doEventAfterStandartEvent('afterAddAuditionModule');
         }
     }
 
@@ -82,7 +79,7 @@ Module.prototype.removeModulesFomAudition = function(){
     var events = this.events;
     var listenersArray = this._listeningsModules;
     var index;
-    var moduleEvents;
+
     var module;
 
     var modules = arguments;
@@ -97,23 +94,22 @@ Module.prototype.removeModulesFomAudition = function(){
 
                 if( listenersArray[lenghtListenersArray] == module){
 
-                    moduleEvents = module.events;
+                    this.doEvent('beforeRemoveModuleFromAudition');
+                    this.doEventAfterStandartEvent('beforeRemoveModuleFromAudition');
 
-                    if(events.beforeRemoveModuleFromAudition){
-                        events.beforeRemoveModuleFromAudition();
-                    }
-
-                    if(moduleEvents.beforeRemoveModuleFromAuditionOtherModule){
-                        moduleEvents.beforeRemoveModuleFromAuditionOtherModule();
-                    }
+                    module.doEvent('beforeRemoveModuleFromAuditionOtherModule');
+                    module.doEventAfterStandartEvent('beforeRemoveModuleFromAuditionOtherModule');
 
                     this.removeAuditionFromList(module);
 
                     listenersArray.splice(lenghtListenersArray, 1);
 
-                    if(moduleEvents.afterRemoveModuleFromAuditionOtherModule){
-                        moduleEvents.afterRemoveModuleFromAuditionOtherModule();
-                    }
+                    module.doEvent('afterRemoveModuleFromAuditionOtherModule');
+                    module.doEventAfterStandartEvent('afterRemoveModuleFromAuditionOtherModule');
+
+                    this.doEvent('afterRemoveModuleFromAudition');
+                    this.doEventAfterStandartEvent('afterRemoveModuleFromAudition');
+
 
                     break;
                 }
@@ -129,7 +125,7 @@ Module.prototype.removeListenerFromModules = function(){
     var events = this.events;
 
     var listenersArray;
-    var moduleEvents;
+
     var module;
 
     var modules = arguments;
@@ -146,26 +142,21 @@ Module.prototype.removeListenerFromModules = function(){
 
                 if( listenersArray[lenghtListenersArray] == this){
 
-                    moduleEvents = module.events;
+                    this.doEvent('beforeRemoveModuleFromAuditionOtherModule');
+                    this.doEventAfterStandartEvent('beforeRemoveModuleFromAuditionOtherModule');
 
-                    if(events.beforeRemoveModuleFromAuditionOtherModule){
-                        events.beforeRemoveModuleFromAuditionOtherModule();
-                    }
-
-                    if(moduleEvents.beforeRemoveModuleFromAudition){
-                        moduleEvents.events.beforeRemoveModuleFromAudition();
-                    }
+                    module.doEvent('beforeRemoveModuleFromAudition');
+                    module.doEventAfterStandartEvent('beforeRemoveModuleFromAudition');
 
                     module.removeAuditionFromList(this);
 
                     listenersArray.splice(lenghtListenersArray, 1);
 
-                    if(moduleEvents.afterRemoveModuleFromAudition){
-                        moduleEvents.afterRemoveModuleFromAudition();
-                    }
-                    if(events.afterRemoveModuleFromAuditionOtherModule){
-                        events.afterRemoveModuleFromAuditionOtherModule();
-                    }
+                    module.doEvent('afterRemoveModuleFromAudition');
+                    module.doEventAfterStandartEvent('afterRemoveModuleFromAudition');
+
+                    this.doEvent('afterRemoveModuleFromAuditionOtherModule');
+                    this.doEventAfterStandartEvent('afterRemoveModuleFromAuditionOtherModule');
 
                     break;
                 }
@@ -184,7 +175,7 @@ Module.prototype.addModuleToListenersOtherModule = function(){
 
     var listenersArray;
     var listenerIsset = false;
-    var moduleEvents;
+    var _module;
     var listenersModule;
 
     var modules = arguments;
@@ -211,26 +202,23 @@ Module.prototype.addModuleToListenersOtherModule = function(){
             if(!listenerIsset){
 
                 listenerIsset = false;
-                moduleEvents =  modules[lengthModules].events;
+                _module =  modules[lengthModules];
 
-                if(events.beforeAddModuleToAuditionOtherModules){
-                    events.beforeAddModuleToAuditionOtherModules();
-                }
+                this.doEvent('beforeAddModuleToAuditionOtherModules');
+                this.doEventAfterStandartEvent('beforeAddModuleToAuditionOtherModules');
 
-                if(moduleEvents.beforeAddModuleToAudition){
-                    moduleEvents.beforeAddModuleToAudition();
-                }
+                _module.doEvent('beforeAddModuleToAudition');
+                _module.doEventAfterStandartEvent('beforeAddModuleToAudition');
 
                 listenersArray.push(this);
 
                 listenersModule.addAuditionToList(this);
 
-                if(moduleEvents.afterAddModuleToAudition){
-                    moduleEvents.afterAddModuleToAudition();
-                }
-                if(events.afterAddModuleToAuditionOtherModules){
-                    events.afterAddModuleToAuditionOtherModules();
-                }
+                _module.doEvent('afterAddModuleToAudition');
+                _module.doEventAfterStandartEvent('afterAddModuleToAudition');
+
+                this.doEvent('afterAddModuleToAuditionOtherModules');
+                this.doEventAfterStandartEvent('afterAddModuleToAuditionOtherModules');
             }
         }
     }
@@ -243,33 +231,26 @@ Module.prototype.removeAllAuditions = function(){
     var events = this.events;
 
     var listenersArray = this._listeningsModules;
-    var moduleEvents;
+    var _module;
 
     for (var lenghtListenersArray = listenersArray.length; lenghtListenersArray --;) {
 
-        moduleEvents =  listenersArray[lenghtListenersArray].events;
+        _module =  listenersArray[lenghtListenersArray];
 
-        if(events.beforeAddModuleToAuditionOtherModules){
-            events.beforeAddModuleToAuditionOtherModules();
-        }
+        this.doEvent('beforeRemoveModuleFomAuditionOtherModule');
+        this.doEventAfterStandartEvent('beforeRemoveModuleFomAuditionOtherModule');
 
-        if(events.beforeAddModuleToAuditionOtherModules){
-            events.beforeAddModuleToAuditionOtherModules();
-        }
+        _module.doEvent('beforeRemoveModuleFromAudition');
+        _module.doEventAfterStandartEvent('beforeRemoveModuleFromAudition');
 
-        if(moduleEvents.beforeRemoveModuleFromAudition){
-            moduleEvents.beforeRemoveModuleFromAudition();
-
-        }
 
         listenersArray.splice(lenghtListenersArray, 1);
 
-        if(moduleEvents.afterRemoveModuleFromAudition){
-            moduleEvents.afterRemoveModuleFromAudition();
-        }
-        if(events.afterRemoveModuleFomAuditionOtherModule){
-            events.afterRemoveModuleFomAuditionOtherModule();
-        }
+        _module.doEvent('afterRemoveModuleFromAudition');
+        _module.doEventAfterStandartEvent('afterRemoveModuleFromAudition');
+
+        this.doEvent('afterRemoveModuleFomAuditionOtherModule');
+        this.doEventAfterStandartEvent('afterRemoveModuleFomAuditionOtherModule');
     }
 
     delete modulesForAudition[this._moduleName];
@@ -283,41 +264,41 @@ Module.prototype.addModuleToAuditionAllModules = function(){
 
     var events = this.events;
 
-    if(events.beforeAddAuditionModule){
-        events.beforeAddAuditionModule();
-    }
+    this.doEvent('beforeAddAuditionAllModules');
+    this.doEventAfterStandartEvent('beforeAddAuditionAllModules');
 
     this._listeningsModules = [];
     var listenersArray = this._listeningsModules;
 
     var module;
-    var moduleEvents;
+
 
     for(var name in Modules){
 
         module =  Modules[name];
-        moduleEvents =  module.events;
+
 
         addName(module);
 
-        if(events.beforeAddAuditionModule){
-            events.beforeAddAuditionModule();
-        }
-        if(moduleEvents.beforeAddAuditionModuleToOtherModule){
-            moduleEvents.beforeAddAuditionModuleToOtherModule();
-        }
+        this.doEvent('beforeAddAuditionModule');
+        this.doEventAfterStandartEvent('beforeAddAuditionModule');
+
+        module.doEvent('beforeAddAuditionModuleToOtherModule');
+        module.doEventAfterStandartEvent('beforeAddAuditionModuleToOtherModule');
 
         listenersArray.push(module);
 
         this.addAuditionToList(module);
 
-        if(moduleEvents.afterAddAuditionModuleToOtherModule){
-            moduleEvents.afterAddAuditionModuleToOtherModule();
-        }
-        if(events.afterAddAuditionModule){
-            events.afterAddAuditionModule();
-        }
+        module.doEvent('afterAddAuditionModuleToOtherModule');
+        module.doEventAfterStandartEvent('afterAddAuditionModuleToOtherModule');
+
+        this.doEvent('afterAddAuditionModule');
+        this.doEventAfterStandartEvent('afterAddAuditionModule');
     }
+
+    this.doEvent('afterAddAuditionAllModules');
+    this.doEventAfterStandartEvent('afterAddAuditionAllModules');
 
     return this;
 };
@@ -329,7 +310,7 @@ Module.prototype.removeAuditionFromAllModulesListeners = function(){
     var events = this.events;
 
     var listenersArray;
-    var moduleEvents;
+
 
     for (var name in Modules ){
 
@@ -343,28 +324,23 @@ Module.prototype.removeAuditionFromAllModulesListeners = function(){
 
             for (var lenghtListenersArray = listenersArray.length; lenghtListenersArray --;) {
 
-
                 if( listenersArray[lenghtListenersArray] == this){
 
-                    moduleEvents = module.events;
+                    this.doEvent('beforeRemoveModuleFromAuditionOtherModule');
+                    this.doEventAfterStandartEvent('beforeRemoveModuleFromAuditionOtherModule');
 
-                    if(events.beforeRemoveModuleFromAuditionOtherModule){
-                        events.beforeRemoveModuleFromAuditionOtherModule();
-                    }
-                    if(moduleEvents.beforeRemoveModuleFromAudition){
-                        moduleEvents.beforeRemoveModuleFromAudition();
-                    }
+                    module.doEvent('beforeRemoveModuleFromAudition');
+                    module.doEventAfterStandartEvent('beforeRemoveModuleFromAudition');
 
                     module.removeAuditionFromList(this);
 
                     listenersArray.splice(lenghtListenersArray, 1);
 
-                    if(moduleEvents.afterRemoveModuleFromAudition){
-                        moduleEvents.afterRemoveModuleFromAudition();
-                    }
-                    if(events.afterRemoveModuleFromAuditionOtherModule){
-                        events.afterRemoveModuleFromAuditionOtherModule();
-                    }
+                    module.doEvent('afterRemoveModuleFromAudition');
+                    module.doEventAfterStandartEvent('afterRemoveModuleFromAudition');
+
+                    this.doEvent('afterRemoveModuleFromAuditionOtherModule');
+                    this.doEventAfterStandartEvent('afterRemoveModuleFromAuditionOtherModule');
 
                     break;
                 }
@@ -412,24 +388,22 @@ Module.prototype.addAuditionToAllModulesListeners = function(){
                 moduleEvents =  module.events;
                 listenerIsset = false;
 
+                this.doEvent('beforeAddModuleToAuditionOtherModules');
+                this.doEventAfterStandartEvent('beforeAddModuleToAuditionOtherModules');
 
-                if(events.beforeAddModuleToAuditionOtherModules){
-                    events.beforeAddModuleToAuditionOtherModules();
-                }
-                if(moduleEvents.beforeAddModuleToAudition){
-                    moduleEvents.beforeAddModuleToAudition();
-                }
+                module.doEvent('beforeAddModuleToAudition');
+                module.doEventAfterStandartEvent('beforeAddModuleToAudition');
 
                 listenersArray.push(this);
 
                 listenersModule.addAuditionToList(this);
 
-                if(moduleEvents.afterAddModuleToAudition){
-                    moduleEvents.afterAddModuleToAudition();
-                }
-                if(events.afterAddModuleToAuditionOtherModules){
-                    events.afterAddModuleToAuditionOtherModules();
-                }
+
+                module.doEvent('afterAddModuleToAudition');
+                module.doEventAfterStandartEvent('afterAddModuleToAudition');
+
+                this.doEvent('afterAddModuleToAuditionOtherModules');
+                this.doEventAfterStandartEvent('afterAddModuleToAuditionOtherModules');
             }
         }
     }
