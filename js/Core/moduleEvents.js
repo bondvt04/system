@@ -332,12 +332,13 @@ Module.prototype.doEventForAuditionNow= function(event, data, moduleNameGenerate
 
 };   // запустить событие для подписанных модулей
 
-Module.prototype.doEvent= function(event,data){
+Module.prototype.doEvent= function(event, data){
 
     if(this.events[event]){
 
         this.events[event]({
             eventType : event,
+            moduleName : this._moduleName  || null,
             eventData : data ? data : null
         });
     }
@@ -350,6 +351,7 @@ Module.prototype.doEventForOtherModule= function(module, event,data){
 
         module.events[event]({
             eventType : event,
+            moduleName : this._moduleName  || null,
             eventData : data ? data : null
         });
     }
@@ -357,13 +359,14 @@ Module.prototype.doEventForOtherModule= function(module, event,data){
 };   // выполнить событие для другого модуля
 
 
-Module.prototype.doEventAfterStandartEvent = function(event){
+Module.prototype.doEventAfterStandartEvent = function(event, data){
 
     if(this.events[event] && this.events[event].eventAfterEvent){
 
         stackEvents.pushEvent({
             eventType : this.events[event].eventAfterEvent,
-            moduleName : this._moduleName
+            moduleName : this._moduleName  || null,
+            eventData : data ? data : null
         });
     }
 

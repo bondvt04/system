@@ -1,3 +1,22 @@
+function clone(o) {
+
+    if(!o || "object" !== typeof o)  {
+        return o;
+    }
+    var c = "function" === typeof o.pop ? [] : {};
+    var p, v;
+    for(p in o) {
+
+        v = o[p];
+        if(v && "object" === typeof v) {
+            c[p] = clone(v);
+        }
+        else c[p] = v;
+
+    }
+    return c;
+}
+
 var Modules = {};
 Modules.Pages = {};
 
@@ -94,9 +113,8 @@ Modules.createNewModule = function(defaultSettings){
 
     var newModuleEvents = newModule.events;
 
-    if(newModuleEvents.beforeCreate){
-        newModuleEvents.beforeCreate();
-    }
+    newModule.doEvent('beforeCreate');
+    newModule.doEventAfterStandartEvent('beforeCreate');
 
     if(defaultSettings){
 
@@ -107,9 +125,8 @@ Modules.createNewModule = function(defaultSettings){
     }
     newModule._listeningsModules = [];
 
-    if(newModuleEvents.afterCreate){
-        newModuleEvents.afterCreate();
-    }
+    newModule.doEvent('afterCreate');
+    newModule.doEventAfterStandartEvent('afterCreate');
 
     return  newModule;
 };
@@ -118,41 +135,23 @@ Module.prototype.createCloneModule = function (){
 
     var events = this.events;
 
-    if(events.beforeCreate){
-        events.beforeCreate();
-    }
-    if(events.beforeClone){
-        events.beforeClone();
-    }
+    this.doEvent('beforeCreate');
+    this.doEventAfterStandartEvent('beforeCreate');
 
-    function clone(o) {
 
-        if(!o || "object" !== typeof o)  {
-            return o;
-        }
-        var c = "function" === typeof o.pop ? [] : {};
-        var p, v;
-        for(p in o) {
+    this.doEvent('beforeClone');
+    this.doEventAfterStandartEvent('beforeClone');
 
-                v = o[p];
-                if(v && "object" === typeof v) {
-                    c[p] = clone(v);
-                }
-                else c[p] = v;
 
-        }
-        return c;
-    }
 
     var returnObj = clone(this);
     var returnEvents = returnObj.events;
 
-    if(returnEvents.afterCreate){
-        returnEvents.afterCreate();
-    }
-    if(returnEvents.afterClone){
-        returnEvents.afterClone();
-    }
+    returnObj.doEvent('afterCreate');
+    returnObj.doEventAfterStandartEvent('afterCreate');
+
+    returnObj.doEvent('afterClone');
+    returnObj.doEventAfterStandartEvent('afterClone');
 
     return  returnObj;
 };
@@ -161,44 +160,25 @@ Module.prototype.createCloneModuleWithOutAuditions = function (){
 
     var events = this.events;
 
-    if(events.beforeCreate){
-        events.beforeCreate();
-    }
-    if(events.beforeClone){
-        events.beforeClone();
-    }
+    this.doEvent('beforeCreate');
+    this.doEventAfterStandartEvent('beforeCreate');
 
-    function clone(o) {
 
-        if(!o || "object" !== typeof o)  {
-            return o;
-        }
-        var c = "function" === typeof o.pop ? [] : {};
-        var p, v;
-        for(p in o) {
-            if(o.hasOwnProperty(p)) {
-                v = o[p];
-                if(v && "object" === typeof v) {
-                    c[p] = clone(v);
-                }
-                else c[p] = v;
-            }
-        }
-        return c;
-    }
+    this.doEvent('beforeClone');
+    this.doEventAfterStandartEvent('beforeClone');
+
 
     var returnObj = clone(this);
+
+    returnObj.doEvent('afterCreate');
+    returnObj.doEventAfterStandartEvent('afterCreate');
 
     returnObj._listeningsModules = [];
 
     var returnEvents = returnObj.events;
 
-    if(returnEvents.afterCreate){
-        returnEvents.afterCreate();
-    }
-    if(returnEvents.afterClone){
-        returnEvents.afterClone();
-    }
+    returnObj.doEvent('afterClone');
+    returnObj.doEventAfterStandartEvent('afterClone');
 
     return  returnObj;
 };
@@ -208,13 +188,11 @@ Module.prototype.extend = function(newProps){
 
     var events = this.events;
 
-    if(events.beforeCreate){
-        events.beforeCreate();
-    }
-    if(events.beforeExtend){
-        events.beforeExtend();
-    }
+    this.doEvent('beforeCreate');
+    this.doEventAfterStandartEvent('beforeCreate');
 
+    this.doEvent('beforeExtend');
+    this.doEventAfterStandartEvent('beforeExtend');
 
     function AuxiliaryObj(){};
     AuxiliaryObj.prototype =this;
@@ -228,22 +206,19 @@ Module.prototype.extend = function(newProps){
 
     var returnEvents = returnObj.events;
 
-    if(returnEvents.beforeClearAuditions){
-        returnEvents.beforeClearAuditions();
-    }
+    returnObj.doEvent('beforeClearAuditions');
+    returnObj.doEventAfterStandartEvent('beforeClearAuditions');
 
     returnObj._listeningsModules = [];
 
-    if(returnEvents.afterClearAuditions){
-        returnEvents.afterClearAuditions();
-    }
+    returnObj.doEvent('afterClearAuditions');
+    returnObj.doEventAfterStandartEvent('afterClearAuditions');
 
-    if(returnEvents.afterCreate){
-        returnEvents.afterCreate();
-    }
-    if(returnEvents.afterExtend){
-        returnEvents.afterExtend();
-    }
+    returnObj.doEvent('afterCreate');
+    returnObj.doEventAfterStandartEvent('afterCreate');
+
+    returnObj.doEvent('afterExtend');
+    returnObj.doEventAfterStandartEvent('afterExtend');
 
     return  returnObj;
 };
@@ -252,12 +227,11 @@ Module.prototype.extendWithSaveAuditions = function(newProps){
 
     var events = this.events;
 
-    if(events.beforeCreate){
-        events.beforeCreate();
-    }
-    if(events.beforeExtend){
-        events.beforeExtend();
-    }
+    this.doEvent('beforeCreate');
+    this.doEventAfterStandartEvent('beforeCreate');
+
+    this.doEvent('beforeExtend');
+    this.doEventAfterStandartEvent('beforeExtend');
 
     function AuxiliaryObj(){}
     AuxiliaryObj.prototype =this;
@@ -272,9 +246,10 @@ Module.prototype.extendWithSaveAuditions = function(newProps){
 
     var returnEvents = returnObj.events;
 
-    if(returnEvents.beforeCopyAuditions){
-        returnEvents.beforeCopyAuditions();
-    }
+
+    this.doEvent('beforeCopyAuditions');
+    this.doEventAfterStandartEvent('beforeCopyAuditions');
+
 
     returnObj._listeningsModules = [];
 
@@ -287,17 +262,14 @@ Module.prototype.extendWithSaveAuditions = function(newProps){
         returnObjListeningsModules.push(newPropsListeningsModules[lengthAuditions]);
     }
 
-    if(returnEvents.afterCopyAuditions){
-        returnEvents.afterCopyAuditions();
-    }
+    returnObj.doEvent('afterCopyAuditions');
+    returnObj.doEventAfterStandartEvent('afterCopyAuditions');
 
-    if(returnEvents.afterCreate){
-        returnEvents.afterCreate();
-    }
+    returnObj.doEvent('afterCreate');
+    returnObj.doEventAfterStandartEvent('afterCreate');
 
-    if(returnEvents.afterExtend){
-        returnEvents.afterExtend();
-    }
+    returnObj.doEvent('afterExtend');
+    returnObj.doEventAfterStandartEvent('afterExtend');
 
     return  returnObj;
 };
@@ -308,12 +280,11 @@ Module.prototype.extendExpanding = function(newProps){
 
     var events = this.events;
 
-    if(events.beforeCreate){
-        events.beforeCreate();
-    }
-    if(events.beforeExtend){
-        events.beforeExtend();
-    }
+    this.doEvent('beforeCreate');
+    this.doEventAfterStandartEvent('beforeCreate');
+
+    this.doEvent('beforeExtend');
+    this.doEventAfterStandartEvent('beforeExtend');
 
     function AuxiliaryObj(){}
     AuxiliaryObj.prototype =this;
@@ -353,23 +324,20 @@ Module.prototype.extendExpanding = function(newProps){
 
     var returnEvents = returnObj.events;
 
-    if(returnEvents.beforeClearAuditions){
-        returnEvents.beforeClearAuditions();
-    }
+    returnObj.doEvent('beforeClearAuditions');
+    returnObj.doEventAfterStandartEvent('beforeClearAuditions');
 
     returnObj._listeningsModules = [];
 
 
-    if(returnEvents.afterClearAuditions){
-        returnEvents.afterClearAuditions();
-    }
+    returnObj.doEvent('afterClearAuditions');
+    returnObj.doEventAfterStandartEvent('afterClearAuditions');
 
-    if(returnEvents.afterCreate){
-        returnEvents.afterCreate();
-    }
-    if(returnEvents.afterExtend){
-        returnEvents.afterExtend();
-    }
+    returnObj.doEvent('afterCreate');
+    returnObj.doEventAfterStandartEvent('afterCreate');
+
+    returnObj.doEvent('afterExtend');
+    returnObj.doEventAfterStandartEvent('afterExtend');
 
     return  returnObj;
 };
@@ -379,12 +347,11 @@ Module.prototype.extendExpandingAndSaveAuditions= function(newProps){
 
     var events = this.events;
 
-    if(events.beforeCreate){
-        events.beforeCreate();
-    }
-    if(events.beforeExtend){
-        events.beforeExtend();
-    }
+    this.doEvent('beforeCreate');
+    this.doEventAfterStandartEvent('beforeCreate');
+
+    this.doEvent('beforeExtend');
+    this.doEventAfterStandartEvent('beforeExtend');
 
     function AuxiliaryObj(){}
     AuxiliaryObj.prototype =this;
@@ -425,9 +392,9 @@ Module.prototype.extendExpandingAndSaveAuditions= function(newProps){
 
     var returnEvents = returnObj.events;
 
-    if(returnEvents.beforeCopyAuditions){
-        returnEvents.beforeCopyAuditions();
-    }
+    returnObj.doEvent('beforeCopyAuditions');
+    returnObj.doEventAfterStandartEvent('beforeCopyAuditions');
+
 
     returnObj._listeningsModules = [];
 
@@ -440,15 +407,14 @@ Module.prototype.extendExpandingAndSaveAuditions= function(newProps){
         returnObjListeningsModules.push(thisListeningsModules[lengthAuditions]);
     }
 
-    if(returnEvents.afterCopyAuditions){
-        returnEvents.afterCopyAuditions();
-    }
-    if(returnEvents.afterCreate){
-        returnEvents.afterCreate();
-    }
-    if(returnEvents.afterExtend){
-        returnEvents.afterExtend();
-    }
+    returnObj.doEvent('afterCopyAuditions');
+    returnObj.doEventAfterStandartEvent('afterCopyAuditions');
+
+    returnObj.doEvent('afterCreate');
+    returnObj.doEventAfterStandartEvent('afterCreate');
+
+    returnObj.doEvent('afterExtend');
+    returnObj.doEventAfterStandartEvent('afterExtend');
 
     return  returnObj;
 };
@@ -457,9 +423,8 @@ Module.prototype.removeModule = function(){
 
     var events = this.events;
 
-    if(events.beforeRemove){
-        events.beforeRemove();
-    }
+    this.doEvent('beforeRemove');
+    this.doEventAfterStandartEvent('beforeRemove');
 
     for(var module in Modules){
         if(Modules[module] == this){
@@ -475,14 +440,14 @@ Module.prototype.removeModule = function(){
 
 };
 
-//TODO должен быть метод удалить модуль и его потомков
+//TODO должен быть метод удалить модуль и его потомков  , или нет?
 
 Modules.removeModules = function(modules){
     for(var length = modules.length; length -- ;){
 
-        if(events.beforeRemove){
-            events.beforeRemove();
-        }
+        this.doEvent('beforeRemove');
+        this.doEventAfterStandartEvent('beforeRemove');
+
 
         delete this[modules[length]];
         delete Modules.Pages[modules[length]._moduleName];
@@ -495,9 +460,10 @@ Module.prototype.setAllDefaultSettings = function(){
 
     var events = this.events;
 
-    if(events.beforeSetDefaultSettings){
-        events.beforeSetDefaultSettings();
-    }
+
+    this.doEvent('beforeSetDefaultSettings');
+    this.doEventAfterStandartEvent('beforeSetDefaultSettings');
+
 
     for (var name in this){
 
@@ -509,21 +475,18 @@ Module.prototype.setAllDefaultSettings = function(){
 
         for (var prop in this.default){
 
-            if(events.beforeSetOneDefaultSetting){
-                events.beforeSetOneDefaultSetting( );
-            }
+            this.doEvent('beforeSetOneDefaultSetting');
+            this.doEventAfterStandartEvent('beforeSetOneDefaultSetting');
 
             this[prop] =  this.default[prop];
 
-            if(events.afterSetOneDefaultSetting){
-                events.afterSetOneDefaultSetting( );
-            }
+            this.doEvent('afterSetOneDefaultSetting');
+            this.doEventAfterStandartEvent('afterSetOneDefaultSetting');
         }
     }
 
-    if(events.beforeSetDefaultSettings){
-        events.beforeSetDefaultSettings();
-    }
+    this.doEvent('beforeSetDefaultSettings');
+    this.doEventAfterStandartEvent('beforeSetDefaultSettings');
 
     return this;
 };
@@ -534,9 +497,8 @@ Module.prototype.setDefaultSettings = function(nameSettings){
     var defaultSetting;
     var defaultProp;
 
-    if(events.beforeSetDefaultSettings){
-        events.beforeSetDefaultSettings();
-    }
+    this.doEvent('beforeSetDefaultSettings');
+    this.doEventAfterStandartEvent('beforeSetDefaultSettings');
 
     if(this.default){
 
@@ -556,9 +518,8 @@ Module.prototype.setDefaultSettings = function(nameSettings){
         }
     }
 
-    if(events.afterSetDefaultSettings){
-        events.afterSetDefaultSettings();
-    }
+    this.doEvent('afterSetDefaultSettings');
+    this.doEventAfterStandartEvent('afterSetDefaultSettings');
 
     return this;
 };
@@ -664,7 +625,7 @@ Module.prototype.removeAuditionFromList = function(auditionModule){
 
 
 
-// TODO Пересмотреть все методы -вынести повторяющийся функционал
+// TODO функция запуска событий после события, события стандартные через функцию вызывать
 
 // TODO  ввести ссылку на модуль в свойства модуля that = this . Правильно сделать чтоб она указывала при клонировании , расширении на данный модуль. Поведения при расширении через прототип . Метод один сделать чтоб определять
 
