@@ -5,6 +5,14 @@
 
 //(function (){
 
+function forkEvent(obj){
+    var clone ={};
+    for(var prop in obj){
+        clone[prop] = obj[prop];
+    }
+    return clone;
+}
+
 /**
  * @lends stackEvents 
  * @description Объект для работы с очередью
@@ -118,14 +126,18 @@ var pageModules = {
 
            var eventModule =  pageModules.modules[module].events.userEventsTable[viewElement][eventType];
 
-           var newEvent = pageModules.modules[module].events[eventModule].functionToEvent(event);
+           var newEvent = pageModules.modules[module].events[eventModule].functionToEvent(forkEvent(event));
 
 			if(newEvent){			// нужны ли автозапуски если есть генерация событий ?
 				stackEvents.pushEvent(newEvent);
 			}
 		}
-	}		
+	},
+
+
 };
+
+
 	
 	/** Назначить слушатели событий */
 	if(document.attachEvent){
