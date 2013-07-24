@@ -152,8 +152,8 @@ var pageModules = {
         //document.addEventListener('load', getEvents ,false);
         //document.addEventListener('unload', getEvents ,false);
 	}
-	window.onload = function(){getEvents({type : 'load'})};
-	window.onbeforeunload = function(){getEvents({type : 'beforeunload'})};
+	window.onload = Modules.document.load;
+	window.onbeforeunload = Modules.document.onbeforeunload;
 	
 	/**
 	* @ inner
