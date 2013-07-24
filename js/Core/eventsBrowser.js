@@ -3,7 +3,17 @@ Modules.startFunctions = [];
 Modules.closeFunctions = [];
 
 
+function doEvent(event){
 
+    if(Modules.document.events[event]){
+
+        Modules.document.events[event]({
+            eventType : event,
+            moduleName : 'document'
+        });
+    }
+    return this;
+};   // выполнить событие для этого модуля
 
 function load(){
 
@@ -30,35 +40,31 @@ function load(){
 
 function onDeviceReady(){
 
-    document.addEventListener("pause", yourCallbackFunction, false);
-    document.addEventListener("resume", onResume, false);
-    document.addEventListener("online", yourCallbackFunction, false);
+    document.addEventListener("pause", doEvent("pause"), false);
 
-    document.addEventListener("offline", yourCallbackFunction, false);
-    document.addEventListener("backbutton", yourCallbackFunction, false);
+    document.addEventListener("resume", doEvent("resume"), false);
 
-    window.addEventListener("batterycritical", yourCallbackFunction, false);
-    window.addEventListener("batterystatus", yourCallbackFunction, false);
+    document.addEventListener("online", doEvent("online"), false);
 
-    document.addEventListener("menubutton", yourCallbackFunction, false);
+    document.addEventListener("offline", doEvent("offline"), false)
+    ;
+    document.addEventListener("backbutton", doEvent("backbutton"), false);
 
-    document.addEventListener("searchbutton", yourCallbackFunction, false);
-    document.addEventListener("startcallbutton", yourCallbackFunction, false);
+    window.addEventListener("batterycritical", doEvent("batterycritical"), false);
 
-    document.addEventListener("endcallbutton", yourCallbackFunction, false);
-    document.addEventListener("volumedownbutton", yourCallbackFunction, false);
+    window.addEventListener("batterystatus", doEvent("batterystatus"), false);
 
-    document.addEventListener("volumeupbutton", yourCallbackFunction, false);
+    document.addEventListener("menubutton", doEvent("menubutton"), false);
 
+    document.addEventListener("searchbutton", doEvent("searchbutton"), false);
 
+    document.addEventListener("startcallbutton", doEvent("startcallbutton"), false);
 
+    document.addEventListener("endcallbutton", doEvent("endcallbutton"), false);
 
+    document.addEventListener("volumedownbutton", doEvent("volumedownbutton"), false);
 
-
-
-
-
-
+    document.addEventListener("volumeupbutton", doEvent("volumeupbutton"), false);
 
     stackEvents.pushEvent({
         eventType : 'loaded',
