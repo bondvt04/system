@@ -31,7 +31,9 @@
 
 
 <!-- Подключение системы -->
+
 <script src="./js/Core/eventsBrowser.js"></script>
+<script src="./js/Core/document.js"></script>
 <script src="./js/mainListener.js"></script>
 
 <!--Подключить расширения прототипа -->
@@ -45,14 +47,7 @@
 <script src="./Modules/mod/index.js"></script>
 
 
-<!--Либо отдельный скрипт либо в систему добавить -->
-<script>
-    window.onload = function (){
-        document.addEventListener("deviceready", function(){
-            document.getElementById('startPage').style.display = 'none';
-        }, false);
 
-    }
-</script>
+
 </body>
 </html>

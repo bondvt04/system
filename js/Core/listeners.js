@@ -314,7 +314,8 @@ Module.prototype.removeAuditionFromAllModulesListeners = function(){
 
     for (var name in Modules ){                //TODO фильтровать поскольку есть ещё свойства свои и документ
 
-        if(name != 'document' && name != 'Pages' && name != 'startFunctions' && name != 'closeFunctions'){
+        if(name != 'document' && name != 'Pages' && name != 'startFunctions' && name != 'closeFunctions'  && name != 'extendCore'  &&
+            name != 'createNewModule' && name != 'removeModules'){
 
             module =  Modules[name];
 
@@ -367,7 +368,8 @@ Module.prototype.addAuditionToAllModulesListeners = function(){
 
     for (var name in Modules ){          //TODO фильтровать поскольку есть ещё свойства свои и документ
 
-        if(name != 'document' && name != 'Pages' && name != 'startFunctions' && name != 'closeFunctions'){
+        if(name != 'document' && name != 'Pages' && name != 'startFunctions' && name != 'closeFunctions'  && name != 'extendCore'  &&
+            name != 'createNewModule' && name != 'removeModules'){
 
             module =  Modules[name];
 

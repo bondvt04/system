@@ -154,7 +154,8 @@ var pageModules = {
         document.addEventListener('touchmove', getEvents ,false);
         document.addEventListener('touchend', getEvents ,false);
 	}
-	window.onload = load;
+
+    window.onload = load;
 	window.onbeforeunload = onbeforeunload;
 	
 	/**

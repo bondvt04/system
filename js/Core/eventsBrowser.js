@@ -14,8 +14,6 @@ function doEvent(event){
 
 function load(){
 
-
-
     // проверить поддерживает ли фонегап , да навесить слушатели событий на кнопки
 
     if(document.deviceready){

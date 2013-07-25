@@ -5,9 +5,13 @@ function forkEventToAllModules(eventType){
 
     for (var name in Modules ){
 
-        if(name != 'document' && name != 'Pages' && name != 'startFunctions' && name != 'closeFunctions'){
+
+        if(name != 'document' && name != 'Pages' && name != 'startFunctions' && name != 'closeFunctions'  && name != 'extendCore'  &&
+            name != 'createNewModule' && name != 'removeModules'){
 
             module =  Modules[name];
+
+            console.log(name)
             event = module.events[eventType];
 
             if(event){
