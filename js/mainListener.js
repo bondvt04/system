@@ -169,54 +169,7 @@ var pageModules = {
     window.onload = load;
 	window.onbeforeunload = onbeforeunload;
 	
-	/**
-	* @ inner
-	* @private 
- 	* @event
- 	* @param {Object} event Объект события 
-	* @description Обрабатывает пользовательские события.
-	* @description Если событие произошло на элементе помеченном как, элемент возбуждающий событие модуля,
-	* @description в модуль предаётся событие 'generateEvent' и объект события
- 	*/
 
-
-    /*
-	function getEvents(event){
-		event = event || window.event;
-		var target=event.target || event.srcElement;
-		// Если элемент действия помечен как элемент модуля возбуждающий событие
-		var moduleName;		
-		if(target && target.getAttribute){				
-			moduleName = target.getAttribute('data-moduleName');
-		}
-		else{
-			moduleName = false;
-		}
-		if(moduleName){
-			//Передать на генератор событий модуля событие: "генерация события"
-			event.eventType = 'generateEvent';
-			event.moduleName = moduleName;					
-			//pageModules.ListenToTheEvent(event);
-
-            stackEvents.pushEvent(event);
-		}
-		
-        else {
-			if(event.type == 'load' ){			
-            	event.eventType = 'generateEvent';
-            	event.moduleName = 'document';			
-            	pageModules.ListenToTheEvent(event);
-        	}
-			if( event.type == 'beforeunload'){			
-            	event.eventType = 'documentUnload';
-            	event.moduleName = 'document';			
-            	//pageModules.ListenToTheEvent(event);
-
-                stackEvents.pushEvent(event);
-        	}
-		}
-	}
-		*/
 
 var eventObj = {};  //TODO Получать размеры родителя в объект если это свап блок и т.д .// логику для скролов в модуль оболочку скрола , там же данные для работы логики как динамические так и статичные
 
@@ -261,6 +214,7 @@ function getEvents(event){
 
         eventObj.height = container.offsetHeight;
         eventObj.width = container.offsetWidth;
+
 
         eventObj.offsetY = container.offsetHeight*0.34;
         eventObj.offsetX = container.offsetWidth*0.34;
