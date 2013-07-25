@@ -29,10 +29,8 @@ function load(){
             Modules.startFunctions[lengthArg]();
         }
 
-        stackEvents.pushEvent({
-            eventType : 'loaded',
-            moduleName: 'document'
-        });
+        forkEventToAllModules('loaded');
+
 
         if(document.getElementById('startPage')){
 
@@ -75,10 +73,7 @@ function onDeviceReady(){
         Modules.startFunctions[lengthArg]();
     }
 
-    stackEvents.pushEvent({
-        eventType : 'loaded',
-        moduleName: 'document'
-    });
+    forkEventToAllModules('loaded');
 
     if(document.getElementById('startPage')){
 
@@ -100,6 +95,7 @@ function onbeforeunload(){
         }
     }
 
+    forkEventToAllModules('beforeunload');
 
 };
 // выгрузка

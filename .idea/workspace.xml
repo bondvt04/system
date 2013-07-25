@@ -44,7 +44,7 @@
       <file leaf-file-name="document.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Core/document.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="0" selection-start="467" selection-end="467" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="1545">
+            <state line="66" column="42" selection-start="1353" selection-end="1375" vertical-scroll-proportion="0.0" vertical-offset="495" max-vertical-offset="1545">
               <folding />
             </state>
           </provider>
@@ -80,7 +80,7 @@
       <file leaf-file-name="eventsBrowser.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/Core/eventsBrowser.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="20" selection-start="38" selection-end="52" vertical-scroll-proportion="0.034013607" vertical-offset="0" max-vertical-offset="1725">
+            <state line="88" column="67" selection-start="2245" selection-end="2245" vertical-scroll-proportion="0.60884356" vertical-offset="783" max-vertical-offset="1665">
               <folding />
             </state>
           </provider>
@@ -117,10 +117,10 @@
         <option value="$PROJECT_DIR$/js/Core/cookies.js" />
         <option value="$PROJECT_DIR$/js/Core/other.js" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/js/Core/eventsBrowser.js" />
         <option value="$PROJECT_DIR$/js/mainListener.js" />
         <option value="$PROJECT_DIR$/js/Core/listeners.js" />
         <option value="$PROJECT_DIR$/js/Core/document.js" />
+        <option value="$PROJECT_DIR$/js/Core/eventsBrowser.js" />
       </list>
     </option>
   </component>
@@ -597,20 +597,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/Core/document.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="467" selection-end="467" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="1545">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/mainListener.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="322" column="110" selection-start="10476" selection-end="10476" vertical-scroll-proportion="0.0" vertical-offset="3751" max-vertical-offset="5205">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/core.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="9" selection-start="339" selection-end="344" vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="10155">
@@ -625,9 +611,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/Core/document.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="42" selection-start="1353" selection-end="1375" vertical-scroll-proportion="0.0" vertical-offset="495" max-vertical-offset="1545">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/mainListener.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="322" column="110" selection-start="10476" selection-end="10476" vertical-scroll-proportion="0.0" vertical-offset="3751" max-vertical-offset="5205">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/eventsBrowser.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="20" selection-start="38" selection-end="52" vertical-scroll-proportion="0.034013607" vertical-offset="0" max-vertical-offset="1725">
+        <state line="88" column="67" selection-start="2245" selection-end="2245" vertical-scroll-proportion="0.60884356" vertical-offset="783" max-vertical-offset="1665">
           <folding />
         </state>
       </provider>
