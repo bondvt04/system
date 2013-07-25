@@ -289,8 +289,11 @@ function getEvents(event){
                 eventObj.eventType = 'scrollY';
             }
             //TODO в зависимости от типа скрол слайд
+
             //TODO в менять модуль в событии сейчас при скроле передаётся тотже -хотя можно скрол не усколлеров по умолчанию сделать предать в родителя пока не дойдёт до того какому предназначен
                 //TODO -события по умолчанию с поведением кроме спец модулей
+                //TODO -тогда можно и контейнер не определят
+
             //TODO  элемент можно закрыть и открыть с указанным эффектом  -функции для этого
             eventObj.moduleName = eventObj.moduleContainer;
             eventObj.viewElement =  eventObj.moduleContainerViewElement;
