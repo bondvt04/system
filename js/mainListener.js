@@ -141,18 +141,29 @@ var pageModules = {
 	
 	/** Назначить слушатели событий */
 	if(document.attachEvent){
-		document.attachEvent('onmousedown', getEvents);
-        document.attachEvent('onmouseup', getEvents);
-        document.attachEvent('onmousemove', getEvents);
+
+
+
+            document.attachEvent('onmousedown', getEvents);
+            document.attachEvent('onmouseup', getEvents);
+            document.attachEvent('onmousemove', getEvents);
+
 	}
 	else{
-		document.addEventListener('mousedown', getEvents ,false);
-        document.addEventListener('mouseup', getEvents ,false);
-        document.addEventListener('mousemove', getEvents ,false);
 
-        document.addEventListener('touchstart', getEvents ,false);
-        document.addEventListener('touchmove', getEvents ,false);
-        document.addEventListener('touchend', getEvents ,false);
+
+        if('ontouchstart' in document){
+
+            document.addEventListener('touchstart', getEvents ,false);
+            document.addEventListener('touchmove', getEvents ,false);
+            document.addEventListener('touchend', getEvents ,false);
+        }
+        else{
+
+            document.addEventListener('mousedown', getEvents ,false);
+            document.addEventListener('mouseup', getEvents ,false);
+            document.addEventListener('mousemove', getEvents ,false);
+        }
 	}
 
     window.onload = load;
@@ -211,10 +222,14 @@ var eventObj = {};  //TODO Получать размеры родителя в �
 
 function getEvents(event){
 
-    console.log("_   "+event.type)
-
     var button=false;
     event = event || window.event;
+
+    if (event.preventDefault) {
+        event.preventDefault();
+    } else {
+        event.returnValue = false;
+    }
 
     if (event.which == null){
 
@@ -251,13 +266,17 @@ function getEvents(event){
         eventObj.offsetX = container.offsetWidth*0.34;
 
         if(container.getAttribute){
+
             eventObj.typeContainer = container.getAttribute('data-Container');               // както должно учитыватся при действиях мова толи это слайд толи скрол или элемент будет сам поднимать зная свои настройки?
             eventObj.moduleContainer = container.getAttribute('data-moduleName');
             eventObj.moduleContainerViewElement = container.getAttribute('data-actionElem');
 
         }
-        eventObj.startX = event.clientX;
-        eventObj.startY = event.clientY;
+
+        eventObj.startX = event.clientX || event.targetTouches[0].pageX;
+        eventObj.startY = event.clientY || event.targetTouches[0].pageY;
+
+
 
         eventObj.oldMove = new Date();
 
@@ -266,15 +285,13 @@ function getEvents(event){
     }
 
 
-    if ((event.type == 'mousemove' || event.type == 'touchmove') && (eventObj.moduleName || eventObj.moduleContainer) ){
+    if (event.type == 'mousemove' || event.type == 'touchmove'  ){
 
-        eventObj.clientX = event.clientX;
-        eventObj.clientY = event.clientY;
+        eventObj.clientX = event.clientX || event.targetTouches[0].pageX;
+        eventObj.clientY = event.clientY || event.targetTouches[0].pageY;
         eventObj.eventType = 'move';
 
-
-
-        if((Math.abs(eventObj.startX - event.clientX) >= eventObj.offsetX ||  Math.abs(eventObj.startY - event.clientY) >= eventObj.offsetY)) {
+        if((Math.abs(eventObj.startX -eventObj.clientX) >= eventObj.offsetX ||  Math.abs(eventObj.startY - eventObj.clientY) >= eventObj.offsetY) && (eventObj.moduleName || eventObj.moduleContainer)) {
 
             if(eventObj.timer){
 
@@ -284,11 +301,11 @@ function getEvents(event){
 
             eventObj.canClick = false;
 
-            if(Math.abs(eventObj.startX - event.clientX) >= eventObj.offsetX){
+            if(Math.abs(eventObj.startX - eventObj.clientX) >= eventObj.offsetX){
 
                 eventObj.eventType = 'scrollX';
             }
-            if(Math.abs(eventObj.startY - event.clientY) >= eventObj.offsetY){
+            if(Math.abs(eventObj.startY - eventObj.clientY) >= eventObj.offsetY){
 
                 eventObj.eventType = 'scrollY';
             }
@@ -298,8 +315,8 @@ function getEvents(event){
 
             pageModules.ListenToTheEvent(eventObj);      // форк сдеклать      // определять какой скрол (верт/гор) его направление
 
-            eventObj.startX = event.clientX;
-            eventObj.startY = event.clientY;
+            eventObj.startX = eventObj.clientX;
+            eventObj.startY = eventObj.clientY;
         }
         else{
 
@@ -319,9 +336,11 @@ function getEvents(event){
     //alert(eventObj.moduleName)
     if(((event.type == 'mouseup' && button)|| event.type == 'touchend') && (eventObj.moduleName || eventObj.moduleContainer)){
 
-        console.log("+   "+event.type)
+        eventObj.clientX = eventObj.clientX || eventObj.startX;
+        eventObj.clientY = eventObj.clientY || eventObj.startY;
 
-        if((Math.abs(eventObj.startX - event.clientX) <= 10 || Math.abs(eventObj.startY - event.clientY) <= 10) && eventObj.canClick ) {
+
+        if((Math.abs(eventObj.startX - eventObj.clientX) <= 10 || Math.abs(eventObj.startY - eventObj.clientY) <= 10) && eventObj.canClick ) {
 
             if(eventObj.timer){
                 clearTimeout(eventObj.timer);
