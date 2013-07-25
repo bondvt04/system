@@ -142,13 +142,14 @@ var pageModules = {
 	/** Назначить слушатели событий */
 	if(document.attachEvent){
 
-
-
             document.attachEvent('onmousedown', getEvents);
             document.attachEvent('onmouseup', getEvents);
             document.attachEvent('onmousemove', getEvents);
 
-	}
+            document.getElementById('scrollpage').attachEvent("onDOMMouseScroll",getEvents,false);    //?
+            document.getElementById('scrollpage').attachEvent("onmousewheel",getEvents,false);
+
+    }
 	else{
 
 
@@ -163,6 +164,9 @@ var pageModules = {
             document.addEventListener('mousedown', getEvents ,false);
             document.addEventListener('mouseup', getEvents ,false);
             document.addEventListener('mousemove', getEvents ,false);
+
+            document.getElementById('scrollpage').addEventListener("DOMMouseScroll",getEvents ,false);
+            document.getElementById('scrollpage').addEventListener("mousewheel",getEvents,false);
         }
 	}
 
@@ -184,6 +188,13 @@ function getEvents(event){
         event.returnValue = false;
     }
 
+    if (event.stopPropagation){
+        event.stopPropagation();
+    }
+    else {
+        event.cancelBubble=true;
+    }
+
     if (event.which == null){
 
         button= (event.button < 2);
@@ -192,6 +203,20 @@ function getEvents(event){
         button= (event.which < 2);
     }
 
+    if(event.type=='DOMMouseScroll' || event.type=='mousewheel' ){      // колесо мыши
+
+        var delta;
+        if (event.wheelDelta){// Opera и IE работают со свойством wheelDelta
+            delta =-event.wheelDelta / 120;
+        }
+        else{
+            if (event.detail){// В реализации Gecko получим свойство detail
+                delta =event.detail / 3;
+            }
+        }
+
+
+    }
 
     if ((event.type == 'mousedown' && button) || event.type == 'touchstart' ){                                   // количество пальцев учитывать чтоб определять зум ротейт  . зум и ротейт на ближайшем помеченном
 
@@ -264,6 +289,8 @@ function getEvents(event){
                 eventObj.eventType = 'scrollY';
             }
             //TODO в зависимости от типа скрол слайд
+            //TODO в менять модуль в событии сейчас при скроле передаётся тотже -хотя можно скрол не усколлеров по умолчанию сделать предать в родителя пока не дойдёт до того какому предназначен
+                //TODO -события по умолчанию с поведением кроме спец модулей
             //TODO  элемент можно закрыть и открыть с указанным эффектом  -функции для этого
             eventObj.moduleName = eventObj.moduleContainer;
             eventObj.viewElement =  eventObj.moduleContainerViewElement;
