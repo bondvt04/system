@@ -7,10 +7,7 @@ function doEvent(event){
 
     if(Modules.document.events[event]){
 
-        Modules.document.events[event]({
-            eventType : event,
-            moduleName : 'document'
-        });
+        Modules.document.events[event]();
     }
     return this;
 };   // выполнить событие для этого модуля
@@ -36,6 +33,11 @@ function load(){
             eventType : 'loaded',
             moduleName: 'document'
         });
+
+        if(document.getElementById('startPage')){
+
+            document.getElementById('startPage').style.display = 'none';
+        }
     }
 };
 // онлоад
@@ -77,6 +79,11 @@ function onDeviceReady(){
         eventType : 'loaded',
         moduleName: 'document'
     });
+
+    if(document.getElementById('startPage')){
+
+        document.getElementById('startPage').style.display = 'none';
+    }
 }
 
 function onbeforeunload(){
