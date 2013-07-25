@@ -312,37 +312,40 @@ Module.prototype.removeAuditionFromAllModulesListeners = function(){
     var listenersArray;
 
 
-    for (var name in Modules ){
+    for (var name in Modules ){                //TODO фильтровать поскольку есть ещё свойства свои и документ
 
-        module =  Modules[name];
+        if(name != 'document' && name != 'Pages' && name != 'startFunctions' && name != 'closeFunctions'){
 
-        addName(module);
+            module =  Modules[name];
 
-        listenersArray = module._listeningsModules;
+            addName(module);
 
-        if (listenersArray){
+            listenersArray = module._listeningsModules;
 
-            for (var lenghtListenersArray = listenersArray.length; lenghtListenersArray --;) {
+            if (listenersArray){
 
-                if( listenersArray[lenghtListenersArray] == this){
+                for (var lenghtListenersArray = listenersArray.length; lenghtListenersArray --;) {
 
-                    this.doEvent('beforeRemoveModuleFromAuditionOtherModule');
-                    this.doEventAfterStandartEvent('beforeRemoveModuleFromAuditionOtherModule');
+                    if( listenersArray[lenghtListenersArray] == this){
 
-                    module.doEvent('beforeRemoveModuleFromAudition');
-                    module.doEventAfterStandartEvent('beforeRemoveModuleFromAudition');
+                        this.doEvent('beforeRemoveModuleFromAuditionOtherModule');
+                        this.doEventAfterStandartEvent('beforeRemoveModuleFromAuditionOtherModule');
 
-                    module.removeAuditionFromList(this);
+                        module.doEvent('beforeRemoveModuleFromAudition');
+                        module.doEventAfterStandartEvent('beforeRemoveModuleFromAudition');
 
-                    listenersArray.splice(lenghtListenersArray, 1);
+                        module.removeAuditionFromList(this);
 
-                    module.doEvent('afterRemoveModuleFromAudition');
-                    module.doEventAfterStandartEvent('afterRemoveModuleFromAudition');
+                        listenersArray.splice(lenghtListenersArray, 1);
 
-                    this.doEvent('afterRemoveModuleFromAuditionOtherModule');
-                    this.doEventAfterStandartEvent('afterRemoveModuleFromAuditionOtherModule');
+                        module.doEvent('afterRemoveModuleFromAudition');
+                        module.doEventAfterStandartEvent('afterRemoveModuleFromAudition');
 
-                    break;
+                        this.doEvent('afterRemoveModuleFromAuditionOtherModule');
+                        this.doEventAfterStandartEvent('afterRemoveModuleFromAuditionOtherModule');
+
+                        break;
+                    }
                 }
             }
         }
@@ -362,48 +365,51 @@ Module.prototype.addAuditionToAllModulesListeners = function(){
     var moduleEvents;
     var listenersModule;
 
-    for (var name in Modules ){
+    for (var name in Modules ){          //TODO фильтровать поскольку есть ещё свойства свои и документ
 
-        module =  Modules[name];
+        if(name != 'document' && name != 'Pages' && name != 'startFunctions' && name != 'closeFunctions'){
 
-        listenersArray = module._listeningsModules;
+            module =  Modules[name];
 
-        if (listenersArray){
+            listenersArray = module._listeningsModules;
 
-            for (var lenghtListenersArray = listenersArray.length; lenghtListenersArray --;) {
+            if (listenersArray){
 
-                listenersModule =  listenersArray[lenghtListenersArray];
+                for (var lenghtListenersArray = listenersArray.length; lenghtListenersArray --;) {
 
-                addName(listenersModule);
+                    listenersModule =  listenersArray[lenghtListenersArray];
 
-                if( listenersModule == this){
+                    addName(listenersModule);
 
-                    listenerIsset = true;
-                        break;
+                    if( listenersModule == this){
+
+                        listenerIsset = true;
+                            break;
+                    }
                 }
-            }
 
-            if(!listenerIsset){
+                if(!listenerIsset){
 
-                moduleEvents =  module.events;
-                listenerIsset = false;
+                    moduleEvents =  module.events;
+                    listenerIsset = false;
 
-                this.doEvent('beforeAddModuleToAuditionOtherModules');
-                this.doEventAfterStandartEvent('beforeAddModuleToAuditionOtherModules');
+                    this.doEvent('beforeAddModuleToAuditionOtherModules');
+                    this.doEventAfterStandartEvent('beforeAddModuleToAuditionOtherModules');
 
-                module.doEvent('beforeAddModuleToAudition');
-                module.doEventAfterStandartEvent('beforeAddModuleToAudition');
+                    module.doEvent('beforeAddModuleToAudition');
+                    module.doEventAfterStandartEvent('beforeAddModuleToAudition');
 
-                listenersArray.push(this);
+                    listenersArray.push(this);
 
-                listenersModule.addAuditionToList(this);
+                    listenersModule.addAuditionToList(this);
 
 
-                module.doEvent('afterAddModuleToAudition');
-                module.doEventAfterStandartEvent('afterAddModuleToAudition');
+                    module.doEvent('afterAddModuleToAudition');
+                    module.doEventAfterStandartEvent('afterAddModuleToAudition');
 
-                this.doEvent('afterAddModuleToAuditionOtherModules');
-                this.doEventAfterStandartEvent('afterAddModuleToAuditionOtherModules');
+                    this.doEvent('afterAddModuleToAuditionOtherModules');
+                    this.doEventAfterStandartEvent('afterAddModuleToAuditionOtherModules');
+                }
             }
         }
     }

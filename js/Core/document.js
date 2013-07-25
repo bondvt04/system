@@ -1,18 +1,25 @@
 function forkEventToAllModules(eventType){
-    // пройти по всем вызывать форк кидать всем форк
+
+    var module;
+    var event;
+
+    for (var name in Modules ){
+
+        if(name != 'document' && name != 'Pages' && name != 'startFunctions' && name != 'closeFunctions'){
+
+            module =  Modules[name];
+            event = module.events[eventType];
+
+            if(event){
+
+                event();
+                module.doEventAfterStandartEvent(eventType);
+            }
+        }
+    }
 }
 
-
-
-
-
-
-
 Modules.document = {};
-// TODO свой навесчик событий при выполнении бросит либо генератор бросает событие в очередь при возникновении события
-
-
-
 
 Modules.document.userData = {
 
@@ -84,7 +91,7 @@ Modules.document.event = {
     volumeupbutton: function (){forkEventToAllModules('volumeupbutton');}
 
 };
-// события после событий
+// события после событий  ??
 
 Modules.document._systemData = {
 

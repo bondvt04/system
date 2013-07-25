@@ -141,16 +141,18 @@ var pageModules = {
 	
 	/** Назначить слушатели событий */
 	if(document.attachEvent){
-		document.attachEvent('onclick', getEvents);
-        //document.attachEvent('onload', getEvents ,false);
-        //document.attachEvent('onunload', getEvents ,false);
+		document.attachEvent('onmousedown', getEvents);
+        document.attachEvent('onmouseup', getEvents);
+        document.attachEvent('onmousemove', getEvents);
 	}
 	else{
 		document.addEventListener('mousedown', getEvents ,false);
         document.addEventListener('mouseup', getEvents ,false);
         document.addEventListener('mousemove', getEvents ,false);
-        //document.addEventListener('load', getEvents ,false);
-        //document.addEventListener('unload', getEvents ,false);
+
+        document.addEventListener('touchstart', getEvents ,false);
+        document.addEventListener('touchmove', getEvents ,false);
+        document.addEventListener('touchend', getEvents ,false);
 	}
 	window.onload = load;
 	window.onbeforeunload = onbeforeunload;
@@ -207,6 +209,8 @@ var pageModules = {
 var eventObj = {};  //TODO Получать размеры родителя в объект если это свап блок и т.д .// логику для скролов в модуль оболочку скрола , там же данные для работы логики как динамические так и статичные
 
 function getEvents(event){
+
+    console.log("_   "+event.type)
 
     var button=false;
     event = event || window.event;
@@ -314,9 +318,9 @@ function getEvents(event){
     //alert(eventObj.moduleName)
     if(((event.type == 'mouseup' && button)|| event.type == 'touchend') && (eventObj.moduleName || eventObj.moduleContainer)){
 
+        console.log("+   "+event.type)
 
-
-        if((Math.abs(eventObj.startX - event.clientX) < 7 || Math.abs(eventObj.startY - event.clientY) < 7) && eventObj.canClick ) {
+        if((Math.abs(eventObj.startX - event.clientX) <= 10 || Math.abs(eventObj.startY - event.clientY) <= 10) && eventObj.canClick ) {
 
             if(eventObj.timer){
                 clearTimeout(eventObj.timer);
