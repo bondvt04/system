@@ -17,10 +17,7 @@ function doEvent(event){
 
 function load(){
 
-    for(var lengthArg = Modules.startFunctions.length; lengthArg--;){
 
-        Modules.startFunctions[lengthArg]();
-    }
 
     // проверить поддерживает ли фонегап , да навесить слушатели событий на кнопки
 
@@ -29,6 +26,11 @@ function load(){
         document.addEventListener("deviceready", onDeviceReady, false);
     }
     else{
+
+        for(var lengthArg = Modules.startFunctions.length; lengthArg--;){
+
+            Modules.startFunctions[lengthArg]();
+        }
 
         stackEvents.pushEvent({
             eventType : 'loaded',
@@ -65,6 +67,11 @@ function onDeviceReady(){
     document.addEventListener("volumedownbutton", doEvent("volumedownbutton"), false);
 
     document.addEventListener("volumeupbutton", doEvent("volumeupbutton"), false);
+
+    for(var lengthArg = Modules.startFunctions.length; lengthArg--;){
+
+        Modules.startFunctions[lengthArg]();
+    }
 
     stackEvents.pushEvent({
         eventType : 'loaded',
