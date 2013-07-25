@@ -230,6 +230,7 @@ function getEvents(event){
         eventObj.moduleName = target.getAttribute('data-moduleName');
         //alert(target.getAttribute('data-modulename'))
 
+
         eventObj.viewElement = target.getAttribute('data-actionElem');      // может не быть их -вверх по предкам пока не обнаружатся
 
         var container  = target;
@@ -238,6 +239,11 @@ function getEvents(event){
             container = container.parentNode;
         }
 
+        eventObj.height = container.offsetHeight;
+        eventObj.width = container.offsetWidth;
+
+        eventObj.offsetY = container.offsetHeight*0.34;
+        eventObj.offsetX = container.offsetWidth*0.34;
 
         if(container.getAttribute){
             eventObj.typeContainer = container.getAttribute('data-Container');               // както должно учитыватся при действиях мова толи это слайд толи скрол или элемент будет сам поднимать зная свои настройки?
@@ -261,16 +267,27 @@ function getEvents(event){
         eventObj.clientY = event.clientY;
         eventObj.eventType = 'move';
 
-        if((Math.abs(eventObj.startX - event.clientX)> 30 ||  Math.abs(eventObj.startY - event.clientY) >30)) {
+
+
+        if((Math.abs(eventObj.startX - event.clientX) >= eventObj.offsetX ||  Math.abs(eventObj.startY - event.clientY) >= eventObj.offsetY)) {
 
             if(eventObj.timer){
+
                 clearTimeout(eventObj.timer);
                 eventObj.timer = false;
             }
 
             eventObj.canClick = false;
 
-            eventObj.eventType = 'scroll';
+            if(Math.abs(eventObj.startX - event.clientX) >= eventObj.offsetX){
+
+                eventObj.eventType = 'scrollX';
+            }
+            if(Math.abs(eventObj.startY - event.clientY) >= eventObj.offsetY){
+
+                eventObj.eventType = 'scrollY';
+            }
+
             eventObj.moduleName = eventObj.moduleContainer;
             eventObj.viewElement =  eventObj.moduleContainerViewElement;
 

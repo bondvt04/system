@@ -32,13 +32,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mainListener.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="mainListener.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/mainListener.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="155" column="28" selection-start="4940" selection-end="4940" vertical-scroll-proportion="0.0" vertical-offset="1456" max-vertical-offset="4845">
-              <folding>
-                <element signature="n#!!doc;n#forkEvent#0" expanded="false" />
-              </folding>
+            <state line="279" column="38" selection-start="9024" selection-end="9024" vertical-scroll-proportion="0.41426927" vertical-offset="3825" max-vertical-offset="5145">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -46,7 +44,7 @@
       <file leaf-file-name="index.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Modules/mod/Modules/mod1/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="472" selection-end="472" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
+            <state line="9" column="0" selection-start="472" selection-end="472" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="225">
               <folding />
             </state>
           </provider>
@@ -64,7 +62,7 @@
       <file leaf-file-name="ajax.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Core/ajax.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="298" column="0" selection-start="7903" selection-end="7903" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5490">
+            <state line="298" column="0" selection-start="7903" selection-end="7903" vertical-scroll-proportion="0.0" vertical-offset="4455" max-vertical-offset="5535">
               <folding />
             </state>
           </provider>
@@ -82,7 +80,7 @@
       <file leaf-file-name="cookies.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Core/cookies.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="97" selection-start="906" selection-end="906" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1095">
+            <state line="42" column="97" selection-start="906" selection-end="906" vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="1095">
               <folding />
             </state>
           </provider>
@@ -97,10 +95,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="other.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="69" selection-start="722" selection-end="722" vertical-scroll-proportion="-17.5" vertical-offset="0" max-vertical-offset="960">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="other.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Core/other.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="7" selection-start="317" selection-end="317" vertical-scroll-proportion="0.20408164" vertical-offset="0" max-vertical-offset="882">
+            <state line="12" column="7" selection-start="317" selection-end="317" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -118,7 +125,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Modules/mod/index.html" />
         <option value="$PROJECT_DIR$/Modules/mod/Modules/mod1/index.html" />
         <option value="$PROJECT_DIR$/Modules/mod/Modules/mod1/index.js" />
         <option value="$PROJECT_DIR$/Modules/mod/index.js" />
@@ -130,10 +136,11 @@
         <option value="$PROJECT_DIR$/js/Core/workWithModuleData.js" />
         <option value="$PROJECT_DIR$/js/Core/workWithView.js" />
         <option value="$PROJECT_DIR$/js/Core/cookies.js" />
-        <option value="$PROJECT_DIR$/js/mainListener.js" />
         <option value="$PROJECT_DIR$/js/Core/other.js" />
         <option value="$PROJECT_DIR$/js/Core/eventsBrowser.js" />
         <option value="$PROJECT_DIR$/js/Core/document.js" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/js/mainListener.js" />
       </list>
     </option>
   </component>
@@ -253,7 +260,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -364,17 +370,18 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="editor.preferences.appearance" />
-    <property name="last_opened_file_path" value="$USER_HOME$/04.06/cms/js/functionsForWork/cookieFunctions.js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../UPMCHealthPlan" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -452,7 +459,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="0" width="1926" height="1057" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -535,11 +542,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/Core/establishmentOfStructures.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="53" selection-start="1260" selection-end="1370" vertical-scroll-proportion="0.73129255" vertical-offset="0" max-vertical-offset="5010" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/core.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="520" column="37" selection-start="12289" selection-end="12392" vertical-scroll-proportion="0.34407365" vertical-offset="7501" max-vertical-offset="10155">
@@ -549,16 +551,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/workWithView.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="264" column="7" selection-start="7366" selection-end="7366" vertical-scroll-proportion="0.0" vertical-offset="3316" max-vertical-offset="4230">
-          <folding />
-        </state>
+        <state line="264" column="7" selection-start="7366" selection-end="7366" vertical-scroll-proportion="0.0" vertical-offset="3316" max-vertical-offset="4230" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Modules/mod/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="2" selection-start="459" selection-end="459" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
-          <folding />
-        </state>
+        <state line="9" column="2" selection-start="459" selection-end="459" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Modules/mod/Modules/mod1/index.js">
@@ -577,32 +575,17 @@
     </entry>
     <entry file="file://$USER_HOME$/04.06/routers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="882">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="882" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/listeners.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="339" column="68" selection-start="9366" selection-end="9501" vertical-scroll-proportion="-0.34353742" vertical-offset="5373" max-vertical-offset="6255">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/mainListener.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="155" column="28" selection-start="4940" selection-end="4940" vertical-scroll-proportion="0.0" vertical-offset="1456" max-vertical-offset="4845">
-          <folding>
-            <element signature="n#!!doc;n#forkEvent#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="339" column="68" selection-start="9366" selection-end="9501" vertical-scroll-proportion="-0.34353742" vertical-offset="5373" max-vertical-offset="6255" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/04.06/cms/js/functionsForWork/cookieFunctions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="38" selection-start="1412" selection-end="1432" vertical-scroll-proportion="0.5102041" vertical-offset="0" max-vertical-offset="882">
-          <folding />
-        </state>
+        <state line="30" column="38" selection-start="1412" selection-end="1432" vertical-scroll-proportion="0.5102041" vertical-offset="0" max-vertical-offset="882" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/ajax.js">
@@ -619,16 +602,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/Core/document.js">
+    <entry file="file://$PROJECT_DIR$/js/Core/cookies.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="119" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="105">
+        <state line="42" column="97" selection-start="906" selection-end="906" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1095">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/Core/cookies.js">
+    <entry file="file://$PROJECT_DIR$/js/Core/other.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="97" selection-start="906" selection-end="906" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1095">
+        <state line="12" column="7" selection-start="317" selection-end="317" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Core/document.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="119" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="105">
           <folding />
         </state>
       </provider>
@@ -640,12 +632,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/Core/other.js">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="7" selection-start="317" selection-end="317" vertical-scroll-proportion="0.20408164" vertical-offset="0" max-vertical-offset="882">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state line="28" column="69" selection-start="722" selection-end="722" vertical-scroll-proportion="-17.5" vertical-offset="0" max-vertical-offset="960">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/mainListener.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="279" column="38" selection-start="9024" selection-end="9024" vertical-scroll-proportion="0.41426927" vertical-offset="3825" max-vertical-offset="5145">
+          <folding />
         </state>
       </provider>
     </entry>
