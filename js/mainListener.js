@@ -263,7 +263,8 @@ function getEvents(event){
 
                 eventObj.eventType = 'scrollY';
             }
-
+            //TODO в зависимости от типа скрол слайд
+            //TODO  элемент можно закрыть и открыть с указанным эффектом  -функции для этого
             eventObj.moduleName = eventObj.moduleContainer;
             eventObj.viewElement =  eventObj.moduleContainerViewElement;
 
