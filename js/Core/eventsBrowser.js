@@ -10,13 +10,13 @@ function doEvent(event){
         Modules.document.events[event]();
     }
     return this;
-};   // выполнить событие для этого модуля
+}   // выполнить событие для этого модуля
 
 function load(){
 
     // проверить поддерживает ли фонегап , да навесить слушатели событий на кнопки
 
-    if(document.deviceready){
+    if('deviceready' in document){
 
         document.addEventListener("deviceready", onDeviceReady, false);
     }
@@ -35,36 +35,36 @@ function load(){
             document.getElementById('startPage').style.display = 'none';
         }
     }
-};
+}
 // онлоад
 
 function onDeviceReady(){
 
-    document.addEventListener("pause", doEvent("pause"), false);
+    document.addEventListener("pause", function(){doEvent("pause")}, false);
 
-    document.addEventListener("resume", doEvent("resume"), false);
+    document.addEventListener("resume", function(){doEvent("resume")}, false);
 
-    document.addEventListener("online", doEvent("online"), false);
+    document.addEventListener("online", function(){doEvent("online")}, false);
 
-    document.addEventListener("offline", doEvent("offline"), false)
-    ;
-    document.addEventListener("backbutton", doEvent("backbutton"), false);
+    document.addEventListener("offline", function(){doEvent("offline")}, false);
 
-    window.addEventListener("batterycritical", doEvent("batterycritical"), false);
+    document.addEventListener("backbutton", function(){doEvent("backbutton")}, false);
 
-    window.addEventListener("batterystatus", doEvent("batterystatus"), false);
+    window.addEventListener("batterycritical", function(){doEvent("batterycritical")}, false);
 
-    document.addEventListener("menubutton", doEvent("menubutton"), false);
+    window.addEventListener("batterystatus", function(){doEvent("batterystatus")}, false);
 
-    document.addEventListener("searchbutton", doEvent("searchbutton"), false);
+    document.addEventListener("menubutton", function(){doEvent("menubutton")}, false);
 
-    document.addEventListener("startcallbutton", doEvent("startcallbutton"), false);
+    document.addEventListener("searchbutton", function(){doEvent("searchbutton")}, false);
 
-    document.addEventListener("endcallbutton", doEvent("endcallbutton"), false);
+    document.addEventListener("startcallbutton", function(){doEvent("startcallbutton")}, false);
 
-    document.addEventListener("volumedownbutton", doEvent("volumedownbutton"), false);
+    document.addEventListener("endcallbutton", function(){doEvent("endcallbutton")}, false);
 
-    document.addEventListener("volumeupbutton", doEvent("volumeupbutton"), false);
+    document.addEventListener("volumedownbutton", function(){doEvent("volumedownbutton")}, false);
+
+    document.addEventListener("volumeupbutton", function(){doEvent("volumeupbutton")}, false);
 
     for(var lengthArg = Modules.startFunctions.length; lengthArg--;){
 
@@ -95,7 +95,7 @@ function onbeforeunload(){
 
     forkEventToAllModules('beforeunload');
 
-};
+}
 // выгрузка
 
 
