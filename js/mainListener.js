@@ -146,8 +146,8 @@ var pageModules = {
             document.attachEvent('onmouseup', getEvents);
             document.attachEvent('onmousemove', getEvents);
 
-            document.getElementById('scrollpage').attachEvent("onDOMMouseScroll",getEvents,false);    //?
-            document.getElementById('scrollpage').attachEvent("onmousewheel",getEvents,false);
+            document.attachEvent("onDOMMouseScroll",getEvents,false);    //?
+            document.attachEvent("onmousewheel",getEvents,false);
 
     }
 	else{
@@ -165,8 +165,8 @@ var pageModules = {
             document.addEventListener('mouseup', getEvents ,false);
             document.addEventListener('mousemove', getEvents ,false);
 
-            document.getElementById('scrollpage').addEventListener("DOMMouseScroll",getEvents ,false);
-            document.getElementById('scrollpage').addEventListener("mousewheel",getEvents,false);
+            document.addEventListener("DOMMouseScroll",getEvents ,false);
+            document.addEventListener("mousewheel",getEvents,false);
         }
 	}
 
@@ -181,6 +181,10 @@ function getEvents(event){
 
     var button=false;
     event = event || window.event;
+
+    var target=event.target || event.srcElement;
+
+    var container;
 
     if (event.preventDefault) {
         event.preventDefault();
@@ -214,15 +218,29 @@ function getEvents(event){
                 delta =event.detail / 3;
             }
         }
+        // предать сответсвующему методу если у него родитель с типом скрол переопределить элемент
+        container  = target;
 
+        while (container.hasAttribute && !container.hasAttribute('data-Container')  ){
+            container = container.parentNode;
+        }
 
+        if(container.getAttribute && container.getAttribute('data-Container') == 'scroll'){
+            eventObj.eventType = 'scroll';
+            eventObj.moduleName = container.getAttribute('data-moduleName');
+            eventObj.target = container;
+            pageModules.ListenToTheEvent(eventObj);
+            eventObj = {};
+        }
+
+       return;
     }
 
     if ((event.type == 'mousedown' && button) || event.type == 'touchstart' ){                                   // количество пальцев учитывать чтоб определять зум ротейт  . зум и ротейт на ближайшем помеченном
 
         // флаг для либо клик на элементе , либо на контейнер прорвалось. без него пишей не должно быть ни при муве ни при отпускании
 
-        var target=event.target || event.srcElement;
+
 
         eventObj.realEvent = event;
         eventObj.moduleName = target.getAttribute('data-moduleName');
@@ -231,7 +249,7 @@ function getEvents(event){
 
         eventObj.viewElement = target.getAttribute('data-actionElem');      // может не быть их -вверх по предкам пока не обнаружатся
 
-        var container  = target;
+        container  = target;
 
         while (container.hasAttribute && !container.hasAttribute('data-Container')  ){
             container = container.parentNode;
@@ -247,13 +265,22 @@ function getEvents(event){
         if(container.getAttribute){
 
             eventObj.typeContainer = container.getAttribute('data-Container');               // както должно учитыватся при действиях мова толи это слайд толи скрол или элемент будет сам поднимать зная свои настройки?
-            eventObj.moduleContainer = container.getAttribute('data-moduleName');
+            eventObj.moduleName = container.getAttribute('data-moduleName');
             eventObj.moduleContainerViewElement = container.getAttribute('data-actionElem');
+            eventObj.container = container;
 
         }
 
-        eventObj.startX = event.clientX || event.targetTouches[0].pageX;
-        eventObj.startY = event.clientY || event.targetTouches[0].pageY;
+        if(event.clientX){
+
+            eventObj.startX = event.clientX;
+            eventObj.startY = event.clientY;
+        }
+        else{
+
+            eventObj.startX = event.targetTouches[0].pageX;
+            eventObj.startY = event.targetTouches[0].pageY;
+        }
 
 
 
@@ -264,13 +291,22 @@ function getEvents(event){
     }
 
 
-    if (event.type == 'mousemove' || event.type == 'touchmove'  ){
+    if ((event.type == 'mousemove' || event.type == 'touchmove') && eventObj.moduleName  ){
 
-        eventObj.clientX = event.clientX || event.targetTouches[0].pageX;
-        eventObj.clientY = event.clientY || event.targetTouches[0].pageY;
+        if(event.clientX){
+
+            eventObj.clientX = event.clientX;
+            eventObj.clientY = event.clientY;
+        }
+        else{
+
+            eventObj.clientX = event.targetTouches[0].pageX;
+            eventObj.clientY = event.targetTouches[0].pageY;
+        }
+
         eventObj.eventType = 'move';
 
-        if((Math.abs(eventObj.startX -eventObj.clientX) >= eventObj.offsetX ||  Math.abs(eventObj.startY - eventObj.clientY) >= eventObj.offsetY) && (eventObj.moduleName || eventObj.moduleContainer)) {
+        if((Math.abs(eventObj.startX -eventObj.clientX) >= eventObj.offsetX ||  Math.abs(eventObj.startY - eventObj.clientY) >= eventObj.offsetY) && (eventObj.moduleName || eventObj.typeContainer  == 'swap')) {
 
             if(eventObj.timer){
 
@@ -282,34 +318,29 @@ function getEvents(event){
 
             if(Math.abs(eventObj.startX - eventObj.clientX) >= eventObj.offsetX){
 
-                eventObj.eventType = 'scrollX';
+                eventObj.eventType = 'swapX';
             }
             if(Math.abs(eventObj.startY - eventObj.clientY) >= eventObj.offsetY){
 
-                eventObj.eventType = 'scrollY';
+                eventObj.eventType = 'swapY';
             }
-            //TODO в зависимости от типа скрол слайд
 
-            //TODO в менять модуль в событии сейчас при скроле передаётся тотже -хотя можно скрол не у с коллеров по умолчанию сделать предать в родителя пока не дойдёт до того какому предназначен
-                //TODO -события по умолчанию с поведением кроме спец модулей
-                //TODO -тогда можно и контейнер не определять
-            //TODO преопределять элемент для кастомных событий скрол свап в каком произошло преопределить  , хотя , если генерятся если есть родитель и будет переливать по родителям (с.т событие) пока не дойдёт с переопределённым
-
-
-            //TODO  элемент можно закрыть и открыть с указанным эффектом  -функции для этого
-            eventObj.moduleName = eventObj.moduleContainer;
             eventObj.viewElement =  eventObj.moduleContainerViewElement;
+            eventObj.target = eventObj.container;
 
-            pageModules.ListenToTheEvent(eventObj);      // форк сдеклать      // определять какой скрол (верт/гор) его направление
+            if(eventObj.moduleName){
+                pageModules.ListenToTheEvent(eventObj);
+            }
 
             eventObj.startX = eventObj.clientX;
             eventObj.startY = eventObj.clientY;
+            return;
         }
         else{
 
             var time = Math.abs(30-(new Date() - eventObj.oldMove));
 
-            if(!eventObj.timer){
+            if(!eventObj.timer && eventObj.moduleName){
 
                 eventObj.timer = setTimeout( function(){
                     eventObj.timer = false;
@@ -321,13 +352,13 @@ function getEvents(event){
     }
 
     //alert(eventObj.moduleName)
-    if(((event.type == 'mouseup' && button)|| event.type == 'touchend') && (eventObj.moduleName || eventObj.moduleContainer)){
+    if(((event.type == 'mouseup' && button)|| event.type == 'touchend') && eventObj.moduleName) {
+
 
         eventObj.clientX = eventObj.clientX || eventObj.startX;
         eventObj.clientY = eventObj.clientY || eventObj.startY;
 
-
-        if((Math.abs(eventObj.startX - eventObj.clientX) <= 10 || Math.abs(eventObj.startY - eventObj.clientY) <= 10) && eventObj.canClick ) {
+        if((Math.abs(eventObj.startX - eventObj.clientX) <= 10 && Math.abs(eventObj.startY - eventObj.clientY) <= 10) && eventObj.canClick ) {
 
             if(eventObj.timer){
                 clearTimeout(eventObj.timer);
