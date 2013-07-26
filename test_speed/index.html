@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        #pak{
+            position: absolute;
+            top: 200px;
+            left: 100px;
+            width:200px;
+            height: 400px;
+            border: 1px solid black;
+            overflow: hidden;
+        }
+
+        #content{
+            position: absolute;
+            top: -100px;
+            left: 0px;
+            width:200px;
+            height: 500px;
+            overflow: hidden;
+        }
+        #content1,#content2{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width:200px;
+            height: 500px;
+
+        }
+        #content1 div{
+            width:200px;
+            height: 90px;
+            margin-bottom: 10px;
+            background-color: red;
+            display: block;
+        }
+
+        #content2 div{
+            width:200px;
+            height: 90px;
+            margin-bottom: 10px;
+            background-color: red;
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="pak">
+
+        <div id="content">
+            <div id="content1">
+
+            </div>
+
+        </div>
+    </div>
+
+<script>
+    var div = document.createElement("div");
+
+    var fragment = document.createDocumentFragment()
+    fragment.appendChild(div);
+
+    var _top = 0;
+    var i = 0;
+    var d;
+
+
+    var cont1 =    document.getElementById('content1').style;
+    var cont2 =    document.getElementById('content1');
+
+    cont1.top= _top + 'px';
+
+    cont2.appendChild(fragment.cloneNode());
+    cont2.appendChild(fragment.cloneNode());
+    cont2.appendChild(fragment.cloneNode());
+    cont2.appendChild(fragment.cloneNode());
+    cont2.appendChild(fragment.cloneNode());
+    cont2.appendChild(fragment.cloneNode());
+
+    setInterval(function(){
+        _top = _top +10;
+
+
+        cont1.top= _top + 'px';
+
+        if(_top >= 90){
+        _top = _top -90;
+        cont2.appendChild(fragment.cloneNode());
+            d= cont2.querySelector('div')
+        cont2.removeChild(d);
+        }
+
+
+    },0);
+
+</script>
+
+</body>
+</html>
+
+        // поднимать из модели данные переисовывать шаблон , вставлять
+        // ориетироваться на события -нап время последнего события на дистанцию при мове -это скрол блок
+        // делать модуль -представить как работу системы
