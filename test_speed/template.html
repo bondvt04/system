@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+
+
+<script>
+    var template = "<div   data-moduleName='{$a}' data-actionElem='testElem' data-Container='true' > {$b}</div><p  data-moduleName='{$c}' data-actionElem='testElem' data-Container='true' > {$d}</p>";
+
+    var obj = {
+        a : 10,
+        b : 20,
+        c : 30,
+        d : 40
+    };
+
+    // подготовить в массив
+
+    // тест реплейса
+
+    function setDataToTemplate(template, data){
+
+        var reg;
+        for(var dataToInsert in data){
+            reg = new RegExp("{\\$"+dataToInsert+"}", "g");
+            template = template.replace(reg, data[dataToInsert]);
+        }
+
+        return template;
+
+
+    }
+
+    var d_start = new Date();
+
+    for(var i = 100000;i--;) {
+
+        setDataToTemplate(template, obj);
+    }
+    alert((new Date() - d_start)/100000);
+
+</script>
+
+</body>
+</html>

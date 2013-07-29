@@ -53,6 +53,7 @@
 
         <div id="content">
             <div id="content1">
+                <div></div>
 
             </div>
 
@@ -60,8 +61,57 @@
     </div>
 
 <script>
-    var div = document.createElement("div");
+    var container = document.getElementById('content1');
+    var div;
+    var first = container.firstElementChild;
+    var last = container.lastElementChild;
+    div = first;
+    var i = 10000;
 
+    var div1 = document.createElement("div");
+    var h =   document.createElement("h1");
+    var img =  document.createElement("img");
+    var p =  document.createElement("p");
+
+    div1.appendChild(h);
+    div1.appendChild(img);
+    div1.appendChild(p);
+
+    var d_start = new Date();
+
+    var fragment = document.createDocumentFragment();
+
+    var cloneFragmemt;
+
+    var timer = setInterval(function(){
+
+        if(i>0){
+
+            cloneFragmemt  = fragment.cloneNode();
+            container.removeChild(div);
+            div = document.createElement("div");
+            //div.innerHTML = '<div><h1></h1><img><p></p></div>';    //4.2444
+            //div.appendChild(div1);                                 // 4.2115
+
+            //cloneFragmemt.appendChild(div1);      //4.218
+
+            div.appendChild(cloneFragmemt);
+            container.appendChild(div);
+
+            i--;
+
+        }
+        else{
+            alert((new Date() - d_start)/10000);
+            clearInterval(timer);
+        }
+
+    }, 0);
+
+    //console.log(first)
+    //  в массив ссылки на созданны ноды
+
+   /*
     var fragment = document.createDocumentFragment()
     fragment.appendChild(div);
 
@@ -97,12 +147,9 @@
 
 
     },0);
+    */
 
 </script>
 
 </body>
 </html>
-
-        // поднимать из модели данные переисовывать шаблон , вставлять
-        // ориетироваться на события -нап время последнего события на дистанцию при мове -это скрол блок
-        // делать модуль -представить как работу системы

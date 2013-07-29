@@ -252,3 +252,28 @@ Module.prototype.removeValidateFunction = function(name){
 
     return this;
 };
+
+Module.prototype.setSettings = function(settings){
+
+    for (var name in settings){
+
+        this._settings[name] = settings[name];
+    }
+
+    return this;
+};
+
+Module.prototype.getSettings = function(){
+
+    return this._settings;
+};
+
+Module.prototype.removeSettings = function(settings){
+
+    for (var name in settings){
+
+        delete this._settings[name];
+    }
+
+    return this;
+};
