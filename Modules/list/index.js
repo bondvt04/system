@@ -24,7 +24,7 @@ Modules.list.insertItems = function(){
 
     var elemHTML = document.createElement("script");
 
-    elemHTML.onerror = function(){throw (template.urlHTML +' no shablon');templatesLength--;};
+    elemHTML.onerror = function(){throw (template.urlHTML +' no shablon')};
 
     elemHTML.onload=function(){
 
@@ -32,8 +32,9 @@ Modules.list.insertItems = function(){
 
         that._settings.loadTemplate = true;
 
-        // заполнять пока не станет больше чем один
+        // заполнять пока не станет больше чем  размер окна или не закончится -прерывания после каждого на отрисовку  -запомнить размер и поставит его жестко
         // запомнить счётчик
+        // запомнить количество общее
 
     };
 
@@ -60,11 +61,11 @@ Modules.list.events.rendered = function(data){
     // указатели на элементы
     document.getElementById(this.that.container).innerHTML = data;
 
-    this.that._settings.list = document.getElementById(this.that.container).getElementsByClassName('list')[0];
-    this.that._settings.list_wrapper = document.getElementById(this.that.container).getElementsByClassName('list-wrapper')[0];
-    this.that._settings.list_conten = document.getElementById(this.that.container).getElementsByClassName('list-content')[0];
-    this.that._settings.listVerticalScrollLine = document.getElementById(this.that.container).getElementsByClassName('listVerticalScrollLine')[0];
-    this.that._settings.listVerticalScrollBar = document.getElementById(this.that.container).getElementsByClassName('listVerticalScrollBar')[0];
+    this.that._settings.list = document.getElementById(this.that.container).getElementsByClassName('list')[0];  // не нужен           -поставить жестко      высоту ширину
+    this.that._settings.list_wrapper = document.getElementById(this.that.container).getElementsByClassName('list-wrapper')[0];     // не нужен         -поставить жестко      высоту ширину
+    this.that._settings.list_conten = document.getElementById(this.that.container).getElementsByClassName('list-content')[0];      //  -поставить жестко      высоту ширину
+    this.that._settings.listVerticalScrollLine = document.getElementById(this.that.container).getElementsByClassName('listVerticalScrollLine')[0]; // не нужен   -поставить жестко      высоту ширину
+    this.that._settings.listVerticalScrollBar = document.getElementById(this.that.container).getElementsByClassName('listVerticalScrollBar')[0];  //  -поставить жестко      высоту ширину
 
 
     this.that._settings.list.style.width = this.that._settings.windowWidth;

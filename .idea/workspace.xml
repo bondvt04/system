@@ -26,7 +26,16 @@
       <file leaf-file-name="index.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Modules/list/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="60" selection-start="1468" selection-end="1468" vertical-scroll-proportion="0.61085975" vertical-offset="0" max-vertical-offset="1665">
+            <state line="14" column="0" selection-start="929" selection-end="929" vertical-scroll-proportion="0.23755656" vertical-offset="0" max-vertical-offset="1680">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fhggh.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test_speed/fhggh.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="32.291668" vertical-offset="775" max-vertical-offset="1635">
               <folding />
             </state>
           </provider>
@@ -78,7 +87,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/js/Core/scroll.js" />
         <option value="$PROJECT_DIR$/Modules/mod/Modules/list/index.js" />
         <option value="$PROJECT_DIR$/Modules/mod/Modules/clone_list/index.js" />
         <option value="$PROJECT_DIR$/js/Core/list.js" />
@@ -94,6 +102,7 @@
         <option value="$PROJECT_DIR$/CSS/css.css" />
         <option value="$PROJECT_DIR$/Modules/list/style.css" />
         <option value="$PROJECT_DIR$/Modules/list/index.js" />
+        <option value="$PROJECT_DIR$/test_speed/index.html" />
       </list>
     </option>
   </component>
@@ -228,6 +237,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cmsNew" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test_speed" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -527,22 +550,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/Core/eventsBrowser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1635">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/Core/ajax.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="182" column="23" selection-start="4701" selection-end="4701" vertical-scroll-proportion="0.33333334" vertical-offset="2539" max-vertical-offset="5535">
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/workWithModuleData.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="4" selection-start="205" selection-end="205" vertical-scroll-proportion="0.23037542" vertical-offset="0" max-vertical-offset="4260">
@@ -620,13 +627,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/clone_list/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="17" selection-start="453" selection-end="473" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/Core/workWithView.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="66" column="51" selection-start="1541" selection-end="1656" vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="4275">
@@ -634,9 +634,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/clone_list/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="17" selection-start="453" selection-end="473" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_speed/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="90" column="113" selection-start="1987" selection-end="1987" vertical-scroll-proportion="0.31976745" vertical-offset="1075" max-vertical-offset="2430">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_speed/fhggh.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="32.291668" vertical-offset="775" max-vertical-offset="1635">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Modules/list/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="60" selection-start="1468" selection-end="1468" vertical-scroll-proportion="0.61085975" vertical-offset="0" max-vertical-offset="1665">
+        <state line="14" column="0" selection-start="929" selection-end="929" vertical-scroll-proportion="0.23755656" vertical-offset="0" max-vertical-offset="1680">
           <folding />
         </state>
       </provider>
