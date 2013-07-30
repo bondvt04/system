@@ -9,6 +9,7 @@ Modules.clone_list.setSettings({     // наследник получит
     verticalScroll : 'resizeable',  // none | nonResizeble
     windowWidth : '200px',
     windowHeight : '200px',
+    verticalScrollWidth : '20px',
     templateHTML : 'url',
     templateCSS : 'url'
 
