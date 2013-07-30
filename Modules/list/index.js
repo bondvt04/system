@@ -93,6 +93,7 @@ Modules.list.events.rendered = function(data){
     // вызвать метод заполнения
     this.insertItems();
 
+    //TODO всегда разрывать чтобы браузер мог отрисоваться с жесткими параметрами
 
     // если ресайзебл  поменять размеры   иначе просто вычислить
     if(this.that._settings.verticalScroll == 'resizeable'){
