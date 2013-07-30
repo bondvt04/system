@@ -7,14 +7,40 @@ function clone(o) {
     var p, v;
     for(p in o) {
 
-        v = o[p];
-        if(v && "object" === typeof v) {
-            c[p] = clone(v);
-        }
-        else c[p] = v;
 
+
+        if(p != 'that'){
+
+            v = o[p];
+            if(v && "object" === typeof v) {
+                c[p] = clone(v);
+            }
+            else c[p] = v;
+        }
+        else{
+            c[p] = 'that';
+        }
     }
     return c;
+}
+
+function normaizeAfterClone(obj, that){
+
+    for(var name in obj){
+
+        if(typeof obj[name] == "object"){
+
+            obj[name] = normaizeAfterClone(obj[name], that);
+        }
+
+        if(name == 'that'){
+
+            obj[name] =  that;
+        }
+
+    }
+
+    return obj;
 }
 
 var Modules = {};
@@ -36,7 +62,6 @@ function Module(){
 
              if(this.that.container){
                  //console.log(this.that._template.render)
-
                  document.getElementById(this.that.container).innerHTML = this.that._template.render;
              }
         },
@@ -133,7 +158,7 @@ Modules.createNewModule = function(defaultSettings){
 
 Module.prototype.createCloneModule = function (){
 
-    var events = this.events;
+
 
     this.doEvent('beforeCreate');
     this.doEventAfterStandartEvent('beforeCreate');
@@ -145,7 +170,8 @@ Module.prototype.createCloneModule = function (){
 
 
     var returnObj = clone(this);
-    var returnEvents = returnObj.events;
+
+    normaizeAfterClone(returnObj, returnObj);
 
     returnObj.doEvent('afterCreate');
     returnObj.doEventAfterStandartEvent('afterCreate');
@@ -155,6 +181,8 @@ Module.prototype.createCloneModule = function (){
 
     return  returnObj;
 };
+
+
 
 Module.prototype.createCloneModuleWithOutAuditions = function (){
 
@@ -169,6 +197,7 @@ Module.prototype.createCloneModuleWithOutAuditions = function (){
 
 
     var returnObj = clone(this);
+    normaizeAfterClone(returnObj, returnObj);
 
     returnObj.doEvent('afterCreate');
     returnObj.doEventAfterStandartEvent('afterCreate');

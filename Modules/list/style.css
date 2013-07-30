@@ -1,0 +1,41 @@
+.list{
+    position:relative;
+    top:0px;
+    left:0px;
+
+}
+
+.list-wrapper{
+    position:absolute;
+    top:0px;
+    left:0px;
+    overflow: hidden;
+
+}
+
+.list-content{
+    position:absolute;
+    top:0px;
+    left:0px;
+    overflow: hidden;
+
+}
+
+#listVerticalScrollLine{
+    position:absolute;
+    top:0px;
+    right:0px;
+    width: 10%;
+    height: 100%;
+    background-color:red;
+}
+
+#listVerticalScrollBar{
+    position:absolute;
+    top:0px;
+    right:0px;
+    width: 10px;
+    height: 20px;
+    background-color:blue;
+
+}

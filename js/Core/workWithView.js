@@ -92,6 +92,7 @@ Module.prototype.loadTemplate = function(type){
 Module.prototype.render = function(){
 
     this.loadTemplate('top');
+
 };
 
 Module.prototype.renderWithOutEventRendered= function(type){
@@ -124,6 +125,7 @@ Module.prototype.renderWithOutEventRendered= function(type){
     if(template && (this._settings.rendering == 'renderingAll' || this._settings.rendering == 'thisRendering')){
 
         var childTemplates = template.match(/\{\{[^}]+\}\}/g);
+        childTemplates =  childTemplates || [];
         var nameChildTemplates;
         var templateLine;
         var dataToInsert;
@@ -221,6 +223,7 @@ Module.prototype.renderWithOutEventRendered= function(type){
     this._template.render = template;        // нужно ли хранить забивать память?
 
     if(type == 'top'){
+
         if (this.events.rendered){
 
             this.events.rendered(this._template.render);    //TODO а вот его можно преопределить обработчик этого события что дальше делать

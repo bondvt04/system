@@ -59,7 +59,7 @@ Module.prototype.getServerResponse = function(event){
         }
 
         var moduleName = this._moduleName;
-        //var that = this;
+        var that = this;
         // счётчик здесь и таймер
 
         var count = 0;
