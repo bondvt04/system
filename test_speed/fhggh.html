@@ -1,8 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+
     <title></title>
     <style>
+
+        div,p,h6{
+            padding:0;
+            margin:0;
+            width:0;
+            height: 0;
+        }
+
+        img{
+            padding:0;
+            margin:0;
+        }
+
         #pak{
             position: absolute;
             top: 200px;
@@ -15,7 +30,7 @@
 
         #content{
             position: absolute;
-            top: -50px;
+            top: -100px;
             left: 0px;
             width:200px;
             height: 500px;
@@ -29,21 +44,27 @@
             height: 500px;
 
         }
-        #content1 div{
+        #content1 > div{
             width:200px;
-            height: 40px;
-            margin-bottom: 10px;
-            background-color: red;
+            height: 90px;
             display: block;
-            overflow: hidden;
+            margin-top: 10px;
+            background-color: red;
+
+
         }
 
-        #content2 div{
+
+
+
+        #content2 > div{
             width:200px;
             height: 90px;
             margin-bottom: 10px;
             background-color: red;
             display: block;
+            position: absolute;
+
         }
 
     </style>
@@ -65,7 +86,7 @@
 
 
 
-    var _top = -50;
+    var _top = -100;  // вычислить высоту
 
 
 
@@ -79,11 +100,7 @@
     cont2.innerHTML += '<div>d</div>';
     cont2.innerHTML += '<div>e</div>';
     cont2.innerHTML += '<div>f</div>';
-    cont2.innerHTML += '<div></div>';
-    cont2.innerHTML += '<div>g</div>';
-    cont2.innerHTML += '<div>h</div>';
-    cont2.innerHTML += '<div>m</div>';
-    cont2.innerHTML += '<div>z</div>';
+
 
 
     cont1.top= _top + 'px';
@@ -94,34 +111,54 @@
     var dat = d_start;
     var newStamp;
     var b = 0
+    var speedList;
+    var old_top = _top;
 
-   var timer = setInterval(function(){
+    var timer = setInterval(function(){
+       speedList = 0.7;//*(i/10000);
 
-        if(i>0){
+        if(speedList){
+
             newStamp =  new Date();
 
-            _top = _top + (newStamp - dat)*0.1;       // скорость
+            _top = parseInt(_top + parseInt((newStamp - dat)*speedList));       // скорость
 
-            dat = newStamp;
 
-            cont1.top= _top + 'px';
+            //dat = newStamp;
+
+           // console.log(_top)
+
+
+            if(_top > old_top+1){
+
+                cont1.top= _top + 'px';
+                dat = newStamp;
+
+                old_top = _top;
+
+
+                //console.log(_top/(newStamp - dat))
+            }
 
             if(_top >= 0){
-                _top = _top -50;    // высота блока с марджином
 
 
-                 b++
+                b++
                 div = document.createElement("div");
-                div.innerHTML = '<div><h6>'+b+'</h6><img><p></p></div>';          // 4.571     // 4.645        23.1708 -15мс   23.165       4.6407      // 4.6473 -2пиксела    //4.29 - 0.5 // 4.307 - 07  4.3599 -09 // 4.49   -1
+                div.innerHTML = '<div><img width="30px" height="30px" src="./test.png?m='+i+'"><h6>'+b+'</h6><p><br>'+i+'</p></div>';          // 4.571     // 4.645        23.1708 -15мс   23.165       4.6407      // 4.6473 -2пиксела    //4.29 - 0.5 // 4.307 - 07  4.3599 -09 // 4.49   -1
 
                 //cont2.appendChild(div);
 
-                console.log(cont2.firstElementChild)
-                console.log(cont2.lastElementChild)
+
+
+
+                _top = _top -100;    // высота блока с марджином
+                old_top = _top;
 
                 cont2.insertBefore(div,cont2.firstElementChild);
-
                 cont2.removeChild(cont2.lastElementChild);
+
+                cont2.offsetHeight();
 
 
             }
@@ -130,7 +167,7 @@
         }
 
         else{
-            alert((new Date() - d_start)/10000);
+            //alert((new Date() - d_start)/10000);
             clearInterval(timer);
         }
 
