@@ -114,11 +114,13 @@
     var b = 0
     var speedList;
     var old_top = _top;
+    var len = 1000;
+    var Speed  = 1.1;
 
     var timer = setInterval(function(){
-       speedList = 0.7;//*(i/10000);
+       speedList = Speed*(len/1000);//*(i/10000);
 
-        if(speedList){
+        if(speedList>0.01){
 
             newStamp =  new Date();
 
@@ -138,6 +140,7 @@
                 old_top = _top;
 
 
+
                 //console.log(_top/(newStamp - dat))
             }
 
@@ -146,7 +149,7 @@
 
                 b++
                 div = document.createElement("div");
-                div.innerHTML = '<div><img width="30px" height="30px" src="./test.png?m='+i+'"><h6>'+b+'</h6><p><br>'+i+'</p></div>';          // 4.571     // 4.645        23.1708 -15мс   23.165       4.6407      // 4.6473 -2пиксела    //4.29 - 0.5 // 4.307 - 07  4.3599 -09 // 4.49   -1
+                div.innerHTML = '<div><img width="30px" height="30px" src="./test.png?z='+i+'"><h6>'+b+'</h6><p><br>'+i+'</p></div>';          // 4.571     // 4.645        23.1708 -15мс   23.165       4.6407      // 4.6473 -2пиксела    //4.29 - 0.5 // 4.307 - 07  4.3599 -09 // 4.49   -1
 
                 //cont2.appendChild(div);
 
@@ -159,7 +162,7 @@
                 cont2.insertBefore(div,cont2.firstElementChild);
                 cont2.removeChild(cont2.lastElementChild);
 
-
+                len --;
 
 
             }
