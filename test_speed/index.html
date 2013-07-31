@@ -51,11 +51,11 @@
 
     <div id="pak">
 
-        <div id="content">
-            <div id="content1">
+        <div id="content1">
+
                 <div></div>
 
-            </div>
+
 
         </div>
     </div>
@@ -83,7 +83,7 @@
 
     var cloneFragmemt;
 
-    var timer = setInterval(function(){
+    var timer = setInterval(function(){          // 4.08 пустой
 
         if(i>0){
 
@@ -92,7 +92,7 @@
             div = document.createElement("div");
             div.innerHTML = '<div><h1></h1><img><p></p></div>';    //4.2444
 
-            //div.appendChild(div1);                                 // 4.2115
+            //div.appendChild(div1);                                 // 4.2115       4.2089  без одного контейнера
 
             //cloneFragmemt.appendChild(div1);      //4.218
 
@@ -109,6 +109,26 @@
 
     }, 0);
 
+    /*
+
+   function tes(){
+       if(i>0){
+           i--;
+           intervalTest();
+       }
+       else{
+           alert((new Date() - d_start)/10000);
+       }
+   }
+
+    function intervalTest(){
+
+        setTimeout(tes,0)
+    }
+
+
+    intervalTest();
+    */
     //console.log(first)
     //  в массив ссылки на созданны ноды
 

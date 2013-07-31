@@ -15,7 +15,7 @@
 
         #content{
             position: absolute;
-            top: -100px;
+            top: -50px;
             left: 0px;
             width:200px;
             height: 500px;
@@ -31,10 +31,11 @@
         }
         #content1 div{
             width:200px;
-            height: 90px;
+            height: 40px;
             margin-bottom: 10px;
             background-color: red;
             display: block;
+            overflow: hidden;
         }
 
         #content2 div{
@@ -60,43 +61,82 @@
 </div>
 
 <script>
-    var div = document.createElement("div");
+    var div;
 
-    var fragment = document.createDocumentFragment()
-    fragment.appendChild(div);
 
-    var _top = 0;
-    var i = 0;
-    var d;
+
+    var _top = -50;
+
+
 
 
     var cont1 = document.getElementById('content1').style;
     var cont2 = document.getElementById('content1');
 
+    cont2.innerHTML += '<div>a</div>';
+    cont2.innerHTML += '<div>b</div>';
+    cont2.innerHTML += '<div>c</div>';
+    cont2.innerHTML += '<div>d</div>';
+    cont2.innerHTML += '<div>e</div>';
+    cont2.innerHTML += '<div>f</div>';
+    cont2.innerHTML += '<div></div>';
+    cont2.innerHTML += '<div>g</div>';
+    cont2.innerHTML += '<div>h</div>';
+    cont2.innerHTML += '<div>m</div>';
+    cont2.innerHTML += '<div>z</div>';
+
+
     cont1.top= _top + 'px';
 
-    cont2.appendChild(fragment.cloneNode());
-    cont2.appendChild(fragment.cloneNode());
-    cont2.appendChild(fragment.cloneNode());
-    cont2.appendChild(fragment.cloneNode());
-    cont2.appendChild(fragment.cloneNode());
-    cont2.appendChild(fragment.cloneNode());
 
-    setInterval(function(){
-        _top = _top +7;
+    var d_start = new Date();
+    var i = 10000;                   // длинна пути
+    var dat = d_start;
+    var newStamp;
+    var b = 0
+
+   var timer = setInterval(function(){
+
+        if(i>0){
+            newStamp =  new Date();
+
+            _top = _top + (newStamp - dat)*0.1;       // скорость
+
+            dat = newStamp;
+
+            cont1.top= _top + 'px';
+
+            if(_top >= 0){
+                _top = _top -50;    // высота блока с марджином
 
 
-        cont1.top= _top + 'px';
+                 b++
+                div = document.createElement("div");
+                div.innerHTML = '<div><h6>'+b+'</h6><img><p></p></div>';          // 4.571     // 4.645        23.1708 -15мс   23.165       4.6407      // 4.6473 -2пиксела    //4.29 - 0.5 // 4.307 - 07  4.3599 -09 // 4.49   -1
 
-        if(_top >= 90){
-            _top = _top -90;
-            cont2.appendChild(fragment.cloneNode());
-            d= cont2.querySelector('div')
-            cont2.removeChild(d);
+                //cont2.appendChild(div);
+
+                console.log(cont2.firstElementChild)
+                console.log(cont2.lastElementChild)
+
+                cont2.insertBefore(div,cont2.firstElementChild);
+
+                cont2.removeChild(cont2.lastElementChild);
+
+
+            }
+
+            i--;
         }
 
+        else{
+            alert((new Date() - d_start)/10000);
+            clearInterval(timer);
+        }
 
-    },0);
+   },0);
+
+
 
 </script>
 
